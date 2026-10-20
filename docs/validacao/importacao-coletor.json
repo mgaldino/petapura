@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-20",
+  "source": "Export local do coletor existente; sem nova consulta ao TSE nesta verificação",
+  "source_snapshot_id": "9cc8a050-db5a-4dbc-809b-1c0f9269f19d",
+  "source_area": "SOMA_UFS",
+  "total_sections": 499248,
+  "reported_sections": 0,
+  "collected_sections": 0,
+  "forecast": null,
+  "original_files_modified": false
+}

@@ -1,0 +1,446 @@
+[
+  {
+    "version": 1,
+    "snapshot_id": "demo-stage-0",
+    "source_snapshot_id": "demo-source-0",
+    "generated_at": "2026-10-25T21:45:00Z",
+    "mode": "demo",
+    "election": {
+      "year": 2026,
+      "round": 2,
+      "office": "president",
+      "election_id": "6258",
+      "pleito_id": "3221"
+    },
+    "candidates": {
+      "a": {
+        "id": "13",
+        "name": "Candidata A"
+      },
+      "b": {
+        "id": "22",
+        "name": "Candidato B"
+      }
+    },
+    "counting": {
+      "total_sections": 10000,
+      "reported_sections": 2180,
+      "collected_sections": 2180,
+      "votes_a": 1037680,
+      "votes_b": 1142320,
+      "valid_votes": 2180000,
+      "generated_at": "2026-10-25T21:45:00Z",
+      "source": {
+        "name": "Demonstração",
+        "area": "DEMO",
+        "generated_raw": null
+      }
+    },
+    "forecast": {
+      "model_version": "Demonstração sintética",
+      "source_snapshot_id": "demo-source-0",
+      "generated_at": "2026-10-25T21:45:00Z",
+      "share_a": 50.81,
+      "interval": {
+        "level": 0.9,
+        "lower": 45.21,
+        "upper": 56.41
+      },
+      "win_probability_a": 0.59517,
+      "notes": [
+        "Cenários fictícios para avaliar a apresentação; não são previsões eleitorais."
+      ]
+    },
+    "history": [
+      {
+        "total_sections": 10000,
+        "reported_sections": 100,
+        "votes_a": 43300,
+        "votes_b": 56700,
+        "valid_votes": 100000,
+        "snapshot_id": "demo-partial-1",
+        "generated_at": "2026-10-25T21:02:03Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 200,
+        "votes_a": 89400,
+        "votes_b": 110600,
+        "valid_votes": 200000,
+        "snapshot_id": "demo-partial-2",
+        "generated_at": "2026-10-25T21:04:07Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 500,
+        "votes_a": 231000,
+        "votes_b": 269000,
+        "valid_votes": 500000,
+        "snapshot_id": "demo-partial-5",
+        "generated_at": "2026-10-25T21:10:19Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 1000,
+        "votes_a": 466000,
+        "votes_b": 534000,
+        "valid_votes": 1000000,
+        "snapshot_id": "demo-partial-10",
+        "generated_at": "2026-10-25T21:20:38Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 1500,
+        "votes_a": 706500,
+        "votes_b": 793500,
+        "valid_votes": 1500000,
+        "snapshot_id": "demo-partial-15",
+        "generated_at": "2026-10-25T21:30:57Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 2180,
+        "votes_a": 1037680,
+        "votes_b": 1142320,
+        "valid_votes": 2180000,
+        "snapshot_id": "demo-partial-21.8",
+        "generated_at": "2026-10-25T21:45:00Z"
+      }
+    ]
+  },
+  {
+    "version": 1,
+    "snapshot_id": "demo-stage-1",
+    "source_snapshot_id": "demo-source-1",
+    "generated_at": "2026-10-25T23:30:00Z",
+    "mode": "demo",
+    "election": {
+      "year": 2026,
+      "round": 2,
+      "office": "president",
+      "election_id": "6258",
+      "pleito_id": "3221"
+    },
+    "candidates": {
+      "a": {
+        "id": "13",
+        "name": "Candidata A"
+      },
+      "b": {
+        "id": "22",
+        "name": "Candidato B"
+      }
+    },
+    "counting": {
+      "total_sections": 10000,
+      "reported_sections": 6520,
+      "collected_sections": 6520,
+      "votes_a": 3233920,
+      "votes_b": 3286080,
+      "valid_votes": 6520000,
+      "generated_at": "2026-10-25T23:30:00Z",
+      "source": {
+        "name": "Demonstração",
+        "area": "DEMO",
+        "generated_raw": null
+      }
+    },
+    "forecast": {
+      "model_version": "Demonstração sintética",
+      "source_snapshot_id": "demo-source-1",
+      "generated_at": "2026-10-25T23:30:00Z",
+      "share_a": 51.4,
+      "interval": {
+        "level": 0.9,
+        "lower": 48.29,
+        "upper": 54.5
+      },
+      "win_probability_a": 0.77023,
+      "notes": [
+        "Cenários fictícios para avaliar a apresentação; não são previsões eleitorais."
+      ]
+    },
+    "history": [
+      {
+        "total_sections": 10000,
+        "reported_sections": 100,
+        "votes_a": 43300,
+        "votes_b": 56700,
+        "valid_votes": 100000,
+        "snapshot_id": "demo-partial-1",
+        "generated_at": "2026-10-25T21:02:03Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 200,
+        "votes_a": 89400,
+        "votes_b": 110600,
+        "valid_votes": 200000,
+        "snapshot_id": "demo-partial-2",
+        "generated_at": "2026-10-25T21:04:07Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 500,
+        "votes_a": 231000,
+        "votes_b": 269000,
+        "valid_votes": 500000,
+        "snapshot_id": "demo-partial-5",
+        "generated_at": "2026-10-25T21:10:19Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 1000,
+        "votes_a": 466000,
+        "votes_b": 534000,
+        "valid_votes": 1000000,
+        "snapshot_id": "demo-partial-10",
+        "generated_at": "2026-10-25T21:20:38Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 1500,
+        "votes_a": 706500,
+        "votes_b": 793500,
+        "valid_votes": 1500000,
+        "snapshot_id": "demo-partial-15",
+        "generated_at": "2026-10-25T21:30:57Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 2180,
+        "votes_a": 1037680,
+        "votes_b": 1142320,
+        "valid_votes": 2180000,
+        "snapshot_id": "demo-partial-21.8",
+        "generated_at": "2026-10-25T21:45:00Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 3000,
+        "votes_a": 1437000,
+        "votes_b": 1563000,
+        "valid_votes": 3000000,
+        "snapshot_id": "demo-partial-30",
+        "generated_at": "2026-10-25T22:04:50Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 4000,
+        "votes_a": 1932000,
+        "votes_b": 2068000,
+        "valid_votes": 4000000,
+        "snapshot_id": "demo-partial-40",
+        "generated_at": "2026-10-25T22:29:01Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 5000,
+        "votes_a": 2440000,
+        "votes_b": 2560000,
+        "valid_votes": 5000000,
+        "snapshot_id": "demo-partial-50",
+        "generated_at": "2026-10-25T22:53:13Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 6000,
+        "votes_a": 2955000,
+        "votes_b": 3045000,
+        "valid_votes": 6000000,
+        "snapshot_id": "demo-partial-60",
+        "generated_at": "2026-10-25T23:17:25Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 6520,
+        "votes_a": 3233920,
+        "votes_b": 3286080,
+        "valid_votes": 6520000,
+        "snapshot_id": "demo-partial-65.2",
+        "generated_at": "2026-10-25T23:30:00Z"
+      }
+    ]
+  },
+  {
+    "version": 1,
+    "snapshot_id": "demo-stage-2",
+    "source_snapshot_id": "demo-source-2",
+    "generated_at": "2026-10-26T01:10:00Z",
+    "mode": "demo",
+    "election": {
+      "year": 2026,
+      "round": 2,
+      "office": "president",
+      "election_id": "6258",
+      "pleito_id": "3221"
+    },
+    "candidates": {
+      "a": {
+        "id": "13",
+        "name": "Candidata A"
+      },
+      "b": {
+        "id": "22",
+        "name": "Candidato B"
+      }
+    },
+    "counting": {
+      "total_sections": 10000,
+      "reported_sections": 9340,
+      "collected_sections": 9340,
+      "votes_a": 4744720,
+      "votes_b": 4595280,
+      "valid_votes": 9340000,
+      "generated_at": "2026-10-26T01:10:00Z",
+      "source": {
+        "name": "Demonstração",
+        "area": "DEMO",
+        "generated_raw": null
+      }
+    },
+    "forecast": {
+      "model_version": "Demonstração sintética",
+      "source_snapshot_id": "demo-source-2",
+      "generated_at": "2026-10-26T01:10:00Z",
+      "share_a": 51.1,
+      "interval": {
+        "level": 0.9,
+        "lower": 49.93,
+        "upper": 52.29
+      },
+      "win_probability_a": 0.9375,
+      "notes": [
+        "Cenários fictícios para avaliar a apresentação; não são previsões eleitorais."
+      ]
+    },
+    "history": [
+      {
+        "total_sections": 10000,
+        "reported_sections": 100,
+        "votes_a": 43300,
+        "votes_b": 56700,
+        "valid_votes": 100000,
+        "snapshot_id": "demo-partial-1",
+        "generated_at": "2026-10-25T21:02:03Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 200,
+        "votes_a": 89400,
+        "votes_b": 110600,
+        "valid_votes": 200000,
+        "snapshot_id": "demo-partial-2",
+        "generated_at": "2026-10-25T21:04:07Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 500,
+        "votes_a": 231000,
+        "votes_b": 269000,
+        "valid_votes": 500000,
+        "snapshot_id": "demo-partial-5",
+        "generated_at": "2026-10-25T21:10:19Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 1000,
+        "votes_a": 466000,
+        "votes_b": 534000,
+        "valid_votes": 1000000,
+        "snapshot_id": "demo-partial-10",
+        "generated_at": "2026-10-25T21:20:38Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 1500,
+        "votes_a": 706500,
+        "votes_b": 793500,
+        "valid_votes": 1500000,
+        "snapshot_id": "demo-partial-15",
+        "generated_at": "2026-10-25T21:30:57Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 2180,
+        "votes_a": 1037680,
+        "votes_b": 1142320,
+        "valid_votes": 2180000,
+        "snapshot_id": "demo-partial-21.8",
+        "generated_at": "2026-10-25T21:45:00Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 3000,
+        "votes_a": 1437000,
+        "votes_b": 1563000,
+        "valid_votes": 3000000,
+        "snapshot_id": "demo-partial-30",
+        "generated_at": "2026-10-25T22:04:50Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 4000,
+        "votes_a": 1932000,
+        "votes_b": 2068000,
+        "valid_votes": 4000000,
+        "snapshot_id": "demo-partial-40",
+        "generated_at": "2026-10-25T22:29:01Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 5000,
+        "votes_a": 2440000,
+        "votes_b": 2560000,
+        "valid_votes": 5000000,
+        "snapshot_id": "demo-partial-50",
+        "generated_at": "2026-10-25T22:53:13Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 6000,
+        "votes_a": 2955000,
+        "votes_b": 3045000,
+        "valid_votes": 6000000,
+        "snapshot_id": "demo-partial-60",
+        "generated_at": "2026-10-25T23:17:25Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 6520,
+        "votes_a": 3233920,
+        "votes_b": 3286080,
+        "valid_votes": 6520000,
+        "snapshot_id": "demo-partial-65.2",
+        "generated_at": "2026-10-25T23:30:00Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 7500,
+        "votes_a": 3750000,
+        "votes_b": 3750000,
+        "valid_votes": 7500000,
+        "snapshot_id": "demo-partial-75",
+        "generated_at": "2026-10-26T00:04:45Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 8500,
+        "votes_a": 4288250,
+        "votes_b": 4211750,
+        "valid_votes": 8500000,
+        "snapshot_id": "demo-partial-85",
+        "generated_at": "2026-10-26T00:40:12Z"
+      },
+      {
+        "total_sections": 10000,
+        "reported_sections": 9340,
+        "votes_a": 4744720,
+        "votes_b": 4595280,
+        "valid_votes": 9340000,
+        "snapshot_id": "demo-partial-93.4",
+        "generated_at": "2026-10-26T01:10:00Z"
+      }
+    ]
+  }
+]

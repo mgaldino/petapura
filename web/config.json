@@ -1,0 +1,9 @@
+{
+  "endpoint": "./data/latest.json",
+  "demo_endpoint": "./demo/snapshots.json",
+  "poll_interval_ms": 30000,
+  "request_timeout_ms": 10000,
+  "stale_after_ms": 180000,
+  "expected_election": {"year": 2026, "round": 2, "office": "president", "election_id": "6258", "pleito_id": "3221"},
+  "expected_candidates": {"a": "13", "b": "22"}
+}

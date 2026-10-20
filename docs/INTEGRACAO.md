@@ -1,0 +1,110 @@
+# Integração entre modelo e site
+
+Versão 1, preparada em 20/10/2026. O contrato contém somente agregados nacionais do segundo turno presidencial. O site não estima o modelo nem recebe coeficientes, sorteios completos ou dados individuais.
+
+## Fronteira entre os projetos
+
+| Responsável | Produto |
+|---|---|
+| Coletor existente | Manifesto consistente, totalização oficial escolhida e BUs |
+| Executor do modelo | Previsão do resultado final, quantis, nível do intervalo, probabilidade quando calculada, versão e identidade do snapshot usado |
+| Adaptadores deste repositório | JSON público validado, histórico e publicação atômica |
+| Aplicação | Leitura periódica, apresentação, gráfico e aviso de falha/desatualização |
+
+O módulo em desenvolvimento na outra sessão foi localizado em `2026/lab-regressao-aula/projeto_agna/previsao_tempo_real`, no repositório Regressao. Seu `STATUS.md` distinguia a coleta operacional do fluxo adaptativo ainda em implementação na consulta de 20/10/2026. Nenhum arquivo desse módulo é alterado por este site.
+
+## Conteúdo do snapshot
+
+O [JSON Schema](../schema/snapshot.schema.json) descreve os tipos. Os validadores em Python e JavaScript verificam também as relações entre campos.
+
+| Campo | Regra |
+|---|---|
+| `version` | Inteiro `1` |
+| `snapshot_id` | Identidade imutável da publicação; novo conteúdo exige nova identidade |
+| `source_snapshot_id` | ID do snapshot do coletor usado para os totais e a previsão |
+| `generated_at` | UTC explícito, terminado em `Z`; inclui data e segundos |
+| `mode` | `waiting`, `live` ou `demo`; o endpoint real rejeita `demo` |
+| `election` | 2026, segundo turno, Presidência; IDs esperados conferidos com a configuração |
+| `candidates` | Identidade e nome de A e B; A em vermelho, B em azul |
+| `counting` | Contagens oficiais, horário de recebimento e fonte escolhida; pode ser `null` |
+| `forecast` | Previsão final e metadados; pode ser `null` |
+| `history` | Histórico de contagens, mantido pelo publicador; até 4.000 entradas |
+
+Percentuais de votos e limites são números de **0 a 100**. `interval.level` e `win_probability_a` usam **0 a 1**. Contagens são inteiros não negativos; votos de A + B devem ser iguais aos válidos. `reported_sections` não pode superar `total_sections`. Somente BR ou a soma completa de UFs/exterior podem representar a totalização nacional.
+
+Um intervalo de 95% deve chegar com `level: 0.95` e seus limites originais. O site não o converte em 90%. A probabilidade pode ser `null`; ela não é inferida da média, do intervalo ou de uma hipótese normal. O ponto pode ser uma média fora do intervalo central em distribuições assimétricas; por isso não se impõe que ele esteja entre os quantis.
+
+O horário textual original do TSE fica em `counting.source.generated_raw`, sem presumir um fuso que não tenha sido informado. `counting.generated_at` é o horário UTC de publicação do snapshot recebido. O horário do modelo fica em `forecast.generated_at`.
+
+As notas em `forecast.notes` explicam hipóteses e limitações do modelo. São texto simples; não executam HTML. Campos fora do contrato são rejeitados para evitar publicar acidentalmente componentes internos do ajuste.
+
+## Caminho preferido: executor produz o snapshot completo
+
+Use os objetos do snapshot que o executor já leu. Não releia o ponteiro do coletor depois de calcular a previsão: ele pode ter avançado nesse intervalo.
+
+```r
+source("/caminho/observatorio-presidencial-2026/integracao/exportar_previsao_site.R", encoding = "UTF-8")
+
+# Os valores abaixo vêm do modelo; não são calculados pelo adaptador.
+previsao_site <- exportar_previsao_site(
+  caminho = "saida/previsao-site.json",
+  snapshot_id = dados$manifesto$snapshot_id,
+  versao_modelo = versao_modelo,
+  percentual_a = percentual_a,
+  limite_inferior = quantil_inferior,
+  limite_superior = quantil_superior,
+  nivel_intervalo = nivel_intervalo,
+  probabilidade_vitoria_a = probabilidade_vitoria_a,
+  notas = notas_metodologicas
+)
+
+montar_snapshot_site(
+  caminho = "saida/snapshot-site.json",
+  manifesto = dados$manifesto,
+  totalizacao_escolhida = dados$detalhes_fontes$chosen,
+  previsao = previsao_site,
+  nome_a = nome_a,
+  nome_b = nome_b
+)
+```
+
+Em seguida, um único publicador:
+
+```sh
+python3 scripts/publish_snapshot.py \
+  --input /caminho/saida/snapshot-site.json \
+  --output /caminho/site-servido/data/latest.json
+```
+
+O publicador valida tudo antes da troca, protege contra escritores simultâneos, rejeita regressão temporal e reutilização indevida de IDs, incorpora o histórico e substitui o arquivo inteiro. O mesmo snapshot é idempotente. Correções de votos ou de seções são aceitas em um snapshot novo; o avanço pode diminuir em uma correção legítima.
+
+## Alternativa: importar o export do coletor
+
+```sh
+python3 scripts/import_tse.py \
+  --source /caminho/data/live/tse_export \
+  --forecast /caminho/previsao-site.json \
+  --name-a "Nome de A" --name-b "Nome de B"
+```
+
+`--forecast` é opcional. Sem ele, a página apresenta somente dados observados e sinaliza a ausência de previsão. O importador confere SHA256 do arquivo escolhido, identidade da eleição/candidaturas, caminho dentro do export e estabilidade do manifesto durante a leitura. Usa `chosen`, nunca soma BR e UFs. Se o coletor tiver avançado para outro ID enquanto o modelo calculava, a combinação é recusada; use o snapshot completo capturado em memória no caminho preferido.
+
+Os arquivos do coletor são apenas lidos. A entrada não é um endpoint público de BUs, e o navegador não acessa diretamente centenas de milhares de seções.
+
+## Antes, durante e ao final da apuração
+
+- Zero BUs não impede uma previsão inicial, se o modelo fornecê-la. Não há limiar artificial de 2%.
+- Se só houver contagem, a votação projetada permanece indisponível; não se apresenta o parcial como previsão.
+- A chance de vitória fica ausente enquanto não for calculada.
+- Com todas as seções totalizadas e votos válidos positivos, a interface usa o resultado observado e informa o fim da apuração.
+- O envelope visual converge para o intervalo do resultado final. A ligação tracejada não estima a ordem de chegada dos votos. O tooltip no trecho futuro informa a estimativa final, sem inventar valores intermediários.
+
+Para o gráfico, o histórico bruto permanece no JSON. A apresentação consolida revisões na mesma posição e usa pontos até o avanço atual, evitando desenhar votos antigos além da posição corrigida de “Agora”.
+
+## Rede e hospedagem
+
+A URL em `web/config.json` pode ser relativa ou um endpoint HTTP(S). Para outro domínio, configure CORS permitindo a origem do site. Sirva `latest.json` com `Content-Type: application/json; charset=utf-8` e `Cache-Control: no-store` (ou revalidação equivalente). Uma resposta deve conter o snapshot inteiro.
+
+O cliente consulta a cada 30 segundos, com timeout de 10 segundos e uma consulta por vez. Falha HTTP, JSON inválido, eleição errada ou payload incoerente preserva o último estado válido e mostra um aviso. Após três minutos sem dados atuais, o site sinaliza desatualização. O horário da contagem e o do modelo entram nessa verificação.
+
+Há exemplos sintéticos em `tests/fixtures/`, incluindo uma faixa de 95%, probabilidade ausente, previsão com zero BUs e apuração completa. Eles são testes; não devem alimentar o endpoint real.

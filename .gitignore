@@ -1,0 +1,13 @@
+dist/
+__pycache__/
+*.pyc
+.DS_Store
+node_modules/
+.venv/
+.env
+.env.*
+!*.example
+local/
+web/data/latest.local.json
+web/data/.*.lock
+tests/qa/site/

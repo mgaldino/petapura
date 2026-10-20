@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:pet-usp:presidencia:snapshot:1",
+  "title": "Snapshot público do Observatório presidencial 2026",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "snapshot_id", "source_snapshot_id", "generated_at", "mode", "election", "candidates", "counting", "forecast", "history"],
+  "properties": {
+    "version": {"const": 1},
+    "snapshot_id": {"$ref": "#/$defs/text"},
+    "source_snapshot_id": {"anyOf": [{"$ref": "#/$defs/text"}, {"type": "null"}]},
+    "generated_at": {"anyOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]},
+    "mode": {"enum": ["waiting", "live", "demo"]},
+    "election": {
+      "type": "object", "additionalProperties": false,
+      "required": ["year", "round", "office", "election_id", "pleito_id"],
+      "properties": {"year": {"const": 2026}, "round": {"const": 2}, "office": {"const": "president"}, "election_id": {"$ref": "#/$defs/text"}, "pleito_id": {"$ref": "#/$defs/text"}}
+    },
+    "candidates": {"type": "object", "additionalProperties": false, "required": ["a", "b"], "properties": {"a": {"$ref": "#/$defs/candidate"}, "b": {"$ref": "#/$defs/candidate"}}},
+    "counting": {"anyOf": [{"$ref": "#/$defs/counting"}, {"type": "null"}]},
+    "forecast": {"anyOf": [{"$ref": "#/$defs/forecast"}, {"type": "null"}]},
+    "history": {"type": "array", "maxItems": 4000, "items": {"$ref": "#/$defs/history"}}
+  },
+  "allOf": [
+    {"if": {"properties": {"mode": {"const": "waiting"}}}, "then": {"properties": {"source_snapshot_id": {"type": "null"}, "counting": {"type": "null"}, "forecast": {"type": "null"}, "history": {"maxItems": 0}}}, "else": {"properties": {"source_snapshot_id": {"$ref": "#/$defs/text"}, "generated_at": {"$ref": "#/$defs/timestamp"}}}}
+  ],
+  "$defs": {
+    "text": {"type": "string", "minLength": 1, "maxLength": 120, "pattern": "\\S"},
+    "timestamp": {"type": "string", "format": "date-time", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,6})?Z$"},
+    "count": {"type": "integer", "minimum": 0, "maximum": 9007199254740991},
+    "total": {"type": "integer", "minimum": 1, "maximum": 9007199254740991},
+    "percent": {"type": "number", "minimum": 0, "maximum": 100},
+    "candidate": {"type": "object", "additionalProperties": false, "required": ["id", "name"], "properties": {"id": {"$ref": "#/$defs/text"}, "name": {"type": "string", "minLength": 1, "maxLength": 80, "pattern": "\\S"}}},
+    "source": {"type": "object", "additionalProperties": false, "required": ["name", "area"], "properties": {"name": {"$ref": "#/$defs/text"}, "area": {"enum": ["BR", "SOMA_UFS", "DEMO"]}, "generated_raw": {"anyOf": [{"$ref": "#/$defs/text"}, {"type": "null"}]}}},
+    "counting": {
+      "type": "object", "additionalProperties": false,
+      "required": ["total_sections", "reported_sections", "votes_a", "votes_b", "valid_votes", "generated_at", "source"],
+      "properties": {"total_sections": {"$ref": "#/$defs/total"}, "reported_sections": {"$ref": "#/$defs/count"}, "collected_sections": {"anyOf": [{"$ref": "#/$defs/count"}, {"type": "null"}]}, "votes_a": {"$ref": "#/$defs/count"}, "votes_b": {"$ref": "#/$defs/count"}, "valid_votes": {"$ref": "#/$defs/count"}, "generated_at": {"$ref": "#/$defs/timestamp"}, "source": {"$ref": "#/$defs/source"}}
+    },
+    "forecast": {
+      "type": "object", "additionalProperties": false,
+      "required": ["model_version", "source_snapshot_id", "generated_at", "share_a", "interval", "win_probability_a", "notes"],
+      "properties": {
+        "model_version": {"$ref": "#/$defs/text"}, "source_snapshot_id": {"$ref": "#/$defs/text"}, "generated_at": {"$ref": "#/$defs/timestamp"}, "share_a": {"$ref": "#/$defs/percent"},
+        "interval": {"type": "object", "additionalProperties": false, "required": ["level", "lower", "upper"], "properties": {"level": {"type": "number", "minimum": 0.01, "maximum": 0.999}, "lower": {"$ref": "#/$defs/percent"}, "upper": {"$ref": "#/$defs/percent"}}},
+        "win_probability_a": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "notes": {"type": "array", "maxItems": 10, "items": {"type": "string", "maxLength": 1000}}
+      }
+    },
+    "history": {
+      "type": "object", "additionalProperties": false,
+      "required": ["snapshot_id", "generated_at", "total_sections", "reported_sections", "votes_a", "votes_b", "valid_votes"],
+      "properties": {"snapshot_id": {"$ref": "#/$defs/text"}, "generated_at": {"$ref": "#/$defs/timestamp"}, "total_sections": {"$ref": "#/$defs/total"}, "reported_sections": {"$ref": "#/$defs/count"}, "votes_a": {"$ref": "#/$defs/count"}, "votes_b": {"$ref": "#/$defs/count"}, "valid_votes": {"$ref": "#/$defs/count"}}
+    }
+  }
+}

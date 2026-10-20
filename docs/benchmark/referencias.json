@@ -1,0 +1,115 @@
+[
+  {
+    "id": "nyt",
+    "name": "New York Times - The Needle",
+    "country": "Estados Unidos",
+    "year": "2024",
+    "url": "https://www.nytimes.com/interactive/2024/11/05/us/elections/results-president-forecast-needle.html",
+    "kind": "Projeção probabilística",
+    "images": [],
+    "observation": "A agulha sintetiza a probabilidade de vitória durante a apuração. É a referência conceitual para um indicador nacional de tendência.",
+    "takeaway": "Usar uma pergunta explícita para cada indicador: chance de vencer, chance de vitória no primeiro turno ou chance de ir ao segundo turno. São eventos diferentes.",
+    "limit": "Acesso direto bloqueado pelo ambiente. Sem captura própria ou auditoria visual da versão de 2024. O endereço foi identificado em referência pública; não houve teste de navegação no NYT."
+  },
+  {
+    "id": "abc",
+    "name": "ABC News",
+    "country": "Austrália",
+    "year": "2025",
+    "url": "https://www.abc.net.au/news/elections/federal/2025/results",
+    "kind": "Placar, cartograma e estados da disputa",
+    "images": [
+      "03-abc-placar.png",
+      "04-abc-cartograma.png"
+    ],
+    "observation": "Barras mostram cadeiras e o limiar de maioria. Um cartograma dá a mesma área aos distritos; a legenda distingue disputa incerta, provável e eleita. Há busca e filtros.",
+    "takeaway": "Boa referência para a hierarquia da página e para cartões de governadores. No mapa presidencial brasileiro, o tamanho das marcas deve representar votos ou eleitores se a intenção for mostrar peso eleitoral.",
+    "limit": "Cada distrito australiano elege uma cadeira. Dar a mesma área a municípios brasileiros mudaria o significado: municípios têm eleitorados muito diferentes."
+  },
+  {
+    "id": "guardian",
+    "name": "The Guardian",
+    "country": "Reino Unido",
+    "year": "2024",
+    "url": "https://www.theguardian.com/politics/ng-interactive/2024/jul/04/uk-general-election-results-2024-live-in-full",
+    "kind": "Placar e comparação histórica",
+    "images": [
+      "05-guardian-placar.png"
+    ],
+    "observation": "Placar por partido, saldo histórico e busca territorial.",
+    "takeaway": "Para o Brasil, vale uma coluna opcional com a diferença em pontos percentuais em relação à eleição anterior, com comparação territorial consistente.",
+    "limit": "Cadeiras e votos expressam medidas distintas. A adaptação brasileira deve rotular claramente a unidade exibida."
+  },
+  {
+    "id": "lemonde",
+    "name": "Le Monde",
+    "country": "França",
+    "year": "2024",
+    "url": "https://www.lemonde.fr/resultats-legislatives-2024/",
+    "kind": "Composição parlamentar e busca local",
+    "images": [
+      "06-lemonde-hemiciclo.png"
+    ],
+    "observation": "O hemiciclo dá uma visão da composição da Assembleia e marca a maioria necessária. A página oferece busca territorial e apresenta participação, votos brancos e nulos.",
+    "takeaway": "Útil para uma eventual cobertura legislativa. Na Presidência, aproveitar a hierarquia de informação e a navegação local; o hemiciclo teria pouca função.",
+    "limit": "A imagem mostra cadeiras já atribuídas na página histórica; não é uma distribuição de probabilidades."
+  },
+  {
+    "id": "reuters",
+    "name": "Reuters Graphics",
+    "country": "Índia",
+    "year": "2024",
+    "url": "https://www.reuters.com/graphics/INDIA-ELECTION/zgponbzllvd/",
+    "kind": "Comparação entre eleições e mapa",
+    "images": [
+      "07-reuters-comparacao.png",
+      "08-reuters-mapa.png"
+    ],
+    "observation": "Barras alinhadas comparam as coalizões em 2024 e 2019. O mapa localiza os resultados por circunscrição. A apresentação combina gráficos com explicação editorial e fontes.",
+    "takeaway": "Boa referência para explicar de onde vem uma mudança na projeção: visualização curta, seguida de uma frase que conecte a atualização aos dados recebidos.",
+    "limit": "O mapa geográfico enfatiza áreas extensas. Para uma eleição presidencial, complementar com votos, eleitorado ou contribuição para a diferença nacional."
+  },
+  {
+    "id": "lanacion",
+    "name": "La Nación",
+    "country": "Argentina",
+    "year": "2023",
+    "url": "https://www.lanacion.com.ar/politica/elecciones-2023-los-resultados-del-balotaje-entre-sergio-massa-y-javier-milei-en-todo-el-pais-nid20112023/",
+    "kind": "Duelo presidencial e margem",
+    "images": [
+      "09-lanacion-placar.png"
+    ],
+    "observation": "O placar do segundo turno põe os dois candidatos na mesma barra, explicita a diferença e permite escolher território. Há uma visualização dedicada à diferença entre candidatos.",
+    "takeaway": "Uma das referências mais diretamente transferíveis ao segundo turno brasileiro: comparação lado a lado, marco de 50% e diferença em pontos percentuais.",
+    "limit": "É necessário acrescentar a faixa de incerteza da nossa projeção. Uma barra com votação apurada não comunica sozinha a probabilidade de vitória."
+  },
+  {
+    "id": "zeit",
+    "name": "DIE ZEIT",
+    "country": "Alemanha",
+    "year": "2025",
+    "url": "https://www.zeit.de/politik/deutschland/2025-02/bundestagswahl-2025-wahlergebnisse-wahlkreise-live",
+    "kind": "Comparação histórica e cenários",
+    "images": [
+      "10-zeit-original.png",
+      "12-zeit-portugues.png"
+    ],
+    "observation": "Barras comparam eleições; cenários de coalizão mostram o limiar de maioria.",
+    "takeaway": "A comparação visual pode inspirar módulos brasileiros de evolução e cenários. Coalizões parlamentares exigem uma adaptação substantiva; não equivalem a probabilidades de candidatos.",
+    "limit": "Original em alemão e adaptação para português por edição de imagem. Números e rótulos foram conferidos visualmente; a adaptação não é uma captura do site em português."
+  },
+  {
+    "id": "elpais",
+    "name": "El País",
+    "country": "Espanha",
+    "year": "2023",
+    "url": "https://elpais.com/espana/elecciones/generales/",
+    "kind": "Abas e comparação de composição",
+    "images": [
+      "11-elpais-escanos.png"
+    ],
+    "observation": "Abas alternam cadeiras, resultados e mapa. Arcos concêntricos comparam a composição de 2023 e 2019. Há busca territorial, horário e percentual apurado.",
+    "takeaway": "A navegação por abas é uma boa solução para celular. Podemos alternar resumo, evolução e mapa sem exigir que tudo caiba na primeira tela.",
+    "limit": "Arcos e cadeiras atendem a uma eleição parlamentar; para a Presidência, barras horizontais favorecem a comparação direta dos candidatos."
+  }
+]

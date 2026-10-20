@@ -1,0 +1,15 @@
+Ferramenta: image_gen nativa. Modo: edição de imagem / text-localization.
+Entrada: 10-zeit-original.png. Saída selecionada: 12-zeit-portugues.png.
+Data: 20/10/2026.
+
+Prompt utilizado:
+
+Use case: text-localization. Edit target: the attached authentic German DIE ZEIT election dashboard screenshot. Create a faithful Portuguese localization of this exact screenshot for a private visual benchmark. Preserve the full original framing, white background, chart geometry, bar heights, colors, alignment, icons, all numbers and percentages, 2021/2025 comparison, coalition total values and chart axis marks. Replace only visible German interface text with these exact Portuguese translations, fit in the existing places with matching typographic hierarchy: top navigation 'Sitze' -> 'Cadeiras', 'Karte' -> 'Mapa', 'Tabelle' -> 'Tabela', 'Hochburgen' -> 'Redutos', 'Gewinne & Verluste' -> 'Ganhos e perdas'. Main chart heading 'Stimmenverteilung: Amtliches Endergebnis' -> 'Votação: resultado oficial final'. Subtitle '82,5 % Wahlbeteiligung • Stand: Fr., 7.38 Uhr • Quelle: Bundeswahlleiterin' -> '82,5% de comparecimento • Atualização: sex., 7h38 • Fonte: autoridade eleitoral federal'. Party names 'Union' -> 'União', 'Grüne' -> 'Verdes', 'Linke' -> 'Esquerda'; keep AfD, SPD, BSW, FDP. Coalition heading 'Mögliche Koalitionen' -> 'Coalizões possíveis'. 'Mehrheit mit 316 Sitzen' -> 'Maioria com 316 cadeiras'. In every coalition row translate the same party names, preserving plus signs and totals exactly: União + SPD + Verdes 413; União + SPD 328; União + Verdes 293; SPD + Verdes + Esquerda 269; SPD + Verdes 205. All numeric labels must stay EXACTLY as in original: 28,5%; 20,8%; 16,4%; 11,6%; 8,8%; 4,98%; 4,3%; changes +4,4; +10,4; -9,3; -3,1; +3,9; –; -7,1; coalition totals 413,328,293,269,205. Do not introduce new electoral data. This is an image edit, not a redesign. Do not add a watermark or caption inside the screenshot; the surrounding report will identify it as a translated adaptation.
+
+Verificação visual realizada:
+- Percentuais: 28,5; 20,8; 16,4; 11,6; 8,8; 4,98; 4,3.
+- Variações: +4,4; +10,4; -9,3; -3,1; +3,9; sem comparação; -7,1.
+- Maioria: 316 cadeiras.
+- Totais de coalizão: 413; 328; 293; 269; 205.
+- Cores, ordenação dos partidos e sentido das comparações mantidos visualmente.
+- A edição é uma adaptação visual, com mudança de resolução e tipografia. Não é réplica pixel a pixel.

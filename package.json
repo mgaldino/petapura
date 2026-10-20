@@ -1,0 +1,13 @@
+{
+  "name": "observatorio-presidencial-2026",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Apuração e projeção presidencial do PET de Ciências Sociais da USP",
+  "scripts": {
+    "dev": "python3 scripts/serve.py",
+    "build": "python3 scripts/build.py",
+    "test": "node --test tests/*.test.js && python3 -m unittest discover -s tests -p 'test_*.py'"
+  },
+  "engines": {"node": ">=20"}
+}

@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "snapshot_id": "aguardando-dados",
+  "source_snapshot_id": null,
+  "generated_at": null,
+  "mode": "waiting",
+  "election": {
+    "year": 2026,
+    "round": 2,
+    "office": "president",
+    "election_id": "6258",
+    "pleito_id": "3221"
+  },
+  "candidates": {
+    "a": {
+      "id": "13",
+      "name": "Candidata A"
+    },
+    "b": {
+      "id": "22",
+      "name": "Candidato B"
+    }
+  },
+  "counting": null,
+  "forecast": null,
+  "history": []
+}

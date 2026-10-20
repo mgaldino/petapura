@@ -1,0 +1,125 @@
+
+#presidencia-2026-preview{width:100%;container-type:inline-size;background:transparent}
+#presidencia-2026-preview *{box-sizing:border-box}
+#presidencia-2026-preview .pres-product{
+  --pres-paper:light-dark(#f6f8f8,#101923);--pres-surface:light-dark(#eaf0f0,#1a2a35);
+  --pres-ink:light-dark(#202d2d,#eff2ed);--pres-muted:light-dark(#596963,#b1c1bc);
+  --pres-rule:light-dark(#cfdad7,#3d5157);--pres-a:light-dark(#c44247,#f08b8e);--pres-b:light-dark(#3574b9,#83b5f1);
+  color-scheme:light dark;background:var(--pres-paper);color:var(--pres-ink);
+  font-family:"Avenir Next","Segoe UI",sans-serif;font-size:16px;line-height:1.5;padding:0 38px 26px;
+}
+#presidencia-2026-preview .pres-demo{margin:0 -38px;padding:10px 38px;background:var(--pres-surface);color:var(--pres-muted);font-size:11px;letter-spacing:.08em}
+#presidencia-2026-preview .pres-masthead{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:25px 0 20px;border-bottom:3px solid var(--pres-ink)}
+#presidencia-2026-preview .pres-wordmark{font-size:26px;letter-spacing:-.8px;font-weight:500;line-height:1.2}
+#presidencia-2026-preview .pres-wordmark span{font-size:18px;margin-left:4px;letter-spacing:-.3px}
+#presidencia-2026-preview .pres-edition{font-size:12px;letter-spacing:.08em;color:var(--pres-muted);text-transform:uppercase}
+#presidencia-2026-preview .pres-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:14px 0;border-bottom:1px solid var(--pres-rule);font-size:13px}
+#presidencia-2026-preview .pres-stamp{color:var(--pres-muted);font-variant-numeric:tabular-nums}
+#presidencia-2026-preview .pres-intro{padding:27px 0 23px}
+#presidencia-2026-preview h1{font-size:clamp(28px,3.7cqw,38px);font-weight:500;letter-spacing:-1.1px;line-height:1.15;margin:0 0 8px}
+#presidencia-2026-preview .pres-intro p{color:var(--pres-muted);margin:0;font-size:15px;max-width:700px}
+#presidencia-2026-preview .pres-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px;background:var(--pres-surface);padding:28px 30px 25px;border-radius:6px}
+#presidencia-2026-preview .pres-name{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:500}
+#presidencia-2026-preview .pres-dot{width:10px;height:10px;background:var(--pres-a);border-radius:50%;flex:none}
+#presidencia-2026-preview .pres-number{font-size:clamp(70px,9.7cqw,106px);font-weight:500;line-height:1.13;letter-spacing:-5px;font-variant-numeric:tabular-nums;margin:3px 0 0}
+#presidencia-2026-preview .pres-number span{font-size:.44em;letter-spacing:-1.5px;margin-left:4px}
+#presidencia-2026-preview .pres-denominator{margin:0;color:var(--pres-muted);font-size:15px}
+#presidencia-2026-preview .pres-status{font-size:14px;margin:15px 0 0;font-weight:500}
+#presidencia-2026-preview h2{font-size:17px;font-weight:500;line-height:1.3;margin:0}
+#presidencia-2026-preview .pres-uncertainty{border-left:1px solid var(--pres-rule);padding-left:30px;min-width:0}
+#presidencia-2026-preview .pres-range-value{font-size:27px;line-height:1.3;font-weight:500;letter-spacing:-.8px;font-variant-numeric:tabular-nums;margin:9px 0 0}
+#presidencia-2026-preview .pres-range-caption{font-size:13px;color:var(--pres-muted);margin:3px 0 0}
+#presidencia-2026-preview .pres-interval{height:48px;position:relative;margin:20px 3px 0}
+#presidencia-2026-preview .pres-axis-track{position:absolute;top:20px;left:0;right:0;height:2px;background:var(--pres-rule)}
+#presidencia-2026-preview .pres-range-band{position:absolute;top:13px;height:16px;background:var(--pres-a);opacity:.25;border-radius:4px}
+#presidencia-2026-preview .pres-estimate{position:absolute;top:7px;width:4px;height:28px;transform:translateX(-2px);background:var(--pres-a);border-radius:2px}
+#presidencia-2026-preview .pres-threshold{position:absolute;top:0;height:46px;border-left:1px dashed var(--pres-ink)}
+#presidencia-2026-preview .pres-axis-labels{display:flex;justify-content:space-between;color:var(--pres-muted);font-size:11px;font-variant-numeric:tabular-nums}
+#presidencia-2026-preview .pres-threshold-label{text-align:center;font-size:12px;color:var(--pres-muted);margin-top:3px}
+#presidencia-2026-preview .pres-risk{font-size:14px;line-height:1.5;margin:15px 0 0}
+#presidencia-2026-preview .pres-risk strong{font-weight:500}
+#presidencia-2026-preview .pres-counted{display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding:23px 0;border-top:1px solid var(--pres-rule)}
+#presidencia-2026-preview .pres-counted h2{font-size:15px}
+#presidencia-2026-preview .pres-counted-results{display:flex;gap:27px;flex-wrap:wrap;align-items:baseline}
+#presidencia-2026-preview .pres-counted-results p{font-size:13px;color:var(--pres-muted);margin:0}
+#presidencia-2026-preview .pres-counted-results b{font-size:20px;font-weight:500;color:var(--pres-ink);font-variant-numeric:tabular-nums;margin-right:4px;letter-spacing:-.4px}
+#presidencia-2026-preview .pres-history{padding:25px 0 8px}
+#presidencia-2026-preview .pres-history-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+#presidencia-2026-preview .pres-chart-legend{display:flex;gap:22px;flex-wrap:wrap}
+#presidencia-2026-preview .pres-series-toggle{display:inline-flex;align-items:center;gap:7px;min-height:44px;font:inherit;font-size:13px;color:var(--pres-ink);background:transparent;border:0;padding:6px 0}
+#presidencia-2026-preview .pres-series-toggle i{display:inline-block;width:20px;height:3px;background:var(--pres-series)}
+#presidencia-2026-preview .pres-series-toggle[aria-pressed="false"]{opacity:.45}
+#presidencia-2026-preview .pres-legend{display:flex;gap:16px;flex-wrap:wrap;color:var(--pres-muted);font-size:12px}
+#presidencia-2026-preview .pres-legend span{display:inline-flex;align-items:center;gap:6px}
+#presidencia-2026-preview .pres-legend i{display:inline-block;width:20px;background:var(--pres-muted)}
+#presidencia-2026-preview .pres-line{height:2px}
+#presidencia-2026-preview .pres-legend .pres-dashed-line{height:0;border-top:2px dashed var(--pres-muted);background:transparent}
+#presidencia-2026-preview .pres-band-swatch{height:8px;opacity:.2}
+#presidencia-2026-preview .pres-chart-stage{position:relative}
+#presidencia-2026-preview .pres-history-plot{display:block;width:100%;height:350px;margin-top:16px;touch-action:pan-y}
+#presidencia-2026-preview .pres-chart-note{font-size:12px;color:var(--pres-muted);margin:0 0 5px}
+#presidencia-2026-preview .pres-chart-tooltip{position:absolute;z-index:2;background:var(--pres-paper);color:var(--pres-ink);border:1px solid var(--pres-rule);border-radius:5px;padding:10px 12px;font-size:12px;line-height:1.5;max-width:230px;pointer-events:none;box-shadow:0 4px 12px color-mix(in srgb,var(--pres-ink) 10%,transparent)}
+#presidencia-2026-preview .pres-chart-tooltip[hidden]{display:none}
+#presidencia-2026-preview .pres-tooltip-heading{color:var(--pres-muted);margin-bottom:4px}
+#presidencia-2026-preview .pres-tooltip-row{display:flex;align-items:center;gap:7px;justify-content:space-between;font-variant-numeric:tabular-nums}
+#presidencia-2026-preview .pres-tooltip-row span{display:inline-flex;align-items:center;gap:6px}
+#presidencia-2026-preview .pres-tooltip-row i{height:3px;width:14px;background:var(--pres-series)}
+#presidencia-2026-preview .pres-tooltip-row b{font-weight:500}
+#presidencia-2026-preview svg text{font-family:"Avenir Next","Segoe UI",sans-serif;font-size:12px;fill:var(--pres-muted)}
+#presidencia-2026-preview .pres-scrub{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;font-size:12px;color:var(--pres-muted);font-variant-numeric:tabular-nums}
+#presidencia-2026-preview input[type="range"]{min-height:44px;width:100%;accent-color:var(--pres-a)}
+#presidencia-2026-preview .pres-method{border-top:1px solid var(--pres-rule);margin-top:9px}
+#presidencia-2026-preview summary{min-height:48px;padding:13px 0;font-size:14px}
+#presidencia-2026-preview .pres-method-content{max-width:720px;padding:0 0 14px}
+#presidencia-2026-preview .pres-method-content p{font-size:14px;color:var(--pres-muted);margin:8px 0}
+#presidencia-2026-preview .pres-method-content .pres-probability{font-size:18px;color:var(--pres-ink);font-weight:500}
+#presidencia-2026-preview .pres-footer{font-size:12px;color:var(--pres-muted);border-top:1px solid var(--pres-rule);padding-top:17px}
+#presidencia-2026-preview .pres-footer p{margin:0}
+#presidencia-2026-preview .pres-footer .pres-credit{font-size:14px;color:var(--pres-ink);margin-bottom:7px}
+#presidencia-2026-preview .pres-credit strong{font-weight:500}
+#presidencia-2026-preview .pres-live-summary{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+@container(max-width:650px){
+  #presidencia-2026-preview .pres-product{padding:0 20px 22px}
+  #presidencia-2026-preview .pres-demo{margin:0 -20px;padding:10px 20px;font-size:11px;letter-spacing:.04em}
+  #presidencia-2026-preview .pres-masthead{padding:21px 0 17px}
+  #presidencia-2026-preview .pres-wordmark{font-size:23px}
+  #presidencia-2026-preview .pres-wordmark span{font-size:16px}
+  #presidencia-2026-preview .pres-edition{display:none}
+  #presidencia-2026-preview .pres-meta{font-size:12px;gap:4px;padding:12px 0}
+  #presidencia-2026-preview .pres-intro{padding:23px 0 20px}
+  #presidencia-2026-preview h1{font-size:30px;letter-spacing:-.9px}
+  #presidencia-2026-preview .pres-intro p{font-size:14px}
+  #presidencia-2026-preview .pres-hero{grid-template-columns:1fr;gap:23px;padding:23px 20px}
+  #presidencia-2026-preview .pres-number{font-size:82px;letter-spacing:-4px}
+  #presidencia-2026-preview .pres-denominator{font-size:14px}
+  #presidencia-2026-preview .pres-uncertainty{border-left:0;border-top:1px solid var(--pres-rule);padding:21px 0 0}
+  #presidencia-2026-preview .pres-range-value{font-size:25px}
+  #presidencia-2026-preview .pres-counted{display:block;padding:21px 0}
+  #presidencia-2026-preview .pres-counted-results{display:block;margin-top:9px}
+  #presidencia-2026-preview .pres-counted-results p+p{margin-top:5px}
+  #presidencia-2026-preview .pres-counted-results b{font-size:19px}
+  #presidencia-2026-preview .pres-history-header{gap:9px}
+  #presidencia-2026-preview .pres-chart-legend{gap:21px}
+  #presidencia-2026-preview .pres-history-plot{height:310px}
+  #presidencia-2026-preview .pres-scrub{gap:10px}
+}
+@media(prefers-reduced-motion:reduce){#presidencia-2026-preview *{animation:none!important;transition:none!important}}
+
+html{color-scheme:light dark}body{margin:0;background:light-dark(#f6f8f8,#101923)}#presidencia-2026-preview{max-width:1120px;margin:0 auto}button,a,input{touch-action:manipulation}
+#presidencia-2026-preview [hidden]{display:none!important}
+#presidencia-2026-preview .pres-number .pres-number-value{font:inherit;letter-spacing:inherit;margin-left:0}
+#presidencia-2026-preview .pres-connection{margin-top:16px;padding:12px 15px;background:var(--pres-surface);color:var(--pres-ink);font-size:14px;border-left:3px solid var(--pres-muted)}
+#presidencia-2026-preview .pres-empty{grid-column:1/-1;padding:12px 0}
+#presidencia-2026-preview .pres-empty p{color:var(--pres-muted);margin:10px 0 0}
+#presidencia-2026-preview .pres-no-count{color:var(--pres-muted);font-size:14px}
+#presidencia-2026-preview .pres-footer-links{display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:12px}
+#presidencia-2026-preview .pres-footer-links a{color:var(--pres-ink);text-underline-offset:3px;display:inline-flex;align-items:center;min-height:44px}
+#presidencia-2026-preview .pres-series-toggle{max-width:100%}
+#presidencia-2026-preview .pres-series-toggle span{text-align:left;overflow-wrap:anywhere}
+#presidencia-2026-preview .pres-range-ticks{position:relative;height:20px;font-size:11px;color:var(--pres-muted)}
+#presidencia-2026-preview .pres-range-ticks span{position:absolute;top:0}
+#presidencia-2026-preview .pres-range-ticks span:first-child{left:0}
+#presidencia-2026-preview .pres-range-ticks span:nth-child(2){transform:translateX(-50%)}
+#presidencia-2026-preview .pres-range-ticks span:last-child{right:0}
+@media(max-width:650px){#presidencia-2026-preview .pres-connection{font-size:14px}}
+@container(max-width:650px){#presidencia-2026-preview .pres-number{font-size:76px}}

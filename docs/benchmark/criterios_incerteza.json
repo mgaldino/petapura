@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-20",
+  "principle": "A incerteza deve ser visível na primeira tela, junto da previsão. A pessoa deve conseguir reconhecer quais resultados ainda são plausíveis, quanto a previsão pode variar e o que o modelo considera ao calcular essa faixa.",
+  "source": "https://analysisfunction.civilservice.gov.uk/policy-store/communicating-quality-uncertainty-and-change/",
+  "review": [
+    [
+      "Projeção 2026, exemplo brasileiro",
+      "Faixa numérica de 90% junto à estimativa.",
+      "Comunicação explícita, mas a captura é do fim da apuração. Avaliar a legibilidade quando a faixa for ampla."
+    ],
+    [
+      "Agulha 2026, exemplo brasileiro",
+      "Probabilidade de um evento: vitória no primeiro turno.",
+      "Na primeira tela capturada, a incerteza da votação final não aparece como intervalo."
+    ],
+    [
+      "NYT",
+      "Referência de probabilidade de vitória.",
+      "Sem acesso direto: não foi possível verificar aqui a apresentação completa da incerteza."
+    ],
+    [
+      "ABC",
+      "Estados da disputa: incerta, provável e eleita.",
+      "Categorias ajudam a leitura; não dão a amplitude numérica da votação projetada."
+    ],
+    [
+      "Demais capturas internacionais",
+      "Placares e comparações em páginas de resultados históricos.",
+      "Esses enquadramentos não permitem avaliar como a incerteza foi apresentada durante a apuração."
+    ]
+  ],
+  "scope": "Avaliação de apresentação; o modelo em outra sessão não foi alterado."
+}

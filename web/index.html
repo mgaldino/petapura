@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Apuração presidencial de 2026, projeção do resultado final e comunicação da incerteza. Projeto do PET de Ciências Sociais da USP.">
+  <title>Presidência 2026 | PET de Ciências Sociais da USP</title>
+  <link rel="stylesheet" href="./assets/styles.css">
+  <script type="module" src="./assets/app.js"></script>
+</head>
+<body>
+<div id="presidencia-2026-preview">
+  <main class="pres-product">
+    <div class="pres-demo" id="mode-label">PRESIDENTE DA REPÚBLICA · SEGUNDO TURNO</div>
+    <header class="pres-masthead"><div class="pres-wordmark">Presidência <span>2026</span></div><span class="pres-edition">Observatório</span></header>
+    <div class="pres-meta"><span>Presidente · 2º turno</span><span class="pres-stamp" id="update-time">Aguardando dados</span></div>
+    <div id="connection-status" class="pres-connection" role="status" aria-live="polite" hidden></div>
+    <section class="pres-intro"><h1 id="main-title">Projeção do resultado final</h1><p id="intro-description">Acompanhe a estimativa da votação final e a incerteza durante a apuração.</p></section>
+    <section class="pres-hero" id="result" aria-label="Resultado final e incerteza"><div class="pres-empty"><h2>Aguardando previsão</h2><p>As estimativas serão apresentadas aqui quando estiverem disponíveis.</p></div></section>
+    <section class="pres-history" id="chart-section" aria-labelledby="chart-title">
+      <div class="pres-history-header"><h2 id="chart-title">Da apuração ao resultado final</h2><div class="pres-chart-legend"><button type="button" class="pres-series-toggle" data-series="0" aria-pressed="true"><i style="--pres-series:var(--pres-a)" aria-hidden="true"></i><span id="legend-a">Candidata A</span></button><button type="button" class="pres-series-toggle" data-series="1" aria-pressed="true"><i style="--pres-series:var(--pres-b)" aria-hidden="true"></i><span id="legend-b">Candidato B</span></button></div></div>
+      <div class="pres-legend"><span><i class="pres-line" aria-hidden="true"></i>Apurado</span><span id="projection-legend"><i class="pres-dashed-line" aria-hidden="true"></i>Projeção final</span><span id="interval-legend"><i class="pres-band-swatch" aria-hidden="true"></i><span id="chart-interval-label">Faixa da projeção</span></span></div>
+      <div class="pres-chart-stage"><svg class="pres-history-plot" role="img" aria-labelledby="chart-svg-title"></svg><div class="pres-chart-tooltip" role="tooltip" hidden></div></div>
+      <p class="pres-chart-note" id="chart-note">Aguardando dados para o gráfico.</p>
+      <label class="pres-scrub" id="demo-control" hidden><span id="demo-start"></span><input type="range" min="0" max="2" step="1" value="1" aria-label="Explorar momentos da demonstração"><span id="demo-end"></span></label>
+    </section>
+    <section class="pres-counted" id="counted" aria-label="Resultado parcial da apuração"><h2>Apurado até agora</h2><p class="pres-no-count">Ainda não há votos totalizados disponíveis.</p></section>
+    <details class="pres-method"><summary>Chance de vitória e leitura da incerteza</summary><div class="pres-method-content"><p class="pres-probability" id="win-probability">Chance de vitória ainda indisponível.</p><p id="interval-explanation">A faixa da projeção depende das hipóteses do modelo. Ela pode mudar durante a apuração.</p><p>A chance de vitória e a votação projetada são medidas diferentes. A chance de vitória conta a proporção de cenários em que a candidatura termina acima de 50% dos votos válidos.</p><p>A linha tracejada liga o parcial à estimativa final. Essa ligação não prevê a ordem nem o ritmo dos próximos boletins. As faixas e a probabilidade são condicionadas ao modelo; não garantem proteção contra erros de especificação.</p><p id="model-notes"></p><p id="source-details"></p></div></details>
+    <footer class="pres-footer"><p class="pres-credit">Projeto do <strong>PET de Ciências Sociais da USP</strong></p><p id="source-label">Dados: apuração do TSE e projeção do modelo do projeto.</p><p class="pres-footer-links"><a id="demo-link" href="?demo=1">Ver demonstração com dados fictícios</a><a href="https://resultados.tse.jus.br/" target="_blank" rel="noopener noreferrer">Consultar o TSE</a></p></footer>
+    <div class="pres-live-summary" id="live-summary" aria-live="polite"></div>
+    <noscript><p>Ative o JavaScript para carregar os dados e acompanhar as atualizações.</p></noscript>
+  </main>
+</div>
+</body>
+</html>

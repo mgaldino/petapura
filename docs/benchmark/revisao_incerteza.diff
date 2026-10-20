@@ -1,0 +1,101 @@
+--- antes
+
++++ apos
+
+@@ -22,6 +22,15 @@
+
+ ACCENT = colors.HexColor('#086d82')
+ STYLE = ParagraphStyle('body',fontName='Arial',fontSize=10.3,leading=15,textColor=INK,spaceAfter=9)
+ SMALL = ParagraphStyle('small',parent=STYLE,fontSize=8.2,leading=11.5,textColor=MUTED)
++UNCERTAINTY_SOURCE = 'https://analysisfunction.civilservice.gov.uk/policy-store/communicating-quality-uncertainty-and-change/'
++UNCERTAINTY_PRINCIPLE = 'A incerteza deve ser visível na primeira tela, junto da previsão. A pessoa deve conseguir reconhecer quais resultados ainda são plausíveis, quanto a previsão pode variar e o que o modelo considera ao calcular essa faixa.'
++UNCERTAINTY_REVIEW = [
++    ('Projeção 2026, exemplo brasileiro', 'Faixa numérica de 90% junto à estimativa.', 'Comunicação explícita, mas a captura é do fim da apuração. Avaliar a legibilidade quando a faixa for ampla.'),
++    ('Agulha 2026, exemplo brasileiro', 'Probabilidade de um evento: vitória no primeiro turno.', 'Na primeira tela capturada, a incerteza da votação final não aparece como intervalo.'),
++    ('NYT', 'Referência de probabilidade de vitória.', 'Sem acesso direto: não foi possível verificar aqui a apresentação completa da incerteza.'),
++    ('ABC', 'Estados da disputa: incerta, provável e eleita.', 'Categorias ajudam a leitura; não dão a amplitude numérica da votação projetada.'),
++    ('Demais capturas internacionais', 'Placares e comparações em páginas de resultados históricos.', 'Esses enquadramentos não permitem avaliar como a incerteza foi apresentada durante a apuração.'),
++]
+ 
+ ITEMS = [
+  dict(id='nyt', name='New York Times - The Needle', country='Estados Unidos', year='2024',
+@@ -98,13 +107,40 @@
+
+ def link(c,label,url,x,y,width):
+     return paragraph(c,f'<link href="{html.escape(url,quote=True)}" color="#086d82"><u>{html.escape(label)}</u></link>',x,y,width,SMALL)
+ 
++def uncertainty_pages(c):
++    y=header(c,'A incerteza é parte da previsão','REQUISITO CENTRAL DO PROJETO | DEFINIDO EM 20/10/2026',2)
++    y=paragraph(c,UNCERTAINTY_PRINCIPLE,38,y,W-76)
++    sections=[
++      ('Votação final e resultados plausíveis','Mostrar a estimativa junto de uma faixa preditiva, com nível e significado definidos pela metodologia. No resumo, uma faixa bem explicada pode bastar; nos detalhes, intervalos aninhados ou a distribuição completa. A faixa representa a incerteza do resultado final, conforme os componentes incluídos no modelo.'),
++      ('Probabilidade de vitória e possibilidade de derrota','Exibir a probabilidade complementar com a mesma clareza: por exemplo, 80% de chance de vitória de A e 20% de B, em um segundo turno com esses dois desfechos. Explicar que um resultado menos provável continua possível. Probabilidade de vitória e percentual de votos medem coisas distintas.'),
++      ('Diferença entre candidatos','No segundo turno, considerar a distribuição da diferença A menos B, em pontos percentuais, com zero marcado. Ela permite ver os cenários de vitória de cada lado. Calcular a diferença a partir da distribuição conjunta; a sobreposição de intervalos individuais não determina a chance de vitória.'),
++      ('Evolução ao longo da apuração','Preservar o histórico da estimativa e de sua faixa. Permitir que novas informações movam ou ampliem a incerteza quando o modelo indicar. O desenho não deve impor um estreitamento automático com o avanço da contagem.'),
++      ('Por que ainda existe incerteza','Relacionar a previsão aos votos ainda esperados e à composição territorial do que falta entrar, quando houver suporte no modelo. Percentual apurado não é uma medida suficiente de precisão. Explicar quais fontes de incerteza entram na faixa e quais ficam fora dela.'),
++    ]
++    for title,body in sections:
++        y=paragraph(c,'<b>'+title+'</b>',38,y,W-76)
++        y=paragraph(c,body,38,y,W-76)
++    y=paragraph(c,'<b>Critério de compreensão:</b> testar se o leitor identifica quem é favorito, reconhece que o outro ainda pode ganhar e distingue chance de vitória de participação nos votos. Antes da apuração real, validar intervalos e probabilidades em replays históricos; uma interface clara depende de quantidades estatísticas adequadas.',38,y,W-76,SMALL)
++    link(c,'Referência de comunicação: Government Analysis Function / Data Quality Hub',UNCERTAINTY_SOURCE,38,y,W-76)
++    c.showPage()
++    y=header(c,'Releitura do benchmark: incerteza','O QUE FOI OBSERVADO | LIMITES DAS CAPTURAS',3)
++    y=paragraph(c,'As interfaces são úteis como repertório visual, mas o projeto deve ser avaliado também pela compreensão da incerteza. As capturas disponíveis não sustentam uma conclusão geral de que esses veículos omitiram incerteza durante a noite eleitoral.',38,y,W-76)
++    data=[['Referência','Comunicação observada','Implicação para a avaliação']]+UNCERTAINTY_REVIEW
++    cells=[[Paragraph(html.escape(t),SMALL) for t in row] for row in data]
++    t=Table(cells,colWidths=[123,163,W-76-286],hAlign='LEFT')
++    t.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.HexColor('#e8f2f4')),('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),7),('RIGHTPADDING',(0,0),(-1,-1),7),('TOPPADDING',(0,0),(-1,-1),10),('BOTTOMPADDING',(0,0),(-1,-1),10),('LINEBELOW',(0,0),(-1,-1),0.4,colors.HexColor('#dce4e9'))]))
++    _,th=t.wrap(W-76,H);t.drawOn(c,38,y-th);y-=th+17
++    y=paragraph(c,'<b>Consequência para a escolha visual.</b> O placar do La Nación continua útil para comparar os candidatos. A distribuição da previsão e sua faixa passam a ter presença central. A agulha pode resumir um evento, acompanhada de informação que torne o resultado alternativo visível.',38,y,W-76)
++    y=paragraph(c,'<b>Ligação com a sessão de modelagem.</b> Planejar a interface para receber distribuições ou simulações conjuntas, quantis, probabilidades dos eventos relevantes e histórico por atualização. Registrar também cobertura da apuração e diagnósticos disponíveis. Exibir somente quantidades sustentadas pelo modelo; este benchmark não altera o modelo da outra sessão.',38,y,W-76)
++    c.showPage()
++
+ def build():
+     path=OUT/'benchmark_apuracao_eleitoral_2026.pdf'
+     c=canvas.Canvas(str(path),pagesize=A4)
+     c.setTitle('Benchmark visual de apuração eleitoral - Brasil 2026')
+     c.setAuthor('Pesquisa preparada para Manoel Galdino')
+     y=header(c,'Referências para a noite eleitoral de 2026',page=1)
+-    y=paragraph(c,'<b>Recomendação inicial:</b> combinar a síntese probabilística da agulha com um placar presidencial claro, evolução da projeção com faixa de incerteza e navegação por estado. Para o segundo turno, o duelo visual do La Nación é especialmente próximo do uso brasileiro.',38,y,W-76)
++    y=paragraph(c,'<b>Prioridade do projeto:</b> comunicar a incerteza das previsões. A primeira tela deve combinar placar, distribuição ou faixa da votação final e probabilidade dos desfechos. A agulha é uma síntese possível, com os resultados alternativos claramente visíveis.',38,y,W-76)
+     y=paragraph(c,'Escopo: oito referências internacionais, de oito países e quatro continentes, além dos dois exemplos brasileiros enviados. O foco é apresentação. Não houve avaliação estatística dos modelos, teste de carga ou validação da atualização em tempo real.',38,y,W-76)
+     data=[['Referência','Eleição','Principal contribuição visual']]
+     for d in ITEMS:
+@@ -115,7 +151,9 @@
+
+     _,th=t.wrap(W-76,H);t.drawOn(c,38,y-th);y-=th+17
+     y=paragraph(c,'<b>Como ler as capturas:</b> são enquadramentos reais em janela compacta de navegador, úteis para avaliar a leitura no celular. As páginas internacionais mostram hoje os resultados históricos; as imagens não reconstituem a sequência original da noite eleitoral.',38,y,W-76,SMALL)
+     y=paragraph(c,'<b>Disponibilidade:</b> sete referências internacionais têm captura própria. O NYT entra como referência conceitual com link e limitação de acesso. A captura alemã acompanha uma versão traduzida identificada.',38,y,W-76,SMALL)
+-    c.showPage();page=2;fig=1
++    c.showPage()
++    uncertainty_pages(c)
++    page=4;fig=1
+     for d in ITEMS:
+         if not d['images']:continue
+         y=header(c,d['name'],f"{d['country'].upper()} | ELEIÇÃO DE {d['year']}",page)
+@@ -162,6 +200,7 @@
+
+     y=header(c,'Links e limites da pesquisa','FONTES | TRILHA DE CONSULTA',page)
+     for d in ITEMS:
+         y=link(c,d['name']+' | '+d['country']+' | '+d['year'],d['url'],38,y,W-76)
++    y=link(c,'Government Analysis Function / Data Quality Hub - comunicar incerteza',UNCERTAINTY_SOURCE,38,y,W-76)
+     y-=8
+     y=paragraph(c,'<b>NYT.</b> '+ITEMS[0]['observation']+' '+ITEMS[0]['takeaway']+' '+ITEMS[0]['limit'],38,y,W-76,SMALL)
+     y=link(c,'Contexto sobre a agulha em 2024: Associated Press','https://apnews.com/article/87900329cb4a3400c021bde149011ef5',38,y,W-76)
+@@ -169,11 +208,14 @@
+
+     y=paragraph(c,'<b>Limites.</b> A seleção é intencional e voltada à discussão de interface. As recomendações são juízos de design desta pesquisa, sem estudo de usabilidade com usuários. Não foram medidos desempenho, acessibilidade completa, estabilidade de dados, qualidade estatística das projeções ou custo de manutenção. Links históricos podem mudar.',38,y,W-76,SMALL)
+     c.save()
+     (BASE/'referencias.json').write_text(json.dumps(ITEMS,ensure_ascii=False,indent=2),encoding='utf-8')
++    (BASE/'criterios_incerteza.json').write_text(json.dumps({'date':'2026-10-20','principle':UNCERTAINTY_PRINCIPLE,'source':UNCERTAINTY_SOURCE,'review':UNCERTAINTY_REVIEW,'scope':'Avaliação de apresentação; o modelo em outra sessão não foi alterado.'},ensure_ascii=False,indent=2),encoding='utf-8')
+     cards=[]
+     for d in ITEMS:
+         imgs=''.join(f'<figure><a href="{html.escape(fn)}"><img src="{html.escape(fn)}" alt="{html.escape(d["name"])} - '+('tradução em português' if 'portugues' in fn else 'captura original')+'"></a><figcaption>'+('Adaptação em português' if 'portugues' in fn else 'Captura original')+'</figcaption></figure>' for fn in d['images'])
+         cards.append(f'<article><p class="kicker">{d["country"]} · {d["year"]}</p><h2>{html.escape(d["name"])}</h2><p>{html.escape(d["observation"])}</p><div class="images">{imgs}</div><p><b>Para nosso site:</b> {html.escape(d["takeaway"])}</p><p class="muted">{html.escape(d["limit"])}</p><a href="{html.escape(d["url"])}" target="_blank" rel="noopener">Abrir referência original ↗</a></article>')
+     pagehtml='''<!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Benchmark de apuração eleitoral</title><style>body{font:17px/1.55 system-ui;background:#eef3f5;color:#142b3d;margin:0}main{max-width:1120px;margin:auto;padding:32px 24px}h1{font-size:38px;line-height:1.15}h2{margin:0 0 12px}.kicker,.muted,figcaption{color:#526575}.kicker{font-size:13px;text-transform:uppercase;letter-spacing:.08em}article{background:white;border:1px solid #dce4e9;border-radius:14px;padding:28px;margin:24px 0}.images{display:flex;gap:20px;justify-content:center;align-items:flex-start;flex-wrap:wrap}figure{margin:8px 0;flex:1;min-width:220px;max-width:487px}img{width:100%;height:auto;border:1px solid #dce4e9;display:block}figcaption{font-size:13px;margin-top:6px}a{color:#00677c}header{border-bottom:3px solid #086d82;padding-bottom:22px}footer{font-size:14px;color:#526575}</style><main><header><p class="kicker">Pesquisa e capturas · 20/10/2026</p><h1>Como mostrar a noite eleitoral</h1><p>Oito referências internacionais de apresentação para o Brasil em 2026. Capturas em janela compacta, com links para exploração. A versão alemã acompanha tradução em português.</p><a href="output/pdf/benchmark_apuracao_eleitoral_2026.pdf">Abrir o relatório em PDF</a></header>'''+''.join(cards)+'''<footer><p>As imagens mostram as páginas consultadas em 20/10/2026. Os resultados internacionais são históricos. As recomendações são avaliações de design; não houve teste de carga, estudo de usabilidade ou validação dos modelos. A tradução do ZEIT é uma adaptação visual.</p></footer></main></html>'''
++    uncertainty_html='<article><p class="kicker">Prioridade do projeto</p><h2>Comunicar a incerteza das previsões</h2><p>'+html.escape(UNCERTAINTY_PRINCIPLE)+'</p><ul><li>Faixa ou distribuição da votação final junto à estimativa.</li><li>Probabilidade de vitória e do resultado alternativo visíveis.</li><li>Evolução da estimativa e da faixa ao longo da noite.</li><li>Explicação sobre votos ainda esperados e limites do modelo.</li></ul><p>O relatório atualizado inclui uma releitura das referências sob esse critério. As capturas históricas não permitem concluir como cada veículo comunicou incerteza durante toda a apuração.</p></article>'
++    pagehtml=pagehtml.replace('</header>','</header>'+uncertainty_html,1)
+     (BASE/'galeria.html').write_text(pagehtml,encoding='utf-8')
+     print(path)
+ 

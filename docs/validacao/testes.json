@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-20",
+  "results": [
+    {
+      "suite": "javascript",
+      "exit_code": 0,
+      "output": "✔ contrato aceita waiting (1.313208ms)\n✔ contrato aceita live-95 (5.0785ms)\n✔ contrato aceita prior (0.467166ms)\n✔ contrato aceita complete (0.418208ms)\n✔ demonstração tem três momentos coerentes (1.127125ms)\n✔ 95% permanece 95%; probabilidade ausente permanece nula (0.22275ms)\n✔ previsão existe antes do primeiro BU (0.41275ms)\n✔ somente apuração completa com votos é resultado final (0.205583ms)\n✔ configuração impede polling sem intervalo (0.296708ms)\n✔ rejeita turno incorreto (0.207959ms)\n✔ rejeita eleição diferente (0.124709ms)\n✔ rejeita candidaturas trocadas (0.117875ms)\n✔ rejeita percentual em vez de probabilidade (0.13725ms)\n✔ rejeita quantis invertidos (0.1275ms)\n✔ rejeita votos não somam válidos (0.098875ms)\n✔ rejeita bool não é contagem (0.09975ms)\n✔ rejeita mais seções que o total (0.084542ms)\n✔ rejeita fonte estadual isolada (0.090125ms)\n✔ rejeita previsão de outro snapshot (0.088667ms)\n✔ rejeita dados privados fora do contrato (0.074ms)\n✔ rejeita parâmetros fora do contrato público (0.097958ms)\n✔ rejeita histórico duplicado (0.153167ms)\n✔ rejeita hora sem fuso (0.073334ms)\n✔ rejeita data inexistente (0.069042ms)\n✔ identifica desatualização da fonte mesmo com modelo recente (0.111833ms)\n✔ demonstração nunca é apresentada como dado real desatualizado (0.034625ms)\n✔ gráfico mantém só posições até o avanço corrente e corrige a última posição (0.978417ms)\n✔ rótulos finais não se sobrepõem no empate ou em uma disputa muito próxima (0.116416ms)\n✔ não substitui dado válido por resposta inválida (0.806834ms)\n✔ recusa demonstração no endpoint real (0.156125ms)\n✔ recusa regressão temporal sem bloquear correção mais recente (0.447417ms)\n✔ não faz consultas simultâneas (0.133167ms)\n✔ timeout aborta e permite agendar nova tentativa (0.128709ms)\n✔ ordem das chaves não altera identidade do conteúdo (15.882875ms)\n✔ falha HTTP não é interpretada como snapshot vazio (0.227583ms)\nℹ tests 35\nℹ suites 0\nℹ pass 35\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 107.851292\n"
+    },
+    {
+      "suite": "python",
+      "exit_code": 0,
+      "output": "...................\n----------------------------------------------------------------------\nRan 19 tests in 0.019s\n\nOK\n"
+    }
+  ]
+}
