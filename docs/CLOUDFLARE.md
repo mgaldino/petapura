@@ -15,8 +15,9 @@ credenciais de acesso à conta continuam fora do repositório.
 
 ## Supervisão configurada em 24/10
 
-Coletor e publicador estão sob dois LaunchAgents do `launchd`. Eles iniciam no login
-e retomam após encerramento inesperado, preservando o mesmo runtime e checkpoints.
+Coletor e publicador estão sob dois LaunchDaemons do `launchd`, no domínio `system`.
+Eles iniciam antes do login e retomam após encerramento inesperado, preservando o mesmo
+runtime e checkpoints. Os componentes executam na conta comum do operador.
 A operação e os comandos atuais estão em [SERVICOS.md](SERVICOS.md). Para consultar:
 
 ```sh
@@ -153,6 +154,7 @@ configurado. Evidência do endpoint e da correspondência com o upload em
 export a cada 60 segundos. PID observado em 22/10: `2022`; estado local em
 `local/cloudflare/publisher-status.json`. Esse processo não inicia outro coletor.
 É necessário manter o Mac ligado e conectado e preservar a execução desse processo.
-Esse início manual foi substituído em 24/10 pelos LaunchAgents descritos em
-[SERVICOS.md](SERVICOS.md). Eles retomam os componentes na sessão do usuário, inclusive
-após novo login, com logs próprios e sem duplicar as instâncias.
+Esse início manual foi substituído em 24/10 pela supervisão descrita em
+[SERVICOS.md](SERVICOS.md), inicialmente por LaunchAgents e depois por LaunchDaemons.
+A configuração atual retoma os componentes no domínio `system`, antes do login,
+com logs próprios e sem duplicar as instâncias.

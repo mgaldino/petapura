@@ -2,6 +2,21 @@
 
 Atualizado em 24/10/2026. Os registros anteriores abaixo preservam suas datas.
 
+## Instalação de sistema confirmada em 24/10
+
+O operador executou o instalador com autenticação administrativa. Coletor e publicador
+estão carregados no domínio `system`, com `RunAtLoad`, plists `root:wheel` de modo 0644
+em `/Library/LaunchDaemons/` e execução dos componentes na conta comum do operador.
+Os LaunchAgents anteriores foram retirados. A configuração local seleciona agora o
+modo sistema por padrão.
+
+O teste real interrompeu os dois supervisores e confirmou sua retomada automática,
+com remoção dos filhos antigos. Houve um erro inicial de autenticação no envio à
+Cloudflare, seguido de envio bem-sucedido na retentativa. O JSON público e os dois
+cenários foram conferidos contra a saída do mesmo runtime e checkpoint.
+Não foi feita reinicialização física do Mac nem encerramento da sessão gráfica.
+Evidência em [launchdaemons-20261024.json](validacao/launchdaemons-20261024.json).
+
 ## Preparação para iniciar antes do login em 24/10
 
 O gerenciador recebeu o modo `--scope system`, que prepara LaunchDaemons no domínio
@@ -9,9 +24,9 @@ O gerenciador recebeu o modo `--scope system`, que prepara LaunchDaemons no dom�
 foram gerados e validados. Passaram 83 testes Python, incluindo testes de migração,
 permissões definidas na instalação e retorno aos LaunchAgents em caso de falha.
 
-A instalação efetiva aguarda autenticação administrativa no Terminal. Os LaunchAgents
-existentes continuam ativos. O código preparado ainda não foi usado para retirar os
-serviços da sessão do usuário. Evidência em
+Na etapa de preparação, a instalação aguardava autenticação administrativa e os
+LaunchAgents continuavam ativos. Essa etapa foi concluída pela instalação de sistema
+documentada acima. Evidência histórica em
 [launchdaemons-preparacao-20261024.json](validacao/launchdaemons-preparacao-20261024.json).
 
 ## Supervisão automática e concordância de fontes em 24/10

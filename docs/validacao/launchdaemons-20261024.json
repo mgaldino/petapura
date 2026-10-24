@@ -1,0 +1,109 @@
+{
+  "verified_at_utc": "2026-10-24T17:06:19.018250+00:00",
+  "result": "system_services_installed_loaded_and_verified",
+  "startup_before_graphical_login_configured": true,
+  "physical_reboot_tested": false,
+  "graphical_logout_tested": false,
+  "configuration_selected_scope": "system",
+  "services": {
+    "collector": {
+      "label": "br.usp.petapura.collector",
+      "domain": "system",
+      "loaded": true,
+      "enabled": true,
+      "run_at_load": true,
+      "state": "running",
+      "phase": "waiting_window",
+      "supervisor_pid": 37591,
+      "child_pid": 37594,
+      "process_uid": 501,
+      "supervisor_parent_pid": 1,
+      "installed_plist": "/Library/LaunchDaemons/br.usp.petapura.collector.plist",
+      "plist_owner": "root:wheel",
+      "plist_mode": "0644",
+      "matches_prepared_plist": true,
+      "keep_alive": {
+        "SuccessfulExit": false
+      },
+      "throttle_interval_seconds": 20,
+      "abandon_process_group": false,
+      "former_user_job_loaded": false,
+      "former_user_plist_present": false,
+      "singleton_processes_verified": true,
+      "status_age_seconds": 3.04
+    },
+    "publisher": {
+      "label": "br.usp.petapura.publisher",
+      "domain": "system",
+      "loaded": true,
+      "enabled": true,
+      "run_at_load": true,
+      "state": "running",
+      "phase": "running",
+      "supervisor_pid": 37590,
+      "child_pid": 37593,
+      "process_uid": 501,
+      "supervisor_parent_pid": 1,
+      "installed_plist": "/Library/LaunchDaemons/br.usp.petapura.publisher.plist",
+      "plist_owner": "root:wheel",
+      "plist_mode": "0644",
+      "matches_prepared_plist": true,
+      "keep_alive": {
+        "SuccessfulExit": false
+      },
+      "throttle_interval_seconds": 20,
+      "abandon_process_group": false,
+      "former_user_job_loaded": false,
+      "former_user_plist_present": false,
+      "singleton_processes_verified": true,
+      "status_age_seconds": 3.67
+    }
+  },
+  "automatic_restart_test": {
+    "at_utc": "2026-10-24T17:03:37.485945+00:00",
+    "domain": "system",
+    "signal": "SIGKILL",
+    "before": {
+      "collector": {
+        "supervisor": 37157,
+        "child": 37165,
+        "runs": 1
+      },
+      "publisher": {
+        "supervisor": 37359,
+        "child": 37360,
+        "runs": 2
+      }
+    },
+    "after": {
+      "collector": {
+        "supervisor": 37591,
+        "child": 37594,
+        "runs": 2
+      },
+      "publisher": {
+        "supervisor": 37590,
+        "child": 37593,
+        "runs": 3
+      }
+    },
+    "automatic_restart": true,
+    "old_children_removed": true
+  },
+  "pipeline": {
+    "production_run": "e93d394069e84d86b835473645592ee0",
+    "production_run_preserved": true,
+    "initial_state_id": "76f70c2d4616be6813e4c4d0491afde97fde42e1c66405d700cc687dbd8ecbf7",
+    "initial_state_preserved": true,
+    "source_manifest_sha256": "94e357363000b0b34c64ea9fab72727cadc8faf408ecb6f6a9a785e43c9e1061",
+    "frozen_model_sources_preserved": true,
+    "public_snapshot_id": "cp-4e968e539656187e4cc9faf1ee21746cbbcd624efc7fa81384d1d0bf42d38d76-379c944d5d575cbb",
+    "checkpoint_preserved": true,
+    "public_json_matches_local_and_upload": true,
+    "two_scenarios_present": true,
+    "new_system_publisher_generation_uploaded": true,
+    "reported_sections": 0,
+    "collection_window_start": "2026-10-25T17:00:00-03:00",
+    "collection_window_end": "2026-10-26T08:00:00-03:00"
+  }
+}

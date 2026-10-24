@@ -108,13 +108,13 @@ evidências em [CLOUDFLARE.md](docs/CLOUDFLARE.md).
 
 ## Supervisão automática no macOS
 
-O coletor e o publicador podem ser mantidos por dois LaunchAgents do `launchd`, com
-retomada após encerramento e início automático no login, inclusive depois de reiniciar
-o Mac. A instalação e os comandos de operação estão em [SERVICOS.md](docs/SERVICOS.md).
-Na máquina de produção, os dois serviços usam os mesmos dados, runtime e checkpoints
-que já alimentam o site. Não dependem de manter o aplicativo aberto.
+Na máquina de produção, o coletor e o publicador são mantidos por dois LaunchDaemons
+do `launchd`, no domínio `system`, com retomada após encerramento e início antes do
+login. Os componentes executam na conta comum do operador e reutilizam os mesmos
+dados, runtime e checkpoints que já alimentam o site. A instalação administrativa
+foi concluída e a retomada dos processos foi testada em 24/10/2026.
 
-O gerenciador também oferece `--scope system --user NOME_DA_CONTA` para instalar
-LaunchDaemons e iniciar antes do login. Essa instalação exige `sudo`, mantém a execução
-dos componentes na conta comum do operador e inclui retorno aos serviços anteriores
-se a migração falhar. O guia de serviços descreve o procedimento.
+A instalação e os comandos de operação estão em [SERVICOS.md](docs/SERVICOS.md).
+O modo `--scope system --user NOME_DA_CONTA` exige `sudo` para instalar e administrar
+os serviços, com retorno à configuração anterior se a migração falhar. O modo de
+LaunchAgents por usuário continua disponível para início no login.

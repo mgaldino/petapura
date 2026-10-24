@@ -1,15 +1,15 @@
 # Supervisão automática no macOS
 
-O coletor e o publicador dos dois cenários são supervisionados pelo `launchd`, com dois
-LaunchAgents instalados na conta do operador:
+Na máquina de produção, o coletor e o publicador dos dois cenários são supervisionados
+pelo `launchd`, com dois LaunchDaemons instalados no domínio `system`:
 
-- `~/Library/LaunchAgents/br.usp.petapura.collector.plist`
-- `~/Library/LaunchAgents/br.usp.petapura.publisher.plist`
+- `/Library/LaunchDaemons/br.usp.petapura.collector.plist`
+- `/Library/LaunchDaemons/br.usp.petapura.publisher.plist`
 
-Eles iniciam ao entrar na conta do macOS, inclusive depois de reiniciar o Mac. Não é
-necessário abrir o Codex, ChatGPT ou um terminal. Essa configuração usa a sessão do
-usuário e não inicia os processos antes do login. O Mac precisa estar ligado,
-conectado e acordado durante a coleta.
+Eles iniciam na partida do macOS, antes do login, e executam como a conta comum do
+operador, conforme `UserName` e `GroupName` nos plists. A configuração foi instalada
+e verificada em 24/10/2026. Os LaunchAgents anteriores foram retirados. O Mac precisa
+estar ligado, conectado e acordado durante a coleta.
 
 ## Execução antes do login: modo sistema
 
@@ -47,7 +47,8 @@ em execução. A instalação efetiva só ocorre depois da autenticação no Ter
 
 ## Política de retomada
 
-`RunAtLoad` inicia os serviços no login. Cada supervisor executa o comando configurado
+`RunAtLoad` inicia os serviços na partida, no modo sistema, ou no login, no modo usuário.
+Cada supervisor executa o comando configurado
 e retorna uma falha ao `launchd` se o filho encerrar antes do fim da janela eleitoral,
 mesmo que o filho retorne zero. `KeepAlive.SuccessfulExit = false` provoca a retomada,
 com `ThrottleInterval = 20` para limitar as tentativas repetidas. Os locks próprios do
@@ -84,23 +85,24 @@ devem ser operados por estes comandos, em vez de iniciar novas cópias diretamen
 
 ```sh
 python3 scripts/manage_services.py prepare
-python3 scripts/manage_services.py install
+sudo /caminho/python3 scripts/manage_services.py install --scope system --user NOME_DA_CONTA
 python3 scripts/manage_services.py status
 ```
 
-`prepare` gera e valida os plists em `local/services/launchagents/`, sem instalá-los.
-`install` instala os arquivos no perfil e carrega os dois serviços na sessão atual.
+`prepare` gera e valida os plists em `local/services/launchdaemons/` no modo sistema,
+ou `launchagents/` no modo usuário, sem instalá-los.
+`install` instala os arquivos e carrega os dois serviços no domínio selecionado.
 Uma nova execução do comando recarrega serviços do próprio projeto e preserva uma
 cópia do plist anterior quando seu conteúdo muda. `status` consulta o estado real no
 `launchd`.
 
-Para retirar os serviços somente da sessão atual:
+Para retirar temporariamente os serviços do domínio de sistema:
 
 ```sh
-python3 scripts/manage_services.py stop
+sudo /caminho/python3 scripts/manage_services.py stop --scope system
 ```
 
-Os plists permanecem instalados, portanto o próximo login volta a iniciá-los.
+Os plists permanecem instalados, portanto a próxima partida do Mac volta a iniciá-los.
 `install` também os retoma imediatamente. Alterar a janela do coletor requer recarregar
 os supervisores para que leiam os novos limites.
 
@@ -111,11 +113,16 @@ supervisor, o PID atual do filho, a janela e o estado. Os logs são `collector.o
 `collector.err.log`, `publisher.out.log` e `publisher.err.log`, nessa mesma pasta. Os
 recibos de início configurados são atualizados a cada nova geração de processo.
 
-A conferência de instalação e os testes reais de interrupção estão em
-[`validacao/servicos-20261024.json`](validacao/servicos-20261024.json). O teste reiniciou
-processos sob o `launchd`, sem reiniciar fisicamente o Mac. A retomada após reiniciar
-o computador está configurada e foi inspecionada nos plists, mas não foi testada com
-uma reinicialização física.
+A instalação de sistema e o teste real de interrupção dos dois supervisores estão em
+[`validacao/launchdaemons-20261024.json`](validacao/launchdaemons-20261024.json).
+Foram conferidos o domínio `system`, os donos e as permissões dos plists, a execução
+com o UID do operador, a ausência de LaunchAgents concorrentes e a publicação dos
+dois cenários. O teste reiniciou processos sob o `launchd`, sem reiniciar fisicamente
+o Mac ou encerrar a sessão gráfica. A partida antes do login está configurada e foi
+inspecionada, mas não foi testada com uma reinicialização física sem login.
+
+O registro [`validacao/servicos-20261024.json`](validacao/servicos-20261024.json)
+documenta a instalação inicial por LaunchAgents, substituída pelo modo sistema.
 
 Referências da Apple consultadas em 24/10/2026:
 [daemons e agentes](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingLaunchdJobs.html),
