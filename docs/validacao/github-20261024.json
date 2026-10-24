@@ -1,0 +1,66 @@
+{
+  "verified_at_utc": "2026-10-24T14:23:46.869190+00:00",
+  "repository": "https://github.com/mgaldino/petapura",
+  "visibility": "public",
+  "default_branch": "main",
+  "initial_published_commit": "0f8a249e5b037227cdadc56bb6db26de40cdec13",
+  "worker_version": "6666c36b-34c0-4a79-aca7-bf45f8fa754a",
+  "site": "https://petapura.eleicoes-pet.workers.dev",
+  "page_checks": [
+    {
+      "route": "/",
+      "status": 200,
+      "matches_source": true,
+      "github_link_count": 1
+    },
+    {
+      "route": "/sobre-o-modelo/",
+      "status": 200,
+      "matches_source": true,
+      "github_link_count": 1
+    },
+    {
+      "route": "/quem-somos/",
+      "status": 200,
+      "matches_source": true,
+      "github_link_count": 1
+    }
+  ],
+  "anonymous_github_checks": [
+    {
+      "path": "README.md",
+      "status": 200,
+      "anonymous_access": true,
+      "matches_local": true
+    },
+    {
+      "path": "web/index.html",
+      "status": 200,
+      "anonymous_access": true,
+      "matches_local": true
+    },
+    {
+      "path": "modelo/source-manifest.json",
+      "status": 200,
+      "anonymous_access": true,
+      "matches_local": true
+    },
+    {
+      "path": "modelo/previsao_execucao.R",
+      "status": 200,
+      "anonymous_access": true,
+      "matches_local": true
+    }
+  ],
+  "published_files_checked": 189,
+  "model_files_including_documentation": 67,
+  "model_source_files_verified": 63,
+  "private_files_absent": true,
+  "javascript_tests_passed_before_publication": 55,
+  "python_tests_passed_before_publication": 69,
+  "browser_footer_verified": true,
+  "mobile_width": 365,
+  "mobile_horizontal_overflow": false,
+  "screenshot": "github-link-publicado-20261024.png",
+  "screenshot_sha256": "4479600913dc68648b6630be204ee9d411ab3edfc986e90f68310880c29c135a"
+}

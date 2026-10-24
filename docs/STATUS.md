@@ -2,6 +2,25 @@
 
 Atualizado em 24/10/2026. Os registros anteriores abaixo preservam suas datas.
 
+## Código no GitHub em 24/10
+
+O código foi publicado em [mgaldino/petapura](https://github.com/mgaldino/petapura),
+na branch `main`, com visibilidade pública expressamente autorizada pelo tutor.
+O rodapé de Apuração, Sobre o modelo e Quem somos contém “Código no GitHub”.
+O envio inicial corresponde ao commit `0f8a249`.
+
+O repositório reúne o site, Workers, adaptadores, testes e 63 fontes R, Stan, Python e
+JSON do release do modelo em produção, conferidos byte a byte. O diretório `modelo/`
+também contém a especificação ASN.1 e as dependências do coletor. Seu README documenta
+os dados e objetos ajustados necessários para executar o código. Os registros
+administrativos, credenciais, arquivos de runtime e capturas privadas de analytics
+permanecem locais.
+
+Passaram 55 testes JavaScript e 69 testes Python na preparação. O acesso anônimo a
+arquivos no GitHub, os destinos dos links nas três páginas e o rodapé móvel foram
+conferidos após a publicação. Evidência em
+[github-20261024.json](validacao/github-20261024.json).
+
 ## Fórmulas em LaTeX com MathJax em 24/10
 
 A página “Sobre o modelo” usa MathJax 4.1.3 para as equações, priors e símbolos no
