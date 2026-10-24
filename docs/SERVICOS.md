@@ -11,6 +11,40 @@ necessário abrir o Codex, ChatGPT ou um terminal. Essa configuração usa a ses
 usuário e não inicia os processos antes do login. O Mac precisa estar ligado,
 conectado e acordado durante a coleta.
 
+## Execução antes do login: modo sistema
+
+O gerenciador também prepara LaunchDaemons em `/Library/LaunchDaemons/`, carregados
+no domínio `system` desde a inicialização do macOS. A instalação requer administrador.
+O coletor e o publicador executam com `UserName` e `GroupName` da conta comum do
+operador. A conta de administrador é usada somente para instalar os plists, não para
+executar a coleta ou o modelo como root.
+
+```sh
+python3 scripts/manage_services.py prepare --scope system --user NOME_DA_CONTA
+sudo /caminho/python3 scripts/manage_services.py install --scope system --user NOME_DA_CONTA
+python3 scripts/manage_services.py status --scope system
+```
+
+O instalador valida a configuração antes de retirar os LaunchAgents. Ele preserva
+cópias dos plists anteriores, transfere os serviços para `system`, confere os processos
+filhos com o UID da conta e restaura os serviços anteriores se essa etapa falhar.
+Os plists de sistema ficam com dono `root:wheel` e modo 0644. A configuração local
+continua com o operador como dono e modo 0600. O ambiente aponta para o diretório
+residencial real da conta, para reutilizar a autenticação do Wrangler.
+
+Depois da migração, `local/services/settings.json` registra `service_scope: system`
+e `service_user`. Os comandos passam a selecionar esse modo por padrão. Instalar,
+recarregar ou parar serviços de sistema exige `sudo`. Os arquivos de LaunchAgent são
+retirados com backup para não criar cópias concorrentes no próximo login.
+
+Com FileVault ativado, a partida ainda depende do desbloqueio do volume. O instalador
+não altera FileVault, início automático de sessão ou proteções do sistema. A inspeção
+do domínio `system` e o teste dos processos não substituem uma reinicialização física
+sem login para testar toda a sequência de partida e disponibilidade de rede.
+
+A preparação do modo sistema pode ser feita sem administrador e preserva os serviços
+em execução. A instalação efetiva só ocorre depois da autenticação no Terminal.
+
 ## Política de retomada
 
 `RunAtLoad` inicia os serviços no login. Cada supervisor executa o comando configurado

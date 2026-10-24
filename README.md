@@ -113,3 +113,8 @@ retomada após encerramento e início automático no login, inclusive depois de 
 o Mac. A instalação e os comandos de operação estão em [SERVICOS.md](docs/SERVICOS.md).
 Na máquina de produção, os dois serviços usam os mesmos dados, runtime e checkpoints
 que já alimentam o site. Não dependem de manter o aplicativo aberto.
+
+O gerenciador também oferece `--scope system --user NOME_DA_CONTA` para instalar
+LaunchDaemons e iniciar antes do login. Essa instalação exige `sudo`, mantém a execução
+dos componentes na conta comum do operador e inclui retorno aos serviços anteriores
+se a migração falhar. O guia de serviços descreve o procedimento.

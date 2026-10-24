@@ -2,6 +2,18 @@
 
 Atualizado em 24/10/2026. Os registros anteriores abaixo preservam suas datas.
 
+## Preparação para iniciar antes do login em 24/10
+
+O gerenciador recebeu o modo `--scope system`, que prepara LaunchDaemons no domínio
+`system`, com `UserName` da conta comum e instalação administrativa. Os dois plists
+foram gerados e validados. Passaram 83 testes Python, incluindo testes de migração,
+permissões definidas na instalação e retorno aos LaunchAgents em caso de falha.
+
+A instalação efetiva aguarda autenticação administrativa no Terminal. Os LaunchAgents
+existentes continuam ativos. O código preparado ainda não foi usado para retirar os
+serviços da sessão do usuário. Evidência em
+[launchdaemons-preparacao-20261024.json](validacao/launchdaemons-preparacao-20261024.json).
+
 ## Supervisão automática e concordância de fontes em 24/10
 
 Coletor e publicador foram transferidos para dois LaunchAgents do `launchd`, com início

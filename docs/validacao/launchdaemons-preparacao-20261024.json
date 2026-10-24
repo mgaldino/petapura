@@ -1,0 +1,14 @@
+{
+  "prepared_at_utc": "2026-10-24T16:51:23.269022+00:00",
+  "state": "prepared_pending_administrator_authentication",
+  "system_services_installed": false,
+  "active_user_services_preserved": true,
+  "supervisor_tests_passed": 14,
+  "python_tests_passed": 83,
+  "generated_plists_validated": 2,
+  "intended_domain": "system",
+  "intended_run_at_load": true,
+  "intended_run_as_operator_nonroot": true,
+  "rollback_tests_passed": true,
+  "physical_reboot_tested": false
+}
