@@ -1,6 +1,89 @@
 # Estado da entrega
 
-Atualizado em 20/10/2026.
+Atualizado em 24/10/2026. Os registros anteriores abaixo preservam suas datas.
+
+## Fórmulas em LaTeX com MathJax em 24/10
+
+A página “Sobre o modelo” usa MathJax 4.1.3 para as equações, priors e símbolos no
+texto. A biblioteca é carregada por CDN, apenas nessa página. Os valores e as hipóteses
+do modelo foram preservados. A configuração renderiza cada bloco depois de aberto,
+usando sua largura efetiva, e refaz a composição quando essa largura muda.
+
+Os três blocos abertos foram conferidos no navegador em desktop e em iframe de 320px,
+inclusive após ampliar, reduzir e fechar/reabrir. Foram renderizados 42 contêineres de
+matemática, sem erros TeX ou excesso de largura. Evidência em
+[mathjax-20261024.json](validacao/mathjax-20261024.json).
+
+## Conexão da atualização automática conferida em 24/10
+
+O coletor está ativo e aguarda 25/10 às 17h de Brasília. Foi encontrada e corrigida uma
+interrupção operacional: o publicador dos cenários havia parado em 23/10 às 01h21.
+O processo foi retomado em segundo plano, com o mesmo checkpoint e fontes congelados.
+O upload remoto foi concluído, e o JSON público coincide com a saída real do executor R,
+contendo os dois cenários do mesmo snapshot. A página consulta esse endpoint a cada 30s;
+coletor e publicador trabalham em ciclos de 60s, além do tempo de processamento.
+
+O replay isolado com os fontes da produção passou em 107 verificações e 24 etapas.
+Também passaram os 55 testes JavaScript e três testes do publicador. Não foram enviados
+dados fictícios à produção. O Mac precisa continuar ligado, conectado e acordado. O
+publicador não tem reinício automático após encerramento ou reinicialização do Mac.
+Evidência em [conexao-20261024.json](validacao/conexao-20261024.json).
+
+## Introdução e espera pela apuração em 24/10
+
+A abertura explica que o modelo projeta o resultado final com base nas urnas já apuradas.
+Antes dos primeiros resultados, preserva as caixas dos cenários com “ND” (não disponível)
+no percentual e na faixa. O gráfico fica em 50% / 50%, identificado como referência
+visual de espera por urnas apuradas, inclusive na descrição acessível. Os números da
+prior, o parcial e os detalhes de incerteza permanecem ocultos. Os valores dos cenários
+e o gráfico efetivo aparecem automaticamente quando há seções totalizadas ou BUs incorporados.
+O snapshot e os cálculos do modelo continuam preservados.
+
+Passaram 55 testes JavaScript. Em cópia local isolada, foram verificadas sem recarregar
+a página as transições zero → primeiro BU fictício → apuração concluída → correção
+para zero, além do controle da demonstração. A abertura foi inspecionada em desktop
+e em uma janela de 320 pixels. A revisão para ND e referência 50% / 50% foi conferida
+novamente no navegador. Evidências em [espera-nd-20261024.json](validacao/espera-nd-20261024.json).
+O registro [abertura-20261024.json](validacao/abertura-20261024.json) documenta a versão
+anterior, em que o gráfico ficava oculto.
+
+## Páginas separadas e menu em 23/10
+
+“Quem somos” e “Sobre o modelo” agora têm páginas próprias em `/quem-somos/` e
+`/sobre-o-modelo/`. O menu comum indica a página atual e permite voltar à apuração.
+O conteúdo foi preservado integralmente. O analytics também carrega nas páginas
+de conteúdo. Passaram 51 testes JavaScript, a conferência dos destinos do menu e a
+inspeção das três páginas em desktop e a 320 pixels, sem transbordamento horizontal.
+Registro em [paginas-20261023.json](validacao/paginas-20261023.json).
+
+## Conteúdo institucional e metodologia em 23/10
+
+Foram acrescentadas as seções “Quem somos” e “Como é feita a projeção”, com atalhos no
+início da página. A explicação inclui preditores, hierarquia por UF, equações e priors,
+mudanças entre eleições, aprendizado gradual e componentes locais. A correspondência
+com a cópia congelada do modelo e as fontes institucionais estão em
+[CONTEUDO.md](CONTEUDO.md). A lista de 12 estudantes foi incluída em “Quem somos”.
+Os registros administrativos de conferência permanecem apenas no arquivo local.
+
+## Preparação para publicação em 22/10
+
+O site agora mostra separadamente os cenários com aprendizado e relação de 2022,
+exportados do mesmo checkpoint. A prior real, com zero BUs e 499.248 seções, foi executada
+e preservada: 47,3534% para Lula, faixa de 95% de 43,0195% a 51,4416%. Os dois cenários
+coincidem na prior. Registro em [prior-20261022.json](validacao/prior-20261022.json).
+
+Configuração do Workers, endpoint de leitura no KV, publicador autenticado e integração
+configurável do Web Analytics estão implementados. O build de produção recusa dados de
+demonstração e ausência de um dos cenários; a exigência de analytics é opcional no build.
+
+Passaram 51 testes JavaScript, 69 Python e 107 verificações no replay de 24 etapas. A
+troca de cenário e a largura móvel foram conferidas no navegador. O empacotamento
+`wrangler deploy --dry-run` passou. A publicação em [petapura.eleicoes-pet.workers.dev](https://petapura.eleicoes-pet.workers.dev)
+e o primeiro envio ao KV remoto foram concluídos. O JSON público corresponde ao snapshot
+enviado pelo executor R. Web Analytics está cadastrado e configurado; o painel confirmou 2 visitas e 2
+visualizações durante a verificação. Registro em [analytics-20261022.json](validacao/analytics-20261022.json). O publicador contínuo está ativo no Mac, consultando o export a cada 60 segundos, sem
+iniciar outro coletor. Depende do Mac ligado e conectado. Operação em
+[CLOUDFLARE.md](CLOUDFLARE.md).
 
 ## Implementado neste repositório
 
@@ -13,29 +96,45 @@ Atualizado em 20/10/2026.
 - Leitor do export existente do coletor e funções R para exportar a previsão e montar um snapshot com os objetos já lidos pelo executor.
 - Demonstração separada e identificada. Nenhum dado sintético preenche silenciosamente o endpoint real.
 - Mockup aprovado e pesquisa de benchmark arquivados, com seus fontes e referências.
+- Integração executável com a API atual `avancar_previsao_analise()`, checkpoint e publicador, em `integracao/executar_pipeline.R` e `scripts/run_local.py`.
+- Simulação local interativa: 2.800 seções fictícias, 24 lotes, 400 sorteios por cálculo, avanço automático e página sem controles de operação. Usa o publicador original do coletor, o leitor TSE e o modelo adaptativo reais.
+- Modo `--mode tse` lê o export existente e processa a população real, sem iniciar coletor e sem gravar no módulo do modelo. Modos real e fictício usam pastas separadas.
 
 ## Executado e verificado
 
 | Verificação | Resultado |
 |---|---|
-| Testes JavaScript | 35 passaram: contrato, identidade, intervalos/probabilidade, consultas, timeout, falhas, regressão temporal e rótulos em empate |
-| Testes Python | 19 passaram: publicação, lock, atomicidade, preservação do último válido, correções e importação do coletor |
+| Testes JavaScript | 38 passaram: contrato, identidade, intervalos/probabilidade, consultas, timeout, falhas, regressão temporal e rótulos em empate |
+| Testes Python | 63 passaram: publicação, coletor sintético, controles HTTP, concorrência, recuperação, isolamento e preservação do último válido |
 | Interoperabilidade R | JSON exportado com 95%, probabilidade nula e zero BUs aceito pelos validadores Python e JavaScript |
-| Importação do export real local | Leitura consistente de totalização nacional escolhida, com zero boletins; sem produzir previsão e sem alterar o coletor |
+| Integração com export real local | 499.248 seções e zero BUs; executor produziu a previsão inicial e o adaptador publicou o JSON do site |
 | Inspeção no navegador | Aplicação com a demonstração, espera sem dados, intervalo de 95%, probabilidade ausente, previsão com zero BUs e fim da apuração |
 | Layout compacto | Largura de 320 pixels sem rolagem horizontal; rodapé e rótulo Agora legíveis |
 | Empacotamento | `dist/` gerado a partir de `web/` |
 
 Os resultados automatizados estão em [testes.json](validacao/testes.json). A importação está registrada em [importacao-coletor.json](validacao/importacao-coletor.json). O esquema JSON é acompanhado de validadores com verificações relacionais; não há dependência de um pacote externo de JSON Schema na aplicação.
 
-## Falta para operar com a previsão real
+## Integração verificada nesta etapa
 
-1. O executor desenvolvido na outra sessão deve produzir a previsão adaptativa final: percentual, quantis, nível, versão, snapshot usado e probabilidade quando disponível. As funções de saída deste repositório estão prontas para receber esses valores.
-2. Ligar essa saída ao publicador em um ciclo operacional único e executar um replay integrado com o executor definitivo. O leitor do export observado já foi verificado; a previsão adaptativa completa ainda não foi recebida por este site.
-3. Definir hospedagem/domínio e a URL pública dos dados, ajustar os cabeçalhos de cache/CORS quando necessários e publicar a aplicação.
+O replay completo passou em **81 verificações**, com 24 estágios de zero a 100%, intervalos de 95% preservados, BR/SOMA_UFS, repetição idempotente, retomada após ponteiro atrasado e rejeição de fixture no modo real. No fim, votos e percentual coincidiram com a verdade sintética e o intervalo colapsou. O replay levou 22,508 segundos nesta máquina. Fontes e estado inicial do módulo do modelo tiveram os mesmos hashes antes e depois.
 
-Esses itens não exigem refazer o desenho nem o código de apresentação. São a conexão à saída definitiva, a verificação conjunta e a publicação. Nenhum serviço remoto foi criado ou publicado nesta entrega.
+O caminho real também foi executado com o export local disponível, de **499.248 seções e zero BUs**, em aproximadamente **10,5 segundos**. Produziu a previsão inicial com quantis de 95% através do executor e do adaptador público. Não consultou a rede. Registro em [tse-modelo-site.json](validacao/tse-modelo-site.json); replay em [replay-integrado.json](validacao/replay-integrado.json).
+
+A primeira integração foi conferida no navegador com controles de teste. Esses controles foram removidos na correção posterior, e a simulação passou a avançar automaticamente. O layout integrado a 320 pixels permaneceu sem rolagem horizontal. A probabilidade de vitória continua indisponível no adaptador.
+
+## Falta para a operação pública
+
+1. Verificar o fluxo nas condições finais de operação, incluindo ritmo real de chegada/correções dos BUs T2, falhas de rede e desempenho sustentado. O caminho integrado e o replay sintético já foram executados localmente.
+2. Publicação concluída em 22/10 no Workers; acompanhar a operação contínua do coletor e publicador na janela da apuração.
+
+A publicação no Workers foi concluída em 22/10, conforme o registro no início deste documento. O guia para testar agora está em [LOCAL.md](LOCAL.md).
 
 ## Limites da verificação
 
 Os testes estatísticos e a calibração dos intervalos pertencem ao modelo. As fixtures e os exemplos deste site são sintéticos e não demonstram cobertura preditiva eleitoral. A importação real verificou a leitura do export local disponível em 20/10; não é um teste com votos futuros do segundo turno. A inspeção de largura compacta foi em navegador, sem auditoria completa de acessibilidade ou teste em todos os aparelhos.
+
+## Correção da execução automática
+
+A falha relatada era a leitura de um checkpoint antigo por uma versão mais nova da API do modelo. Cada execução agora preserva os fontes/configurações e seus hashes em `model-source/`; o leitor R e o coletor sintético usam essa mesma versão. Execuções anteriores sem esse registro são mantidas e uma nova execução compatível é criada.
+
+O teste HTTP automático partiu de uma cópia da execução que falhou, percorreu as 24 etapas sem enviar ações e chegou a 100% sem erros em 60,998 segundos. Os checkpoints anteriores foram preservados e os votos finais coincidiram com a fixture. Reabrir a execução concluída também passou. Registro em [automatico.json](validacao/automatico.json). A página agora atualiza automaticamente, sem botões de reprodução, avanço, reinício ou seleção de intervalo.

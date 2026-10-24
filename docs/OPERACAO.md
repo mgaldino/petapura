@@ -1,6 +1,15 @@
 # Operação do site
 
-## Desenvolvimento
+Para a preparação de publicação de 22/10 no Workers, consultar [CLOUDFLARE.md](CLOUDFLARE.md).
+Publicado em [petapura.eleicoes-pet.workers.dev](https://petapura.eleicoes-pet.workers.dev),
+com analytics configurado e envio remoto verificado.
+As instruções gerais abaixo também se aplicam ao desenvolvimento sem hospedagem remota.
+
+## Fluxo integrado local
+
+Use `python3 scripts/run_local.py` para testar com dados fictícios e o modelo real, ou `python3 scripts/run_local.py --mode tse` para ler o export existente do coletor. O [guia local](LOCAL.md) documenta controles, retomada, dependências, caminhos e encerramento. Os checkpoints desta integração são separados das saídas do modelo em desenvolvimento na outra sessão.
+
+## Frontend estático
 
 ```sh
 python3 scripts/serve.py --port 4173
@@ -42,7 +51,7 @@ Ainda devem ser definidos o domínio/hospedagem e a URL definitiva do modelo. Es
 ## Verificação antes da operação
 
 1. Conferir os IDs da eleição e das candidaturas em `web/config.json`.
-2. Executar os testes do repositório e um replay do fluxo completo com o modelo definitivo.
+2. Reexecutar os testes e o replay nas condições da operação. O replay sintético com 2.800 seções/24 etapas já passou; ele não substitui a verificação com BUs T2 reais e na máquina/servidor finais.
 3. Conferir o nível e a origem dos intervalos, a presença/ausência da probabilidade e as notas metodológicas fornecidas pelo modelo.
 4. Testar o endpoint e sua atualização no domínio final, inclusive falha e retomada.
 5. Confirmar que a URL pública usa dados reais e que a demonstração continua identificada e separada.

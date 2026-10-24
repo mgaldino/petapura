@@ -1,0 +1,68 @@
+{
+  "checked_at_utc": "2026-10-24T05:47:52.158152+00:00",
+  "javascript_tests_passed": 55,
+  "waiting_message": "Aguardando urnas serem apuradas",
+  "opening_text": "O Pet Apura usa um modelo estatístico para projetar o resultado final do segundo turno da eleição presidencial de 2026. À medida que as urnas são apuradas, o modelo combina os votos já conhecidos com uma estimativa dos votos que ainda faltam.",
+  "local_qa": "local/qa/abertura-20261024",
+  "browser_transitions": [
+    "zero BUs: no numbers, chart, partial or uncertainty; accessible announcement without prior values",
+    "first synthetic BU: automatic display of both scenarios and chart; scenario selector works",
+    "synthetic completion: observed result replaces forecast",
+    "synthetic correction to zero: numbers and SVG cleared; waiting restored",
+    "demo at moment zero: slider and chart remain available"
+  ],
+  "browser_widths": [
+    320,
+    1265
+  ],
+  "horizontal_overflow": false,
+  "opening_font_px_at_320": 16,
+  "model_and_snapshot_unchanged": true,
+  "source_sha256": {
+    "index.html": "05661522c1fabf8a278b681330daa3ddc09387f92933fd4206ea4547b7bc55ab",
+    "assets/app.js": "404ad59c337e9815ea90e001ece24df9e06842a2ebfbdd9170064d21b2db5f98",
+    "assets/data.js": "81628e5bd61dc50884553af75f6015908adc14ca6de9ca2a6eb2800866fbe084",
+    "assets/styles.css": "3c9477e1e10e1ce6f92681cfe87f5d07a60460981fbbee6c1048fb9be4b01dbd"
+  },
+  "published_at_utc": "2026-10-24T05:48:36.147545+00:00",
+  "url": "https://petapura.eleicoes-pet.workers.dev",
+  "version_id": "b37088df-72f9-402d-8cb6-d01236abeaf2",
+  "http_checks": [
+    {
+      "route": "/",
+      "http_status": 200,
+      "matches_source": true
+    },
+    {
+      "route": "/assets/app.js",
+      "http_status": 200,
+      "matches_source": true
+    },
+    {
+      "route": "/assets/data.js",
+      "http_status": 200,
+      "matches_source": true
+    },
+    {
+      "route": "/assets/styles.css",
+      "http_status": 200,
+      "matches_source": true
+    }
+  ],
+  "public_snapshot_has_both_forecasts": true,
+  "public_counting": {
+    "reported": 0,
+    "collected": 0,
+    "valid_votes": 0
+  },
+  "public_browser_verified": true,
+  "public_waiting_message_visible": true,
+  "public_forecast_numbers": 0,
+  "public_chart_hidden": true,
+  "public_partial_hidden": true,
+  "public_uncertainty_hidden": true,
+  "public_analytics_beacons": 1,
+  "public_mobile_width": 362,
+  "public_mobile_horizontal_overflow": false,
+  "screenshot": "abertura-publicada-20261024.png"
+}

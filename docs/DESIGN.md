@@ -14,9 +14,13 @@ Somente Presidência da República, segundo turno. Direção visual **Observató
 
 O resumo numérico permanece centrado em A; B é seu complemento entre os válidos e aparece no gráfico. A curva de densidade normal e a grade de cem cenários foram retiradas a pedido do usuário.
 
+O menu comum leva a três páginas: “Apuração” (`/`), “Sobre o modelo” (`/sobre-o-modelo/`) e “Quem somos” (`/quem-somos/`). A página atual fica sublinhada e identificada por `aria-current="page"`. Os textos institucionais e a explicação detalhada do modelo ficam nas páginas próprias, preservando a hierarquia da apuração na inicial. Essa separação foi solicitada em 23/10/2026.
+
 “Agora” acompanha a linha vertical tracejada com oito pixels de afastamento. O rótulo passa para o outro lado perto da borda. As cores identificam as candidaturas, acompanhadas por nomes e rótulos numéricos.
 
 ## Adaptação para a aplicação
+
+Em 24/10/2026, a abertura ganhou uma introdução que explica a projeção do resultado final a partir das urnas já apuradas. Enquanto não há seções totalizadas nem BUs incorporados, as caixas dos dois cenários permanecem visíveis com “ND” (não disponível) no percentual e na faixa. O gráfico mostra 50% para cada candidatura, identificado no título, na nota e na descrição acessível como referência visual de espera. Essa referência não usa os valores da prior, não possui faixa de incerteza nem tooltip de projeção. O parcial e os detalhes de incerteza ficam ocultos. O primeiro resultado totalizado ou BU incorporado libera automaticamente os valores dos cenários e o gráfico efetivo. Uma correção para zero restaura o estado de espera. A demonstração com dados fictícios mantém seu controle de momentos disponível.
 
 A aplicação preserva o desenho aprovado e acrescenta estados de carregamento, espera, ausência de previsão, falha e desatualização. Os dados reais e a demonstração são entradas separadas. O controle de momentos fica disponível apenas na demonstração; o modo real recebe atualizações pelo endpoint.
 

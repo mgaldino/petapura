@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "adjudication_id": "integracao-local:1703e188214c:round1",
+  "source": {
+    "reviewed_artifact": "scripts/run_local.py",
+    "sha256": "1703e188214cc2ada06182701c7ad6f572e252fae582b9f04d6fea37acc83aea",
+    "artifact_intact": true
+  },
+  "contract": {
+    "required": false,
+    "path": null,
+    "sha256": null,
+    "contract_id": null,
+    "artifact_sha256": null,
+    "status": null,
+    "stale": false
+  },
+  "review_sources": [
+    {
+      "review_id": "R1",
+      "path": "quality_reports/adjudication/integracao-local/1703e188214c/review.md",
+      "sha256": "9f031c09203bd6f9cae31a367628a609b2319321ebc081065ff2995ff276acfd"
+    }
+  ],
+  "findings": [],
+  "summary": {
+    "total": 0,
+    "confirmed": 0,
+    "partial": 0,
+    "refuted": 0,
+    "unresolved": 0,
+    "held_decisions": 0
+  },
+  "adjudication": {
+    "verdict": "NO_CONFIRMED_DEFECTS",
+    "checked_at": "2026-10-20T17:00:00-03:00",
+    "reasons": [
+      "Revisão final do código corrigido não encontrou defeitos materiais remanescentes.",
+      "Histórico de cinco achados conferidos e corrigidos preservado no parecer; 22 testes independentes passaram.",
+      "R executado, replay e frontend têm evidências separadas em docs/validacao."
+    ]
+  },
+  "context_artifact_sha256": {
+    "scripts/run_local.py": "1703e188214cc2ada06182701c7ad6f572e252fae582b9f04d6fea37acc83aea",
+    "integracao/executar_pipeline.R": "f9990f837f45557f44513be000c08f467029b6ed63f71ba4bd300b5eb52b8412"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "checked_at_utc": "2026-10-24T14:11:11.319717+00:00",
+  "mathjax_version": "4.1.3",
+  "cdn": "https://cdn.jsdelivr.net/npm/mathjax@4.1.3/tex-chtml.js",
+  "scoped_to": "/sobre-o-modelo/",
+  "desktop_width": 1265,
+  "mobile_iframe_width": 320,
+  "mobile_content_width": 305,
+  "typeset_math_containers": 42,
+  "technical_blocks": 3,
+  "tex_errors": 0,
+  "horizontal_overflow": false,
+  "resize_test": "320 → 700 → 320 pixels, all three blocks open, no duplicate containers or overflow",
+  "reopen_test_passed": true,
+  "checks": [
+    "JavaScript syntax",
+    "production build with both real scenarios and analytics",
+    "git diff --check",
+    "browser rendering in all three technical blocks",
+    "browser reflow after resizing",
+    "browser close and reopen blocks"
+  ],
+  "model_parameters_unchanged": true,
+  "source_sha256": {
+    "sobre-o-modelo/index.html": "2829724cd1c22d8dd611b2ce82ed92476148c1a061720c5c0eca70c283cc1ce5",
+    "assets/mathjax-config.js": "13797e22daac086d39aca96b031e280a794674873f216fc56fd996f6425dc7fe",
+    "assets/styles.css": "a6cc9f9d611cce22a74a37c008e17e5cd10689f5abb084cc58278cef52113e71"
+  },
+  "references": [
+    "https://docs.mathjax.org/en/latest/web/configuration.html",
+    "https://docs.mathjax.org/en/latest/web/typeset.html",
+    "https://docs.mathjax.org/en/latest/output/linebreaks.html",
+    "https://github.com/mathjax/MathJax/releases/tag/4.1.3"
+  ],
+  "published_at_utc": "2026-10-24T14:12:27.932427+00:00",
+  "url": "https://petapura.eleicoes-pet.workers.dev/sobre-o-modelo/",
+  "version_id": "cd90d37b-a0e6-4ce0-80e0-af0c1808a4e0",
+  "http_checks": [
+    {
+      "route": "/sobre-o-modelo/",
+      "http_status": 200,
+      "matches_source": true
+    },
+    {
+      "route": "/assets/mathjax-config.js",
+      "http_status": 200,
+      "matches_source": true
+    },
+    {
+      "route": "/assets/styles.css",
+      "http_status": 200,
+      "matches_source": true
+    }
+  ],
+  "public_browser_verified": true,
+  "public_math_containers": 42,
+  "public_tex_errors": 0,
+  "public_analytics_beacons": 1,
+  "screenshot": "mathjax-publicado-20261024.png",
+  "screenshot_sha256": "51c84fe7b1a1cbd4d9b18fbed4af3c858b9195d1cb9c056c48a8c34f5aeb1600"
+}

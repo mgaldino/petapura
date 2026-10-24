@@ -1,0 +1,29 @@
+{
+  "versao": "mudanca_entre_eleicoes_v2_2026-10-20",
+  "versao_anterior": "escalas_online_v1.json",
+  "status": "hipotese_de_magnitude_aprovada_pelo_usuario",
+  "media_dos_desvios": 0,
+  "unidade": "logit; inclinacoes por um desvio padrao historico do preditor",
+  "desvios_padrao": {
+    "alpha_global_sd": 0.10,
+    "alpha_uf_sd": 0.05,
+    "voto_global_sd": 0.03,
+    "voto_uf_sd": 0.02,
+    "comp_sd": 0.02,
+    "outros_sd": 0.03,
+    "validos_sd": 0.03
+  },
+  "perfis": {
+    "restrito": 0.5,
+    "central": 1.0,
+    "amplo": 2.0
+  },
+  "correlacao_entre_ufs_apenas_da_mudanca": {
+    "intercepto": 0.8,
+    "inclinacao_voto_t1": 0.6923076923076923
+  },
+  "aplicacao": "Somar Q uma unica vez a covariancia posterior historica, antes de observar a nova eleicao. Nunca reinflar Q por lote.",
+  "criterio": "Margem central moderada; mais liberdade para mudanca nacional compartilhada do que para mudanca especifica por UF. Versao 1 preservada como comparacao independente.",
+  "limitacao": "Escolha de prior, nao estimativa de variancia temporal. Simulacoes verificam o mecanismo sob a especificacao assumida.",
+  "direcao": "Mudancas positivas e negativas equiprovaveis; nenhuma mudanca direcional de transferencia dos demais candidatos."
+}

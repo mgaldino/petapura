@@ -1,0 +1,68 @@
+{
+  "checked_at_utc": "2026-10-23T23:09:39.106164+00:00",
+  "routes": [
+    "/",
+    "/quem-somos/",
+    "/sobre-o-modelo/"
+  ],
+  "content_preserved": true,
+  "members": 12,
+  "javascript_tests_passed": 51,
+  "local_browser_navigation": "home -> model -> about -> home",
+  "checked_widths": [
+    320,
+    1265
+  ],
+  "horizontal_overflow": false,
+  "model_details_open_at_320": 3,
+  "menu_target_height_px": 44,
+  "source_sha256": {
+    "index.html": "391a0142e028d60139fb5a58dd9b314893a663e912bcefbe0209cfc1ac5858c5",
+    "quem-somos/index.html": "0e64288f73988b6b035e637dba12838252ce1f4f7e98f2acba4da1dfaa13d826",
+    "sobre-o-modelo/index.html": "e43ef126a10c66bc2a060aa948bc2b0e388ce5b30b1d06e757f83c694aa4a197",
+    "assets/page.js": "30209d590db7b89440f7a9234d471f270c15941678f37f2d600ead39018ae64b",
+    "assets/styles.css": "5ec02336e1276a48a475522c521e864d8271a5f71cd68dc9c1b7a758b201d9fc"
+  },
+  "published_at_utc": "2026-10-23T23:10:06.467143+00:00",
+  "version_id": "b0bd220d-4a07-44a2-a6a7-d14888c7079f",
+  "http_checks": [
+    {
+      "route": "/",
+      "http_status": 200,
+      "effective_url": "https://petapura.eleicoes-pet.workers.dev/",
+      "matches_source": true
+    },
+    {
+      "route": "/quem-somos/",
+      "http_status": 200,
+      "effective_url": "https://petapura.eleicoes-pet.workers.dev/quem-somos/",
+      "matches_source": true
+    },
+    {
+      "route": "/sobre-o-modelo/",
+      "http_status": 200,
+      "effective_url": "https://petapura.eleicoes-pet.workers.dev/sobre-o-modelo/",
+      "matches_source": true
+    },
+    {
+      "route": "/assets/page.js",
+      "http_status": 200,
+      "effective_url": "https://petapura.eleicoes-pet.workers.dev/assets/page.js",
+      "matches_source": true
+    },
+    {
+      "route": "/assets/styles.css",
+      "http_status": 200,
+      "effective_url": "https://petapura.eleicoes-pet.workers.dev/assets/styles.css",
+      "matches_source": true
+    }
+  ],
+  "public_browser_navigation_verified": true,
+  "analytics_beacon_per_content_page": {
+    "/sobre-o-modelo/": 1,
+    "/quem-somos/": 1
+  },
+  "public_mobile_width": 362,
+  "public_mobile_horizontal_overflow": false,
+  "screenshot": "paginas-publicadas-20261023.png"
+}

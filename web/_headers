@@ -1,0 +1,10 @@
+/*
+  Cache-Control: no-cache
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+/config.json
+  Cache-Control: no-store
+
+/data/*
+  Cache-Control: no-store

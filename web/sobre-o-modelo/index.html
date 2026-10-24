@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Como funciona a projeção eleitoral do Pet Apura: modelo hierárquico bayesiano, dois cenários, equações e priors.">
+  <title>Sobre o modelo | Presidência 2026 · PET de Ciências Sociais da USP</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script type="module" src="/assets/page.js"></script>
+  <script defer src="/assets/mathjax-config.js"></script>
+  <script defer id="mathjax-script" src="https://cdn.jsdelivr.net/npm/mathjax@4.1.3/tex-chtml.js"></script>
+</head>
+<body>
+<div id="presidencia-2026-preview">
+  <main class="pres-product">
+    <div class="pres-demo">PRESIDENTE DA REPÚBLICA · SEGUNDO TURNO</div>
+    <header class="pres-masthead"><div class="pres-wordmark">Presidência <span>2026</span></div><span class="pres-edition">Observatório</span></header>
+    <nav class="pres-nav" aria-label="Menu principal"><a href="/">Apuração</a><a href="/sobre-o-modelo/" aria-current="page">Sobre o modelo</a><a href="/quem-somos/">Quem somos</a></nav>
+    <section class="pres-info" id="modelo" aria-labelledby="modelo-title">
+      <p class="pres-section-label">O modelo</p>
+      <h1 id="modelo-title">Como é feita a projeção</h1>
+      <p>Estimamos um modelo hierárquico bayesiano com os resultados por seção eleitoral dos dois turnos de 2022. Ele aprende a relação entre a votação de Lula no segundo turno e as características de cada seção no primeiro turno. Aplicamos essa relação aos dados do primeiro turno de 2026 para projetar o resultado das seções ainda não apuradas.</p>
+      <p>No primeiro nível estão as seções eleitorais. No segundo, as unidades da Federação (UFs): cada uma tem seu próprio intercepto e seu próprio coeficiente para o voto de Lula no primeiro turno, com informação compartilhada entre as UFs. O exterior é tratado como um grupo adicional.</p>
+      <h2>O que entra na regressão</h2>
+      <p>A variável resposta é a proporção de votos válidos de Lula no segundo turno, transformada para a escala logit. Todos os preditores vêm do primeiro turno da mesma seção:</p>
+      <ul class="pres-predictors">
+        <li>Proporção de votos válidos de Lula.</li>
+        <li>Comparecimento, como proporção do eleitorado apto.</li>
+        <li>Proporção de votos válidos nas demais candidaturas, excluídos Lula e o adversário do segundo turno.</li>
+        <li>Proporção de votos válidos entre os votos de quem compareceu, transformada para a escala logit.</li>
+      </ul>
+      <h2>Como ler os dois cenários</h2>
+      <div class="pres-scenario-guide">
+        <article><h3>Com aprendizado</h3><p>Os boletins de urna já apurados atualizam os coeficientes da regressão e os componentes locais da projeção. Assim, o modelo pode captar mudanças compartilhadas pelo país, chamadas de <i>swings</i> nacionais, além das diferenças entre UFs e municípios.</p><p>É o cenário indicado para explorar a hipótese de que a relação entre os turnos mudou de forma sistemática em relação a 2022. A atualização ganha peso gradualmente no início da apuração.</p></article>
+        <article><h3>Relação de 2022</h3><p>As seções pendentes são projetadas com a relação histórica, aplicada ao primeiro turno de 2026. Os coeficientes e os demais componentes das seções pendentes permanecem na distribuição inicial, sem aprender com a apuração atual.</p><p>É o cenário indicado para explorar a hipótese de persistência do padrão de 2022, com desvios em torno dessa relação, em vez de um swing nacional aprendido durante a apuração.</p></article>
+      </div>
+      <p>Nos dois cenários, os votos observados substituem a previsão nas seções já apuradas. Antes do primeiro boletim, ambos partem da mesma distribuição inicial. A chegada das urnas pode ser desigual entre regiões, por isso uma diferença inicial em relação a 2022 ainda pode refletir a ordem da apuração.</p>
+      <details class="pres-technical"><summary>Equações da regressão e priors de 2022</summary><div class="pres-technical-content">
+        <p>Para a seção \(i\), sejam \(Y_i\) os votos de Lula e \(V_i\) os votos válidos do segundo turno de 2022. Usamos uma suavização de 0,5 voto para que o logit permaneça definido nos extremos:</p>
+        <div class="pres-equation">\[z_i = \log\left(\frac{Y_i + 0{,}5}{V_i - Y_i + 0{,}5}\right)\]</div>
+        <div class="pres-equation">
+          \[\begin{aligned}
+            z_i &amp;= \alpha_{u[i]} + \beta_{u[i]}L_i \\
+                &amp;\quad + \gamma C_i + \delta O_i + \kappa H_i + \varepsilon_i
+          \end{aligned}\]
+          \[\varepsilon_i \sim \mathcal{N}(0,\sigma^2)\]
+        </div>
+        <p>\(L\) é o voto de Lula, \(C\) o comparecimento, \(O\) o voto nas demais candidaturas e \(H\) o logit suavizado da proporção de válidos entre os presentes, todos no primeiro turno. Para \(H\), a transformação é \(\log[(\text{válidos} + 0{,}5) / (\text{comparecimento} - \text{válidos} + 0{,}5)]\).</p>
+        <p>O voto de Lula e o comparecimento são centrados na média da respectiva UF de 2022. Os outros dois preditores são centrados na média nacional de 2022. Cada preditor é dividido pelo seu desvio padrão histórico após essa centralização. Essas médias e escalas ficam fixas na aplicação a 2026.</p>
+        <p>Os interceptos e os coeficientes do voto no primeiro turno variam conjuntamente entre UFs:</p>
+        <div class="pres-equation">
+          \[\begin{pmatrix}\alpha_u \\ \beta_u\end{pmatrix} \sim \mathcal{N}_2\left(\begin{pmatrix}\alpha \\ \beta\end{pmatrix}, D\Omega D\right)\]
+          \[D = \operatorname{diag}(\tau_\alpha,\tau_\beta)\]
+        </div>
+        <p>As priors do ajuste histórico são:</p>
+        <dl class="pres-priors">
+          <div><dt>Intercepto nacional</dt><dd>\(\alpha \sim \mathcal{N}(0,1{,}5^2)\)</dd></div>
+          <div><dt>Coeficientes nacionais</dt><dd>\(\beta,\gamma,\delta,\kappa \sim \mathcal{N}(0,0{,}7^2)\)</dd></div>
+          <div><dt>Dispersão entre UFs</dt><dd>\(\tau_\alpha,\tau_\beta \sim \mathcal{N}^{+}(0,0{,}5^2)\)</dd></div>
+          <div><dt>Correlação entre intercepto e inclinação</dt><dd>\(\Omega \sim \operatorname{LKJ}(2)\)</dd></div>
+          <div><dt>Desvio padrão residual</dt><dd>\(\sigma \sim \mathcal{N}^{+}(0,1^2)\)</dd></div>
+        </dl>
+        <p>\(\mathcal{N}(\mu,s^2)\) indica média \(\mu\) e variância \(s^2\). A meia-normal, denotada por \(\mathcal{N}^{+}\), restringe o desvio padrão a valores positivos. O ajuste usa 472.024 seções de 2022 com denominadores positivos. Cada seção é uma observação na regressão gaussiana do logit.</p>
+      </div></details>
+      <details class="pres-technical"><summary>Distribuição inicial de 2026 e aprendizado</summary><div class="pres-technical-content">
+        <p>A distribuição posterior de 2022 fornece a média \(m_{22}\) e a matriz de covariância \(S_{22}\) dos coeficientes. Para 2026, usamos uma aproximação normal conjunta e acrescentamos uma margem de mudança entre eleições, \(Q\):</p>
+        <div class="pres-equation">\[\theta_{26} \sim \mathcal{N}(m_{22},S_{22}+Q)\]</div>
+        <p>\(Q\) é construída com mudanças de média zero, independentes entre os componentes abaixo. A mudança nacional de cada coeficiente é compartilhada por todas as UFs e se soma ao desvio específico de cada UF.</p>
+        <table class="pres-prior-table"><caption>Desvios padrão das mudanças entre eleições</caption><thead><tr><th scope="col">Componente</th><th scope="col">Nacional</th><th scope="col">Por UF</th></tr></thead><tbody>
+          <tr><th scope="row">Intercepto</th><td>0,10</td><td>0,05</td></tr>
+          <tr><th scope="row">Voto de Lula no primeiro turno</th><td>0,03</td><td>0,02</td></tr>
+          <tr><th scope="row">Comparecimento</th><td>0,02</td><td>—</td></tr>
+          <tr><th scope="row">Votos nas demais candidaturas</th><td>0,03</td><td>—</td></tr>
+          <tr><th scope="row">Proporção de válidos (logit)</th><td>0,03</td><td>—</td></tr>
+        </tbody></table>
+        <p>Os valores estão na escala logit, com inclinações por um desvio padrão histórico do preditor. São hipóteses sobre a magnitude das mudanças, sem preferência por uma direção. \(Q\) entra uma única vez, antes da apuração.</p>
+        <p>No cenário com aprendizado, recalculamos a distribuição dos coeficientes a partir dessa prior e do conjunto de boletins disponíveis, por atualização normal conjugada com correlação entre seções do mesmo município. O desvio padrão residual permanece fixado na média posterior histórica.</p>
+        <p>Para reduzir a influência dos primeiros boletins, o componente atualizado recebe peso \(w\); o componente inicial recebe o peso restante:</p>
+        <div class="pres-equation">\[w = \min\left(1,\frac{f}{0{,}15}\right)^2\]</div>
+        <p>\(f\) é a fração dos votos válidos do primeiro turno pertencentes às seções com boletim já recebido, em relação à população de seções usada pelo modelo. Com 5%, o peso do aprendizado é de aproximadamente 11%. A partir de 15%, é de 100%. Os votos já apurados entram integralmente desde o primeiro boletim.</p>
+      </div></details>
+      <details class="pres-technical"><summary>Componentes locais, votos válidos e faixa de incerteza</summary><div class="pres-technical-content">
+        <p>Na projeção de 2026, parte do resíduo do voto é compartilhada pelas seções de um município. Escrevemos:</p>
+        <div class="pres-equation">
+          \[z_i = x_i^{\mathsf{T}}\theta + u_{m[i]} + e_i\]
+          \[u_m \sim \mathcal{N}(0,0{,}00291313)\]
+          \[e_i \sim \mathcal{N}(0,\sigma^2-0{,}00291313)\]
+        </div>
+        <p>Aqui os segundos parâmetros são variâncias, e \(\sigma^2 \approx 0{,}02219225\). A variância municipal foi estimada nos resíduos de 2022.</p>
+        <p>Também projetamos o total de votos válidos das seções pendentes a partir dos válidos do primeiro turno:</p>
+        <div class="pres-equation">
+          \[V_{i,2} = V_{i,1}\exp(\lambda_{u[i]}+\nu_{m[i]}+\eta_i)\]
+          \[\lambda_u = \lambda_0+b_u\]
+        </div>
+        <p>As priors são independentes e de média zero:</p>
+        <div class="pres-equation">
+          \[\lambda_0 \sim \mathcal{N}(0,0{,}02^2)\]
+          \[b_u \sim \mathcal{N}(0,0{,}029^2)\]
+          \[\nu_m \sim \mathcal{N}(0,0{,}000216814)\]
+          \[\eta_i \sim \mathcal{N}(0,0{,}00099757)\]
+        </div>
+        <p>Os dois últimos números são variâncias estimadas em 2022. O desvio entre UFs também usa a dispersão histórica. O desvio nacional de 0,02 é uma hipótese de magnitude.</p>
+        <p>O cenário com aprendizado atualiza os componentes municipais do voto e os componentes compartilhados da razão de válidos com os boletins recebidos. No cenário Relação de 2022, eles permanecem na prior. Ao converter o logit em votos, desfazemos a suavização de 0,5 voto e respeitamos os limites entre zero e o total de válidos.</p>
+        <p>A votação final soma os votos observados às projeções das seções pendentes, com ajuste aos totais oficiais compatíveis quando disponíveis. A faixa apresentada contém os 95% centrais de 400 simulações conjuntas por cenário, incluindo incerteza dos coeficientes, mudanças entre eleições e componentes locais.</p>
+        <p>Essa faixa depende das hipóteses do modelo. Erros na relação entre eleições ou na interpretação da ordem de chegada das urnas podem produzir erros maiores do que ela sugere. O nível de 95% não constitui uma garantia de cobertura empírica durante a apuração de 2026.</p>
+      </div></details>
+    </section>
+    <footer class="pres-footer"><p class="pres-credit">Projeto do <strong>PET de Ciências Sociais da USP</strong></p><p class="pres-footer-links"><a href="https://github.com/mgaldino/petapura" target="_blank" rel="noopener noreferrer">Código no GitHub</a><a href="/">Voltar à apuração</a><a href="/?demo=1">Ver demonstração com dados fictícios</a><a href="https://resultados.tse.jus.br/" target="_blank" rel="noopener noreferrer">Consultar o TSE</a></p></footer>
+  </main>
+</div>
+</body>
+</html>

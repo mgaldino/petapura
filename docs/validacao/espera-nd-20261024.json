@@ -1,0 +1,75 @@
+{
+  "checked_at_utc": "2026-10-24T06:01:08.493360+00:00",
+  "javascript_tests_passed": 55,
+  "waiting_cards": "Both scenarios: ND for projected percentage and interval; no prior values displayed.",
+  "waiting_chart": "A 50% / B 50%, explicitly labeled as a visual waiting reference; no forecast intervals or hover projection.",
+  "browser_transitions": [
+    "Initial real prior at zero: two ND cards, waiting chart labels A 50% and B 50%.",
+    "First synthetic BU without reloading: cards 51.4% and 48.0%, two chart bands, scenario selection updates chart to 48.0%.",
+    "Synthetic completion: observed final 51.1% replaces forecast; historical card hidden.",
+    "Synthetic correction to waiting without forecast: ND card and waiting chart restored.",
+    "New zero snapshot with both priors: both ND cards and waiting chart restored; zero bands and no forecast hover overlay."
+  ],
+  "qa_directory": "local/qa/espera-nd-20261024",
+  "browser_widths": [
+    320,
+    1265
+  ],
+  "horizontal_overflow": false,
+  "model_and_snapshot_unchanged": true,
+  "initial_snapshot_sha256": "3a3ddd9ffef55c3afffd2e30927c6e1e90c00701a22c96f6f4245cce5829c89c",
+  "source_sha256": {
+    "index.html": "6f5e00bce0be9b89df969840ff68aa1c2c02312d52f46454e5474b43f9133026",
+    "assets/app.js": "8e8fb27cd013c53944a0a2c301403d398427299cebd352ceeab2940b23ba964d",
+    "assets/chart.js": "73711df5b12f13af7a5eb388c9f90b59edeeb7dfceb16184f32db42f1c06811e",
+    "assets/data.js": "81628e5bd61dc50884553af75f6015908adc14ca6de9ca2a6eb2800866fbe084",
+    "assets/styles.css": "7ceb59b69adc7f06ac1f0113a238348d08f53d50c31464ebcc1453abb4491489"
+  },
+  "published_at_utc": "2026-10-24T06:01:21.201931+00:00",
+  "url": "https://petapura.eleicoes-pet.workers.dev",
+  "version_id": "d451389a-a1b4-4a7f-8a7f-8ba6b2e4d102",
+  "http_checks": [
+    {
+      "route": "/",
+      "status": 200,
+      "matches_source": true
+    },
+    {
+      "route": "/assets/app.js",
+      "status": 200,
+      "matches_source": true
+    },
+    {
+      "route": "/assets/chart.js",
+      "status": 200,
+      "matches_source": true
+    },
+    {
+      "route": "/assets/styles.css",
+      "status": 200,
+      "matches_source": true
+    }
+  ],
+  "public_counting": {
+    "reported_sections": 0,
+    "collected_sections": 0,
+    "valid_votes": 0
+  },
+  "public_snapshot_has_both_forecasts": true,
+  "public_browser_verified": true,
+  "public_browser_shares": [
+    "ND",
+    "ND"
+  ],
+  "public_browser_chart_labels": [
+    "A 50%",
+    "B 50%"
+  ],
+  "public_browser_chart_bands": 0,
+  "public_browser_chart_hidden": false,
+  "public_browser_analytics_beacons": 1,
+  "public_mobile_width": 362,
+  "public_mobile_horizontal_overflow": false,
+  "screenshot": "espera-nd-publicada-20261024.png",
+  "screenshot_sha256": "2e765fb80f6f60c960762cd728ff3cf3c15f8fe35c3eb95b37acbc5fa78b9cbc"
+}

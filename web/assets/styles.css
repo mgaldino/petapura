@@ -18,6 +18,7 @@
 #presidencia-2026-preview .pres-intro{padding:27px 0 23px}
 #presidencia-2026-preview h1{font-size:clamp(28px,3.7cqw,38px);font-weight:500;letter-spacing:-1.1px;line-height:1.15;margin:0 0 8px}
 #presidencia-2026-preview .pres-intro p{color:var(--pres-muted);margin:0;font-size:15px;max-width:700px}
+#presidencia-2026-preview .pres-intro .pres-opening{color:var(--pres-ink);font-size:16px;line-height:1.65;max-width:76ch;margin:18px 0 12px}
 #presidencia-2026-preview .pres-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px;background:var(--pres-surface);padding:28px 30px 25px;border-radius:6px}
 #presidencia-2026-preview .pres-name{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:500}
 #presidencia-2026-preview .pres-dot{width:10px;height:10px;background:var(--pres-a);border-radius:50%;flex:none}
@@ -123,3 +124,59 @@ html{color-scheme:light dark}body{margin:0;background:light-dark(#f6f8f8,#101923
 #presidencia-2026-preview .pres-range-ticks span:last-child{right:0}
 @media(max-width:650px){#presidencia-2026-preview .pres-connection{font-size:14px}}
 @container(max-width:650px){#presidencia-2026-preview .pres-number{font-size:76px}}
+#presidencia-2026-preview .pres-simulation-status{font-size:14px;color:var(--pres-muted);margin:8px 0 20px;line-height:1.5}
+#presidencia-2026-preview .pres-scenario-intro{margin:22px 0 12px}
+#presidencia-2026-preview .pres-scenario-intro p,#presidencia-2026-preview .pres-scenarios-note{font-size:16px;color:var(--pres-muted);margin:6px 0 0}
+#presidencia-2026-preview .pres-scenarios-note{margin:18px 0 0;max-width:850px}
+#presidencia-2026-preview .pres-scenario-switch{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+#presidencia-2026-preview .pres-scenario-switch button{font:inherit;font-size:16px;min-height:44px;padding:8px 14px;border:1px solid var(--pres-rule);border-radius:5px;background:transparent;color:var(--pres-ink);cursor:pointer}
+#presidencia-2026-preview .pres-scenario-switch button[aria-pressed="true"]{background:var(--pres-surface);border-color:var(--pres-ink)}
+#presidencia-2026-preview :focus-visible{outline:2px solid var(--pres-ink);outline-offset:3px}
+
+#presidencia-2026-preview .pres-nav{display:flex;flex-wrap:wrap;gap:0 24px;border-bottom:1px solid var(--pres-rule);padding:4px 0}
+#presidencia-2026-preview .pres-nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--pres-ink);text-decoration:none;font-size:16px}
+#presidencia-2026-preview .pres-nav a:hover{text-decoration:underline;text-underline-offset:4px}
+#presidencia-2026-preview .pres-nav a[aria-current="page"]{font-weight:500;text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:2px}
+#presidencia-2026-preview .pres-info{padding:32px 0;scroll-margin-top:20px}
+#presidencia-2026-preview #projecao{scroll-margin-top:20px}
+#presidencia-2026-preview .pres-info h1{font-size:28px;letter-spacing:-.6px;line-height:1.2;margin:0 0 20px}
+#presidencia-2026-preview .pres-info h2{font-size:19px;font-weight:500;margin:28px 0 12px;line-height:1.35}
+#presidencia-2026-preview .pres-info p,#presidencia-2026-preview .pres-info li{font-size:16px;line-height:1.65;max-width:76ch;overflow-wrap:break-word}
+#presidencia-2026-preview .pres-info p{margin:12px 0}
+#presidencia-2026-preview .pres-info .pres-section-label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--pres-muted);margin:0 0 10px}
+#presidencia-2026-preview .pres-predictors{padding-left:23px;margin:12px 0 24px}
+#presidencia-2026-preview .pres-predictors li+li{margin-top:7px}
+#presidencia-2026-preview .pres-scenario-guide{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin:16px 0 20px}
+#presidencia-2026-preview .pres-scenario-guide article{padding:22px;background:var(--pres-surface);border-radius:6px;min-width:0}
+#presidencia-2026-preview .pres-scenario-guide h3{font-size:19px;font-weight:500;margin:0 0 12px}
+#presidencia-2026-preview .pres-scenario-guide p{margin:12px 0 0}
+#presidencia-2026-preview .pres-technical{border-top:1px solid var(--pres-rule)}
+#presidencia-2026-preview .pres-technical summary{font-size:16px;min-height:52px;padding:15px 0;cursor:pointer}
+#presidencia-2026-preview .pres-technical-content{max-width:80ch;padding:0 0 20px;min-width:0}
+#presidencia-2026-preview .pres-equation{padding:18px;margin:20px 0;background:var(--pres-surface);border-radius:5px;font-size:18px;line-height:1.8}
+#presidencia-2026-preview .pres-equation mjx-container[display="true"]{margin:0;max-width:100%}
+#presidencia-2026-preview .pres-equation mjx-container[display="true"]+mjx-container[display="true"]{margin-top:16px}
+#presidencia-2026-preview .pres-priors{margin:20px 0}
+#presidencia-2026-preview .pres-priors>div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;border-top:1px solid var(--pres-rule);padding:13px 0}
+#presidencia-2026-preview .pres-priors dt{color:var(--pres-muted)}
+#presidencia-2026-preview .pres-priors dd{margin:0;overflow-wrap:anywhere}
+#presidencia-2026-preview .pres-prior-table{border-collapse:collapse;width:100%;table-layout:fixed;margin:22px 0;font-size:16px}
+#presidencia-2026-preview .pres-prior-table caption{text-align:left;font-weight:500;margin-bottom:12px}
+#presidencia-2026-preview .pres-prior-table th,#presidencia-2026-preview .pres-prior-table td{text-align:left;vertical-align:top;border-bottom:1px solid var(--pres-rule);padding:12px 8px;overflow-wrap:anywhere;font-weight:400}
+#presidencia-2026-preview .pres-prior-table th:first-child{width:58%;padding-left:0}
+#presidencia-2026-preview .pres-prior-table thead th{color:var(--pres-muted)}
+#presidencia-2026-preview .pres-info a{color:var(--pres-ink);text-underline-offset:3px}
+#presidencia-2026-preview .pres-members{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 30px;list-style:none;padding:0;margin:12px 0 24px}
+#presidencia-2026-preview .pres-members li{min-width:0;padding:12px 0;border-bottom:1px solid var(--pres-rule);overflow-wrap:anywhere}
+@container(max-width:650px){
+  #presidencia-2026-preview .pres-nav{gap:0 18px}
+  #presidencia-2026-preview .pres-info{padding:28px 0}
+  #presidencia-2026-preview .pres-info h1{font-size:26px}
+  #presidencia-2026-preview .pres-scenario-guide{grid-template-columns:1fr;gap:14px}
+  #presidencia-2026-preview .pres-scenario-guide article{padding:20px}
+  #presidencia-2026-preview .pres-priors>div{grid-template-columns:1fr;gap:5px}
+  #presidencia-2026-preview .pres-members{grid-template-columns:1fr}
+  #presidencia-2026-preview .pres-equation{padding:14px;font-size:17px}
+  #presidencia-2026-preview .pres-prior-table th:first-child{width:52%}
+  #presidencia-2026-preview .pres-prior-table th,#presidencia-2026-preview .pres-prior-table td{padding-right:4px;padding-left:4px}
+}

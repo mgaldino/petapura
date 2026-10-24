@@ -1,0 +1,20 @@
+{
+  "versao": "componentes_locais_v1_2026-10-20",
+  "status": "estimado em 2022 (variâncias locais); hipótese de magnitude (dp nacional e de UF da razão de válidos)",
+  "voto": {
+    "tau2_municipio": 0.00291313,
+    "variancia_residual_total_2022": 0.0221891,
+    "sigma2_modelo": 0.0221923,
+    "fonte": "Momentos ANOVA dos resíduos de voto_t1_fits.rds em 472.024 seções de 2022, por município"
+  },
+  "validos": {
+    "dp_nacional": 0.02,
+    "dp_uf": 0.029,
+    "var_municipio": 0.000216814,
+    "var_secao": 0.00099757,
+    "razao_nacional_2022": 1.00273,
+    "fonte": "log(válidos T2 / válidos T1) em 2022: variâncias municipal e por seção em torno da razão da UF; dp_uf = desvio-padrão entre UFs do log da razão em 2022; dp_nacional é hipótese (cerca de +-4% em 95%)"
+  },
+  "media_dos_desvios": 0,
+  "aplicacao": "Prior das mudanças locais com média zero; aprendidas com os BUs a cada snapshot, desde a prior original"
+}

@@ -19,10 +19,12 @@
     "candidates": {"type": "object", "additionalProperties": false, "required": ["a", "b"], "properties": {"a": {"$ref": "#/$defs/candidate"}, "b": {"$ref": "#/$defs/candidate"}}},
     "counting": {"anyOf": [{"$ref": "#/$defs/counting"}, {"type": "null"}]},
     "forecast": {"anyOf": [{"$ref": "#/$defs/forecast"}, {"type": "null"}]},
+    "forecast_2022": {"anyOf": [{"$ref": "#/$defs/forecast"}, {"type": "null"}]},
     "history": {"type": "array", "maxItems": 4000, "items": {"$ref": "#/$defs/history"}}
   },
   "allOf": [
-    {"if": {"properties": {"mode": {"const": "waiting"}}}, "then": {"properties": {"source_snapshot_id": {"type": "null"}, "counting": {"type": "null"}, "forecast": {"type": "null"}, "history": {"maxItems": 0}}}, "else": {"properties": {"source_snapshot_id": {"$ref": "#/$defs/text"}, "generated_at": {"$ref": "#/$defs/timestamp"}}}}
+    {"if": {"properties": {"mode": {"const": "waiting"}}}, "then": {"properties": {"source_snapshot_id": {"type": "null"}, "counting": {"type": "null"}, "forecast": {"type": "null"}, "forecast_2022": {"type": "null"}, "history": {"maxItems": 0}}}, "else": {"properties": {"source_snapshot_id": {"$ref": "#/$defs/text"}, "generated_at": {"$ref": "#/$defs/timestamp"}}}},
+    {"if": {"required": ["forecast_2022"], "properties": {"forecast_2022": {"type": "object"}}}, "then": {"properties": {"forecast": {"$ref": "#/$defs/forecast"}}}}
   ],
   "$defs": {
     "text": {"type": "string", "minLength": 1, "maxLength": 120, "pattern": "\\S"},

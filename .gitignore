@@ -3,6 +3,9 @@ __pycache__/
 *.pyc
 .DS_Store
 node_modules/
+.wrangler/
+.dev.vars
+.dev.vars.*
 .venv/
 .env
 .env.*
@@ -11,3 +14,13 @@ local/
 web/data/latest.local.json
 web/data/.*.lock
 tests/qa/site/
+# Registros administrativos e capturas privadas do painel de operação.
+/docs/INTEGRANTES.md
+/docs/validacao/integrantes-20261023.json
+/docs/validacao/*analytics*.png
+# Dados, modelos ajustados e saídas geradas ao executar o código publicado.
+/modelo/data/
+/modelo/output/
+/modelo/.venv/
+/modelo/*.rds
+/modelo/*.RData

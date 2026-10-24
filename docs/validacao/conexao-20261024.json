@@ -1,0 +1,89 @@
+{
+  "checked_at_utc": "2026-10-24T06:09:59.386418+00:00",
+  "finding": "Production publisher was stopped. Last R cycle before restart: 2026-10-23T04:21:30.295773+00:00.",
+  "action": "Resumed the existing production publisher in a detached background session, without changing model, checkpoint, collector or production configuration.",
+  "processes": {
+    "publisher": {
+      "pid": 22593,
+      "running": true,
+      "command": "/opt/homebrew/Cellar/python@3.15/3.15.0/Frameworks/Python.framework/Versions/3.15/Resources/Python.app/Contents/MacOS/Python -u /Users/manoelgaldino/Documents/DCP/PET/observatorio-presidencial-2026/scripts/run_cloudflare.py --wrangler /Users/manoelgaldino/Documents/DCP/PET/observatorio-presidencial-2026/local/cloudflare-tooling/node_modules/.bin/wrangler --rscript /usr/local/bin/Rscript"
+    },
+    "collector": {
+      "pid": 27739,
+      "running": true,
+      "command": "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/Resources/Python.app/Contents/MacOS/Python /Users/manoelgaldino/Documents/DCP/Cursos/Regressao/2026/lab-regressao-aula/projeto_agna/previsao_tempo_real/coletor.py watch"
+    }
+  },
+  "publisher_lock_active": true,
+  "collector_lock_active": true,
+  "publisher_interval_seconds": 60,
+  "collector_interval_seconds": 60,
+  "collector_window_brasilia": {
+    "start": "2026-10-25T17:00:00-03:00",
+    "end": "2026-10-26T08:00:00-03:00"
+  },
+  "collector_exports_to": "/Users/manoelgaldino/Documents/DCP/Cursos/Regressao/2026/lab-regressao-aula/projeto_agna/previsao_tempo_real/data/live/tse_export",
+  "publisher_reads_same_export": true,
+  "collector_observed_sections": 0,
+  "production_run": "e93d394069e84d86b835473645592ee0",
+  "production_model_sources_verified": 64,
+  "successful_r_cycles_after_resume": [
+    {
+      "at_utc": "2026-10-24T06:08:27.371396+00:00",
+      "checkpoint_id": "4e968e539656187e4cc9faf1ee21746cbbcd624efc7fa81384d1d0bf42d38d76",
+      "source_snapshot_id": "9cc8a050-db5a-4dbc-809b-1c0f9269f19d",
+      "processed": false
+    },
+    {
+      "at_utc": "2026-10-24T06:09:31.623720+00:00",
+      "checkpoint_id": "4e968e539656187e4cc9faf1ee21746cbbcd624efc7fa81384d1d0bf42d38d76",
+      "source_snapshot_id": "9cc8a050-db5a-4dbc-809b-1c0f9269f19d",
+      "processed": false
+    }
+  ],
+  "upload_confirmed": true,
+  "public_endpoint_verification": {
+    "checked_at_utc": "2026-10-24T06:09:07.999164+00:00",
+    "url": "https://petapura.eleicoes-pet.workers.dev/data/latest.json",
+    "cache_control": "no-store",
+    "content_type": "application/json; charset=utf-8",
+    "status": 200,
+    "matches_model_output_and_upload": true,
+    "both_scenarios_same_checkpoint": true,
+    "snapshot_id": "cp-4e968e539656187e4cc9faf1ee21746cbbcd624efc7fa81384d1d0bf42d38d76-379c944d5d575cbb",
+    "source_snapshot_id": "9cc8a050-db5a-4dbc-809b-1c0f9269f19d",
+    "public_sha256": "9603e9036fdfe5835abe0b95954b571d346f7796f3ee2fd6ca56831e4f6c6287",
+    "counting": {
+      "collected_sections": 0,
+      "generated_at": "2026-10-20T17:25:02.833981Z",
+      "reported_sections": 0,
+      "source": {
+        "area": "SOMA_UFS",
+        "generated_raw": "2026-10-15T09:38:19",
+        "name": "TSE"
+      },
+      "total_sections": 499248,
+      "valid_votes": 0,
+      "votes_a": 0,
+      "votes_b": 0
+    },
+    "page_poll_seconds": 30.0
+  },
+  "replay": {
+    "report": "replay-conexao-20261024.json",
+    "passed": 107,
+    "stages": 24,
+    "seconds": 33.81,
+    "source": "same frozen model source as production",
+    "synthetic": true,
+    "uploaded_to_production": false
+  },
+  "javascript_tests_passed": 55,
+  "publisher_tests_passed": 3,
+  "limits": [
+    "No real 2026 T2 BUs have arrived in the export; observed input to production remains zero.",
+    "Synthetic replay verifies software integration, not statistical calibration.",
+    "Operation requires Mac running, online and awake; the background publisher does not restart automatically after termination or reboot.",
+    "Collector starts caffeinate only inside its configured collection window when already running on an awake Mac."
+  ]
+}

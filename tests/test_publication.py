@@ -80,6 +80,21 @@ class PublicationTests(unittest.TestCase):
     def test_boolean_not_count(self):
         s=fixture();s['counting']['reported_sections']=True
         with self.assertRaises(ContractError):validate(s,CONFIG)
+    def test_dual_scenarios_preserved(self):
+        s=fixture();s['forecast_2022']=deepcopy(s['forecast'])
+        s['forecast_2022']['share_a']=48
+        published,_=publish(s,self.output,CONFIG)
+        self.assertEqual(published['forecast_2022']['share_a'],48)
+        self.assertEqual(published['forecast'],s['forecast'])
+    def test_historical_scenario_rejects_inconsistent_checkpoint_and_interval(self):
+        for key,value in [('source_snapshot_id','outro'),('generated_at','2026-10-25T20:00:00Z'),('interval',{'level':.95,'lower':99,'upper':50})]:
+            with self.subTest(key=key), self.assertRaises(ContractError):
+                s=fixture();s['forecast_2022']=deepcopy(s['forecast'])
+                s['forecast_2022'][key]=value
+                validate(s,CONFIG)
+    def test_historical_forecast_requires_primary(self):
+        s=fixture('waiting');s['forecast_2022']=fixture()['forecast']
+        with self.assertRaises(ContractError):validate(s,CONFIG)
 
 class ImportTests(unittest.TestCase):
     def setUp(self):

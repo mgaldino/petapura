@@ -4,6 +4,8 @@
   "poll_interval_ms": 30000,
   "request_timeout_ms": 10000,
   "stale_after_ms": 180000,
+  "counting_starts_at": "2026-10-25T20:00:00Z",
+  "cloudflare_web_analytics_token": "9a5bbf0932dd4e9dbaeacba471a46e88",
   "expected_election": {"year": 2026, "round": 2, "office": "president", "election_id": "6258", "pleito_id": "3221"},
   "expected_candidates": {"a": "13", "b": "22"}
 }

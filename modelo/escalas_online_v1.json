@@ -1,0 +1,28 @@
+{
+  "versao": "mudanca_entre_eleicoes_v1_2026-10-20",
+  "status": "hipotese_fixada_por_escala_interpretavel",
+  "media_dos_desvios": 0,
+  "unidade": "logit; inclinacoes por um desvio padrao historico do preditor",
+  "desvios_padrao": {
+    "alpha_global_sd": 0.15,
+    "alpha_uf_sd": 0.10,
+    "voto_global_sd": 0.05,
+    "voto_uf_sd": 0.05,
+    "comp_sd": 0.05,
+    "outros_sd": 0.05,
+    "validos_sd": 0.05
+  },
+  "perfis": {
+    "restrito": 0.5,
+    "central": 1.0,
+    "amplo": 2.0
+  },
+  "correlacao_entre_ufs_apenas_da_mudanca": {
+    "intercepto": 0.6923076923076923,
+    "inclinacao_voto_t1": 0.5
+  },
+  "aplicacao": "Somar Q uma unica vez a covariancia posterior historica, antes de observar a nova eleicao. Nunca reinflar Q por lote.",
+  "criterio": "Retencao dos valores do prototipo como versao central; interpretacao na escala da resposta e sensibilidade a metade e ao dobro dos desvios padrao.",
+  "limitacao": "Nao estimada por diferencas entre eleicoes. A reserva de municipios de 2022 nao identifica variancia de mudanca entre 2022 e 2026.",
+  "direcao": "Mudancas positivas e negativas equiprovaveis; nenhuma mudanca direcional de transferencia dos demais candidatos."
+}

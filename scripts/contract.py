@@ -54,7 +54,7 @@ def validate(snapshot, config=None):
     s = snapshot
     config = config or {}
     obj(s, "snapshot")
-    keys(s, ("version","snapshot_id","source_snapshot_id","generated_at","mode","election","candidates","counting","forecast","history"), "snapshot")
+    keys(s, ("version","snapshot_id","source_snapshot_id","generated_at","mode","election","candidates","counting","forecast","forecast_2022","history"), "snapshot", ("forecast_2022",))
     require(type(s.get("version")) in (int, float) and s["version"] == 1, "version")
     text(s.get("snapshot_id"), "snapshot_id")
     require(s.get("mode") in ("waiting", "live", "demo"), "mode")
@@ -131,6 +131,12 @@ def validate(snapshot, config=None):
         ids.add(h["snapshot_id"])
     if s["mode"] == "waiting":
         require(s["source_snapshot_id"] is None and s["counting"] is None and s["forecast"] is None and not s["history"], "waiting")
+    if s.get("forecast_2022") is not None:
+        require(s["forecast"] is not None, "forecast_2022 sem forecast")
+        alternative = {k: v for k, v in s.items() if k != "forecast_2022"}
+        alternative["forecast"] = s["forecast_2022"]
+        validate(alternative, config)
+        require(s["forecast_2022"]["generated_at"] == s["forecast"]["generated_at"], "cenários de checkpoints diferentes")
     return s
 
 def read_json(path):

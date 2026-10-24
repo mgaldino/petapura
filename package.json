@@ -5,9 +5,12 @@
   "type": "module",
   "description": "Apuração e projeção presidencial do PET de Ciências Sociais da USP",
   "scripts": {
-    "dev": "python3 scripts/serve.py",
+    "dev": "python3 scripts/run_local.py",
     "build": "python3 scripts/build.py",
-    "test": "node --test tests/*.test.js && python3 -m unittest discover -s tests -p 'test_*.py'"
+    "test": "node --test tests/*.test.js && python3 -m unittest discover -s tests -p 'test_*.py'",
+    "preview": "python3 scripts/serve.py"
   },
-  "engines": {"node": ">=20"}
+  "engines": {
+    "node": ">=20"
+  }
 }

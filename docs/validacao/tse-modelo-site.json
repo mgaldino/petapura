@@ -1,0 +1,29 @@
+{
+  "checkpoint_id": "b4a8abbd3c469d6ef9055f806b606dfd47b8a1d7f753beece835aa49100f33d9",
+  "source_snapshot_id": "9cc8a050-db5a-4dbc-809b-1c0f9269f19d",
+  "processed": true,
+  "sequence": 1,
+  "sections": 499248,
+  "observed_sections": 0,
+  "regression_sections": 0,
+  "share_a": 47.362364557772,
+  "lower": 42.949219774213,
+  "upper": 51.911079966098,
+  "source_area": "SOMA_UFS",
+  "code_sha256": {
+    "analise_execucao.R": "b599fc06770704281450083758168ae68629f77657dd1f030025c665d17d81ae",
+    "executar_analise.R": "07fb677873c012cfcb58537ac7e329392cc9c97df5da911d7b7f7516c610a9f5",
+    "online_conjugado.R": "4a4d6203a612dd8d00248d326400aa6c998b15ee3de4aa1d8a2b721e716c84c8",
+    "bayes.R": "8d34d7232d451feb145e7bf2c054bb9c9e1e489831105fb61b4dd5a4d79b5bbb",
+    "comparecimento_preditor.R": "e0a96a3c4fac9ab3d7516d6770ab2e6a1924a5f2351eb0bbe0894041d78ac12b",
+    "voto_t1.R": "b7391a0ae516b60bfabd1633f6cf2fb33fe60583d633b649666f5708813b3cdc",
+    "ler_dados_tse.R": "07e76e5a990acb002915ca3cada6e02e2910c9990893ba77f4c86e7480d31f25",
+    "previsao_execucao.R": "82580f77fcac2255bdfab9aa7440d35fab9edd52265e626d43a3b8b855f205ca",
+    "ancorar.R": "f797d879e701fcc8ebf56c3c6088d7159a915abb0180c5e5053afe19ab0c3382"
+  },
+  "initial_state_id": "76f70c2d4616be6813e4c4d0491afde97fde42e1c66405d700cc687dbd8ecbf7",
+  "kind": "local_existing_tse_export",
+  "observed_votes": 0,
+  "interval_level": 0.95,
+  "note": "Leitura do export local existente, zero BUs. Não acessou a rede, iniciou a vigia ou alterou o módulo do modelo. Não é validação com BUs T2 reais."
+}

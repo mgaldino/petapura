@@ -1,0 +1,38 @@
+{
+  "verified_at_utc": "2026-10-23T21:57:58.416741+00:00",
+  "url": "https://petapura.eleicoes-pet.workers.dev",
+  "version_id": "82087d98-9301-4c0e-9021-03d5da9b1d7d",
+  "html_http_status": 200,
+  "html_matches_source": true,
+  "html_sha256": "d32d710dda2cddab72980fa9fd1892ec18b7c98d8732a99610b3eb0d4059e2d6",
+  "css_matches_source": true,
+  "css_sha256": "a3fe134b8b7dd889e52ddae0249d0eb7b34a27ad370c785d080bbe6495509faf",
+  "sections": [
+    "modelo",
+    "quem-somos"
+  ],
+  "technical_details": 3,
+  "removed_sentence_absent": true,
+  "analytics_configured": true,
+  "live_snapshot_with_both_scenarios": true,
+  "layout_checked_widths": [
+    320,
+    365,
+    1265
+  ],
+  "student_roster": "pending_user_information",
+  "model_parameters_changed": false,
+  "public_browser_verified": true,
+  "broken_internal_anchors": 0,
+  "analytics_beacon_script_count": 1,
+  "screenshots": [
+    "modelo-publicado-20261023.png",
+    "quem-somos-publicado-20261023.png"
+  ],
+  "student_roster_update": {
+    "status": "published",
+    "count": 12,
+    "version_id": "989c14e8-0bcb-4783-9b3f-bb970d59291d",
+    "evidence": "integrantes-20261023.json"
+  }
+}

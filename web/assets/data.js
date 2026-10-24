@@ -19,7 +19,7 @@ function counts(c,p) {
 }
 export function validateSnapshot(s,config={}) {
   object(s,'snapshot'); if(s.version!==1) fail('version');
-  keys(s,['version','snapshot_id','source_snapshot_id','generated_at','mode','election','candidates','counting','forecast','history'],'snapshot');
+  keys(s,['version','snapshot_id','source_snapshot_id','generated_at','mode','election','candidates','counting','forecast','forecast_2022','history'],'snapshot',['forecast_2022']);
   string(s.snapshot_id,'snapshot_id');
   if(!['waiting','live','demo'].includes(s.mode))fail('mode');
   if(s.generated_at!==null)timestamp(s.generated_at);else if(s.mode!=='waiting')fail('generated_at');
@@ -46,14 +46,23 @@ export function validateSnapshot(s,config={}) {
   let last=-Infinity;const ids=new Set();
   for(const [i,h] of s.history.entries()){keys(h,['snapshot_id','generated_at','total_sections','reported_sections','votes_a','votes_b','valid_votes'],`history[${i}]`);counts(h,`history[${i}]`);string(h.snapshot_id,`history[${i}].snapshot_id`);const t=timestamp(h.generated_at,`history[${i}].generated_at`);if(t<last||ids.has(h.snapshot_id)||s.generated_at===null||t>timestamp(s.generated_at))fail(`history[${i}]`);last=t;ids.add(h.snapshot_id);}
   if(s.mode==='waiting' && (s.source_snapshot_id!==null||s.forecast!==null||s.counting!==null||s.history.length))fail('waiting');
+  if(s.forecast_2022!=null){
+    if(!s.forecast)fail('forecast_2022 sem forecast');
+    const {forecast_2022,...alternative}=s;
+    validateSnapshot({...alternative,forecast:forecast_2022},config);
+    if(forecast_2022.generated_at!==s.forecast.generated_at)fail('cenários de checkpoints diferentes');
+  }
   return s;
 }
 export const share = c => c?.valid_votes>0 ? 100*c.votes_a/c.valid_votes : null;
 export const progress = c => c ? 100*c.reported_sections/c.total_sections : 0;
 export const isComplete = s => Boolean(s.counting?.valid_votes>0 && s.counting.reported_sections===s.counting.total_sections);
-export function freshness(s,now,staleAfter) {
+export const isPrior = s => Boolean(s.forecast && s.counting && s.counting.reported_sections===0 && s.counting.valid_votes===0 && (s.counting.collected_sections??0)===0);
+export const isAwaitingCount = s => s.mode!=='demo' && !(s.counting?.reported_sections>0 || s.counting?.collected_sections>0 || s.counting?.valid_votes>0);
+export function freshness(s,now,staleAfter,countingStartsAt=null) {
   if(s.mode!=='live'||!s.generated_at)return 'current';
-  const times=[s.generated_at,s.counting?.generated_at,s.forecast?.generated_at].filter(Boolean).map(v=>timestamp(v));
+  if(isPrior(s)&&countingStartsAt&&now<timestamp(countingStartsAt))return 'current';
+  const times=[s.generated_at,s.counting?.generated_at,s.forecast?.generated_at,s.forecast_2022?.generated_at].filter(Boolean).map(v=>timestamp(v));
   return times.some(t=>now-t>staleAfter) ? 'stale' : 'current';
 }
 export async function readJSON(url,{signal,fetcher=fetch}={}) {
@@ -64,6 +73,9 @@ export async function readJSON(url,{signal,fetcher=fetch}={}) {
 }
 export function validateConfig(c){
   object(c,'config');for(const key of ['endpoint','demo_endpoint']){string(c[key],key,2048);const u=new URL(c[key],globalThis.location?.href||'http://localhost/');if(!['http:','https:'].includes(u.protocol)||u.username||u.password)fail(key);}
+  if(c.local_simulation!==undefined && typeof c.local_simulation!=='boolean')fail('local_simulation');
+  if(c.counting_starts_at!==undefined)timestamp(c.counting_starts_at,'counting_starts_at');
+  if(c.cloudflare_web_analytics_token!==undefined&&!/^[a-f0-9]{32}$/i.test(c.cloudflare_web_analytics_token))fail('cloudflare_web_analytics_token');
   number(c.poll_interval_ms,'poll_interval_ms',5000,600000);number(c.request_timeout_ms,'request_timeout_ms',1000,60000);number(c.stale_after_ms,'stale_after_ms',c.poll_interval_ms,86400000);
   object(c.expected_election,'expected_election');object(c.expected_candidates,'expected_candidates');for(const k of ['a','b'])string(c.expected_candidates[k],`expected_candidates.${k}`);return c;
 }
@@ -72,7 +84,7 @@ export function createPoller({url,config,onData,onError,onLoading=()=>{},fetcher
   async function refresh(){
     if(stopped||busy)return;busy=true;onLoading();controller=new AbortController();
     const timeout=schedule(()=>controller?.abort(),config.request_timeout_ms);
-    try{const data=validateSnapshot(await readJSON(url,{signal:controller.signal,fetcher}),config);if(!stopped){if(data.mode==='demo')throw new DataError('Endpoint real recebeu dados de demonstração');if(last?.generated_at&&(!data.generated_at||timestamp(data.generated_at)<timestamp(last.generated_at)))throw new DataError('Snapshot anterior ao último recebido');if(last?.snapshot_id===data.snapshot_id&&stable(last)!==stable(data))throw new DataError('Snapshot alterado sem nova identidade');last=data;onData(data);}}
+    try{const data=validateSnapshot(await readJSON(url,{signal:controller.signal,fetcher}),config);if(!stopped){if(data.mode==='demo'&&!config.local_simulation)throw new DataError('Endpoint real recebeu dados de demonstração');if(config.local_simulation&&data.mode==='live')throw new DataError('Simulação recebeu dados reais');if(last?.generated_at&&(!data.generated_at||timestamp(data.generated_at)<timestamp(last.generated_at)))throw new DataError('Snapshot anterior ao último recebido');if(last?.snapshot_id===data.snapshot_id&&stable(last)!==stable(data))throw new DataError('Snapshot alterado sem nova identidade');last=data;onData(data);}}
     catch(error){if(!stopped)onError(error);}
     finally{cancel(timeout);busy=false;controller=null;if(!stopped)timer=schedule(refresh,config.poll_interval_ms);}
   }

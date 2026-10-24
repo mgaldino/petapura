@@ -2,6 +2,14 @@
 
 Versão 1, preparada em 20/10/2026. O contrato contém somente agregados nacionais do segundo turno presidencial. O site não estima o modelo nem recebe coeficientes, sorteios completos ou dados individuais.
 
+Extensão de 22/10: `forecast` preserva o cenário com aprendizado; `forecast_2022` contém
+o cenário relação de 2022, com o mesmo formato. O campo é opcional para manter a leitura
+dos snapshots antigos, mas obrigatório no build de produção e no endpoint do Workers.
+Ambos devem usar o mesmo `source_snapshot_id` e `generated_at`, correspondentes ao mesmo
+checkpoint. Não se calcula uma média entre cenários. A prior anterior à janela de
+apuração é identificada como previsão inicial; depois do início configurado, a ausência
+de atualização volta a gerar o aviso de desatualização.
+
 ## Fronteira entre os projetos
 
 | Responsável | Produto |
@@ -11,7 +19,7 @@ Versão 1, preparada em 20/10/2026. O contrato contém somente agregados naciona
 | Adaptadores deste repositório | JSON público validado, histórico e publicação atômica |
 | Aplicação | Leitura periódica, apresentação, gráfico e aviso de falha/desatualização |
 
-O módulo em desenvolvimento na outra sessão foi localizado em `2026/lab-regressao-aula/projeto_agna/previsao_tempo_real`, no repositório Regressao. Seu `STATUS.md` distinguia a coleta operacional do fluxo adaptativo ainda em implementação na consulta de 20/10/2026. Nenhum arquivo desse módulo é alterado por este site.
+O módulo em desenvolvimento na outra sessão foi localizado em `2026/lab-regressao-aula/projeto_agna/previsao_tempo_real`, no repositório Regressao. Seu executor atual `previsao_execucao.R` já produz previsão por seção/UF/total e checkpoints. A integração local deste repositório chama essa API, preservando o estado inicial e a prior V2. Nenhum arquivo desse módulo é alterado por este site.
 
 ## Conteúdo do snapshot
 
@@ -38,7 +46,15 @@ O horário textual original do TSE fica em `counting.source.generated_raw`, sem 
 
 As notas em `forecast.notes` explicam hipóteses e limitações do modelo. São texto simples; não executam HTML. Campos fora do contrato são rejeitados para evitar publicar acidentalmente componentes internos do ajuste.
 
-## Caminho preferido: executor produz o snapshot completo
+## Executor integrado pronto
+
+`python3 scripts/run_local.py` inicia a simulação de ponta a ponta; `--mode tse` acompanha o export real já produzido pelo coletor. A ponte `integracao/executar_pipeline.R` carrega o estado inicial, recupera o checkpoint e chama `avancar_previsao_analise()`. Usa `cp$snapshot_manifest`, `cp$official_details$chosen` e `cp$results$resumo` do mesmo checkpoint, sem reler o ponteiro vivo após calcular.
+
+O adaptador mapeia `pct_a_projetado`, `pct_a_q025` e `pct_a_q975` diretamente para a votação e o intervalo de 95%. Preserva a versão da prior e a identidade do estado inicial. `win_probability_a` fica nulo; essa saída ainda não é exportada pelo adaptador. A nota metodológica informa quando a âncora foi ou não aplicada.
+
+Saídas e checkpoints ficam em `local/demo/` ou `local/tse/`, fora do módulo do modelo. O publicador original do coletor é usado na demo sem consultas de rede. A origem fictícia tem marcador no manifesto, `mode=demo` no JSON público e identificação persistente na página. O modo TSE recusa o marcador fictício. Ver [guia local](LOCAL.md) e [evidência do replay](validacao/replay-integrado.json).
+
+## Alternativa: executor produz o snapshot completo
 
 Use os objetos do snapshot que o executor já leu. Não releia o ponteiro do coletor depois de calcular a previsão: ele pode ter avançado nesse intervalo.
 
@@ -108,3 +124,7 @@ A URL em `web/config.json` pode ser relativa ou um endpoint HTTP(S). Para outro 
 O cliente consulta a cada 30 segundos, com timeout de 10 segundos e uma consulta por vez. Falha HTTP, JSON inválido, eleição errada ou payload incoerente preserva o último estado válido e mostra um aviso. Após três minutos sem dados atuais, o site sinaliza desatualização. O horário da contagem e o do modelo entram nessa verificação.
 
 Há exemplos sintéticos em `tests/fixtures/`, incluindo uma faixa de 95%, probabilidade ausente, previsão com zero BUs e apuração completa. Eles são testes; não devem alimentar o endpoint real.
+
+## Versão do código por execução
+
+Os fontes e configurações do modelo são copiados de forma consistente para `local/<modo>/runs/<id>/model-source/`, com SHA256 conferido antes de executar R. O coletor sintético também usa essa cópia. Isso mantém a API que criou o checkpoint mesmo se o módulo original for atualizado em outra sessão. Uma execução antiga sem esse registro é preservada e substituída por uma nova compatível. Os ajustes e pacotes históricos continuam sendo lidos do projeto do modelo; nenhum parâmetro estatístico é escolhido pela interface.
