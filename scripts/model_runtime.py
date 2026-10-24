@@ -1,4 +1,4 @@
-"""Cópia consistente dos fontes do modelo por execução; checkpoints não mudam de API."""
+"""Cópia consistente das fontes do modelo por execução; checkpoints não mudam de API."""
 import json
 from pathlib import Path
 import re
@@ -22,7 +22,7 @@ def freeze_model(directory, destination):
     parent_manifest = verify_model(directory) if (directory / "source-manifest.json").exists() else None
     for _ in range(3):
         files = source_files(directory)
-        # Arquivos apontados por defaults em R precisam acompanhar os fontes.
+        # Arquivos apontados por defaults em R precisam acompanhar as fontes.
         referenced = set(re.findall(rb'["\']([^"\'/]+\.json)["\']',
                                     b"\n".join(v for k, v in files.items()
                                                if k in {"componentes_locais.R", "online_conjugado.R"})))
@@ -31,7 +31,7 @@ def freeze_model(directory, destination):
         if files == source_files(directory) and not missing:
             break
     else:
-        raise ValueError("Os fontes/configurações do modelo mudaram durante a cópia; tente novamente")
+        raise ValueError("As fontes e configurações do modelo mudaram durante a cópia; tente novamente")
     require("previsao_execucao.R" in files, "API de previsão ausente")
     destination.parent.mkdir(parents=True, exist_ok=True)
     tmp = Path(tempfile.mkdtemp(prefix=".model-source-", dir=destination.parent))
@@ -53,6 +53,6 @@ def verify_model(directory):
     manifest = json.loads((directory / "source-manifest.json").read_text(encoding="utf-8"))
     require(manifest.get("kind") == "pet_frozen_model_source", "cópia do modelo sem identificação")
     for name, expected in manifest["files"].items():
-        require(Path(name).name == name, "caminho do fonte congelado")
-        require(digest((directory / name).read_bytes()) == expected, f"fonte congelado alterado: {name}")
+        require(Path(name).name == name, "caminho da fonte congelada")
+        require(digest((directory / name).read_bytes()) == expected, f"fonte congelada alterada: {name}")
     return manifest

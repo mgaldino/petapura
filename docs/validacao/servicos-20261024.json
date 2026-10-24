@@ -1,0 +1,110 @@
+{
+  "verified_at_utc": "2026-10-24T15:09:47.862754+00:00",
+  "services": {
+    "collector": {
+      "label": "br.usp.petapura.collector",
+      "installed_plist": "~/Library/LaunchAgents/br.usp.petapura.collector.plist",
+      "plist_sha256": "322bbf6096cff79cdabe6b0ba7f2705375fbb81869556223401755fe06d8eee2",
+      "loaded": true,
+      "supervisor_pid": 34362,
+      "child_pid": 34363,
+      "launchd_runs": 3,
+      "single_instance": true,
+      "phase": "waiting_window",
+      "start_at_login": true,
+      "restart_delay_seconds": 20
+    },
+    "publisher": {
+      "label": "br.usp.petapura.publisher",
+      "installed_plist": "~/Library/LaunchAgents/br.usp.petapura.publisher.plist",
+      "plist_sha256": "d9dd9931dcdb83c7da37c0a0a1809cc4bd87fabcb8681c96130a6219d9b9b92a",
+      "loaded": true,
+      "supervisor_pid": 34334,
+      "child_pid": 34335,
+      "launchd_runs": 3,
+      "single_instance": true,
+      "phase": "running",
+      "start_at_login": true,
+      "restart_delay_seconds": 20
+    }
+  },
+  "window_start": "2026-10-25T17:00:00-03:00",
+  "window_end": "2026-10-26T08:00:00-03:00",
+  "restart_supervisor_test": {
+    "at_utc": "2026-10-24T15:07:27.260587+00:00",
+    "test": "SIGKILL on both launchd supervisors",
+    "before": {
+      "collector": {
+        "supervisor": 34172,
+        "child": 34179,
+        "runs": 1
+      },
+      "publisher": {
+        "supervisor": 34176,
+        "child": 34180,
+        "runs": 1
+      }
+    },
+    "after": {
+      "collector": {
+        "supervisor": 34262,
+        "child": 34267,
+        "runs": 2
+      },
+      "publisher": {
+        "supervisor": 34264,
+        "child": 34266,
+        "runs": 2
+      }
+    },
+    "automatic_restart": true,
+    "old_children_terminated_by_launchd": true
+  },
+  "restart_child_test": {
+    "at_utc": "2026-10-24T15:08:54.880223+00:00",
+    "test": "SIGINT on both real child processes",
+    "before": {
+      "collector": {
+        "supervisor": 34262,
+        "child": 34267,
+        "runs": 2
+      },
+      "publisher": {
+        "supervisor": 34264,
+        "child": 34266,
+        "runs": 2
+      }
+    },
+    "after": {
+      "publisher": {
+        "supervisor": 34334,
+        "child": 34335,
+        "runs": 3
+      },
+      "collector": {
+        "supervisor": 34362,
+        "child": 34363,
+        "runs": 3
+      }
+    },
+    "automatic_restart": true,
+    "publisher_zero_exit_verified": true
+  },
+  "same_production_run": true,
+  "same_initial_state_id": true,
+  "frozen_statistical_sources_unchanged": true,
+  "public_snapshot_matches_model": true,
+  "public_http_status": 200,
+  "public_snapshot_id": "cp-4e968e539656187e4cc9faf1ee21746cbbcd624efc7fa81384d1d0bf42d38d76-379c944d5d575cbb",
+  "both_scenarios_present": true,
+  "real_counting": {
+    "reported_sections": 0,
+    "collected_sections": 0,
+    "valid_votes": 0
+  },
+  "python_tests_passed": 78,
+  "javascript_tests_passed": 55,
+  "physical_reboot_tested": false,
+  "restart_after_reboot": "Configured for user login through persistent LaunchAgents with RunAtLoad. No physical reboot performed.",
+  "grammar": "Fontes padronizado no feminino na documentação, comentários e mensagens, com concordância corrigida."
+}

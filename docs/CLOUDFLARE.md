@@ -13,20 +13,33 @@ Registro em `validacao/analytics-20261022.json` e captura em
 Identificadores públicos em `../deployment/cloudflare.json`. O token do beacon é público;
 credenciais de acesso à conta continuam fora do repositório.
 
+## Supervisão configurada em 24/10
+
+Coletor e publicador estão sob dois LaunchAgents do `launchd`. Eles iniciam no login
+e retomam após encerramento inesperado, preservando o mesmo runtime e checkpoints.
+A operação e os comandos atuais estão em [SERVICOS.md](SERVICOS.md). Para consultar:
+
+```sh
+python3 scripts/manage_services.py status
+```
+
+As observações anteriores de PIDs abaixo registram a história da implantação. O estado
+atual deve ser consultado no `launchd` e em `local/services/`, não nos recibos históricos.
+
 ## Conferência operacional de 24/10/2026
 
 O coletor estava ativo (PID 27739), aguardando a janela configurada para 25/10 às 17h
 até 26/10 às 8h, Brasília. O export ainda tinha zero BUs, como esperado antes da janela.
 O publicador de produção estava parado, com o último ciclo registrado em 23/10 às
 01h21 de Brasília. Ele foi retomado em segundo plano (PID 22593), mantendo o runtime,
-o checkpoint e os fontes congelados existentes. O processo não inicia outro coletor.
+o checkpoint e as fontes congeladas existentes. O processo não inicia outro coletor.
 
 O envio remoto foi concluído e o endpoint público respondeu HTTP 200, com
 `Cache-Control: no-store`, entregando exatamente o JSON do modelo e do upload. Os dois
 cenários têm o mesmo snapshot de origem e o mesmo horário de cálculo. Um snapshot sem
 novos dados conserva sua identidade e horário, mesmo quando o ciclo de consulta roda.
 
-O replay isolado executado com os mesmos fontes congelados da produção passou em 107
+O replay isolado executado com as mesmas fontes congeladas da produção passou em 107
 verificações e 24 etapas, de zero a 100% das seções fictícias. Passaram também os 55
 testes JavaScript e os três testes do publicador remoto. Dados fictícios não foram
 enviados à produção. Evidência em `validacao/conexao-20261024.json`.
@@ -35,8 +48,8 @@ Coletor e publicador operam em ciclos de 60 segundos, além do tempo de processa
 a página consulta os resultados a cada 30 segundos. A propagação do KV acrescenta seu
 próprio tempo. A operação continua dependendo deste Mac ligado, conectado e acordado.
 O coletor inicia `caffeinate` durante a janela se o Mac estiver acordado naquele momento.
-Não há serviço de reinício automático do publicador após encerramento ou reinicialização
-do Mac. A checagem atual confirma processos ativos, não garante disponibilidade futura.
+Naquela conferência, ainda não havia serviço de reinício automático do publicador.
+A supervisão instalada posteriormente em 24/10 está descrita acima.
 
 ## Componentes
 
@@ -48,7 +61,7 @@ do Mac. A checagem atual confirma processos ativos, não garante disponibilidade
 - `deployment/initial-prior.json`: prior real usada antes do primeiro envio ao KV. Falha
   de leitura do KV retorna 503; o navegador preserva o último resultado válido.
 - `scripts/run_cloudflare.py`: lê o export existente do coletor e executa o modelo em R.
-  Não inicia outro coletor nem modifica o módulo original. Fontes são congelados por execução.
+  Não inicia outro coletor nem modifica o módulo original. Fontes são congeladas por execução.
 
 O Worker serve a página e os resultados; o cálculo continua no executor R. Durante a
 apuração, o Mac ou servidor com o coletor e o publicador precisa ficar ligado, conectado
@@ -140,5 +153,6 @@ configurado. Evidência do endpoint e da correspondência com o upload em
 export a cada 60 segundos. PID observado em 22/10: `2022`; estado local em
 `local/cloudflare/publisher-status.json`. Esse processo não inicia outro coletor.
 É necessário manter o Mac ligado e conectado e preservar a execução desse processo.
-Se ele for encerrado ou o Mac reiniciar, retomar com o comando sem `--once` descrito acima.
-A operação do coletor existente continua independente.
+Esse início manual foi substituído em 24/10 pelos LaunchAgents descritos em
+[SERVICOS.md](SERVICOS.md). Eles retomam os componentes na sessão do usuário, inclusive
+após novo login, com logs próprios e sem duplicar as instâncias.

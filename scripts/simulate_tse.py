@@ -115,7 +115,7 @@ def _csv(rows, fields):
 
 
 def _load_publisher(model_dir):
-    """Carrega estes fontes sem criar bytecode nem reaproveitar outro coletor."""
+    """Carrega estas fontes sem criar bytecode nem reaproveitar outro coletor."""
     old_bytecode = sys.dont_write_bytecode
     old_path = list(sys.path)
     old_collector = sys.modules.get("coletor")

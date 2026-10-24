@@ -3,7 +3,7 @@
   "original": "https://github.com/mgaldino/petapura/tree/main/modelo",
   "production_run": "e93d394069e84d86b835473645592ee0",
   "production_source_manifest_sha256": "94e357363000b0b34c64ea9fab72727cadc8faf408ecb6f6a9a785e43c9e1061",
-  "note": "Fontes do release de produção, preservados byte a byte. O inventário de caminhos locais de outros projetos não integra esta distribuição.",
+  "note": "Fontes do release de produção, preservadas byte a byte. O inventário de caminhos locais de outros projetos não integra esta distribuição.",
   "files": {
     "analise_execucao.R": "b599fc06770704281450083758168ae68629f77657dd1f030025c665d17d81ae",
     "ancorar.R": "f797d879e701fcc8ebf56c3c6088d7159a915abb0180c5e5053afe19ab0c3382",

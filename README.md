@@ -6,8 +6,8 @@ Site de apuração e projeção do segundo turno presidencial. Projeto do **PET 
 **Código:** [github.com/mgaldino/petapura](https://github.com/mgaldino/petapura)
 
 O repositório reúne o site, o endpoint no Cloudflare Workers, os adaptadores de
-publicação e os [fontes do modelo estatístico e do coletor](modelo/README.md).
-Os fontes em `modelo/` correspondem ao release usado em produção, com hashes
+publicação e as [fontes do modelo estatístico e do coletor](modelo/README.md).
+As fontes em `modelo/` correspondem ao release usado em produção, com hashes
 conferidos. Dados eleitorais de entrada e objetos ajustados são requisitos separados,
 documentados nesse diretório. Os registros administrativos do PET e as capturas do
 painel de analytics permanecem locais.
@@ -70,7 +70,7 @@ python3 scripts/import_tse.py --source /caminho/previsao_tempo_real/data/live/ts
 ```
 
 O executor de produção continua usando seu runtime isolado. A cópia pública em
-`modelo/` permite inspecionar os fontes que deram origem aos cálculos. Para executá-la,
+`modelo/` permite inspecionar as fontes que deram origem aos cálculos. Para executá-la,
 é necessário fornecer os dados e o estado inicial descritos em seu README. Os formatos
 antigos de previsão não são tratados como saída final do modelo adaptativo.
 
@@ -105,3 +105,11 @@ Publicado em 22/10 em **[petapura.eleicoes-pet.workers.dev](https://petapura.ele
 com Web Analytics ativo e acessos de teste já recebidos no painel. A página pública e
 o primeiro envio do modelo ao KV foram verificados; o JSON público corresponde ao snapshot enviado. Instruções e
 evidências em [CLOUDFLARE.md](docs/CLOUDFLARE.md).
+
+## Supervisão automática no macOS
+
+O coletor e o publicador podem ser mantidos por dois LaunchAgents do `launchd`, com
+retomada após encerramento e início automático no login, inclusive depois de reiniciar
+o Mac. A instalação e os comandos de operação estão em [SERVICOS.md](docs/SERVICOS.md).
+Na máquina de produção, os dois serviços usam os mesmos dados, runtime e checkpoints
+que já alimentam o site. Não dependem de manter o aplicativo aberto.

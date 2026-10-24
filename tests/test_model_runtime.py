@@ -31,7 +31,7 @@ class FrozenModelTests(unittest.TestCase):
     def test_tampered_frozen_source_is_rejected(self):
         freeze_model(self.original, self.frozen)
         (self.frozen / "previsao_execucao.R").write_text("# alterado")
-        with self.assertRaisesRegex(ValueError, "alterado"):
+        with self.assertRaisesRegex(ValueError, "alterada"):
             verify_model(self.frozen)
 
     def test_tested_release_can_be_reused_without_changing_any_source(self):

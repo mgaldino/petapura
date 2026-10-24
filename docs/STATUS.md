@@ -2,6 +2,19 @@
 
 Atualizado em 24/10/2026. Os registros anteriores abaixo preservam suas datas.
 
+## Supervisão automática e concordância de fontes em 24/10
+
+Coletor e publicador foram transferidos para dois LaunchAgents do `launchd`, com início
+no login e retomada após encerramento. Os supervisores respeitam o fim da janela
+eleitoral, preservam o runtime e checkpoints e não deixam cópias antigas concorrentes.
+Os detalhes estão em [SERVICOS.md](SERVICOS.md). Os testes reais encerraram processos
+para verificar a retomada, sem reiniciar fisicamente o Mac.
+
+Foi padronizada a concordância de “fontes” no feminino na documentação e nas mensagens
+do código. As fontes estatísticas
+congeladas e os parâmetros do modelo foram preservados. Evidência em
+[servicos-20261024.json](validacao/servicos-20261024.json).
+
 ## Código no GitHub em 24/10
 
 O código foi publicado em [mgaldino/petapura](https://github.com/mgaldino/petapura),
@@ -37,15 +50,16 @@ matemática, sem erros TeX ou excesso de largura. Evidência em
 
 O coletor está ativo e aguarda 25/10 às 17h de Brasília. Foi encontrada e corrigida uma
 interrupção operacional: o publicador dos cenários havia parado em 23/10 às 01h21.
-O processo foi retomado em segundo plano, com o mesmo checkpoint e fontes congelados.
+O processo foi retomado em segundo plano, com o mesmo checkpoint e fontes congeladas.
 O upload remoto foi concluído, e o JSON público coincide com a saída real do executor R,
 contendo os dois cenários do mesmo snapshot. A página consulta esse endpoint a cada 30s;
 coletor e publicador trabalham em ciclos de 60s, além do tempo de processamento.
 
-O replay isolado com os fontes da produção passou em 107 verificações e 24 etapas.
+O replay isolado com as fontes da produção passou em 107 verificações e 24 etapas.
 Também passaram os 55 testes JavaScript e três testes do publicador. Não foram enviados
-dados fictícios à produção. O Mac precisa continuar ligado, conectado e acordado. O
-publicador não tem reinício automático após encerramento ou reinicialização do Mac.
+dados fictícios à produção. O Mac precisa continuar ligado, conectado e acordado.
+Naquela conferência o publicador ainda não tinha reinício automático. A configuração
+posterior de supervisão está descrita no início deste documento.
 Evidência em [conexao-20261024.json](validacao/conexao-20261024.json).
 
 ## Introdução e espera pela apuração em 24/10
@@ -114,7 +128,7 @@ iniciar outro coletor. Depende do Mac ligado e conectado. Operação em
 - Publicação atômica, lock para um único escritor, histórico, idempotência e tratamento de correções.
 - Leitor do export existente do coletor e funções R para exportar a previsão e montar um snapshot com os objetos já lidos pelo executor.
 - Demonstração separada e identificada. Nenhum dado sintético preenche silenciosamente o endpoint real.
-- Mockup aprovado e pesquisa de benchmark arquivados, com seus fontes e referências.
+- Mockup aprovado e pesquisa de benchmark arquivados, com suas fontes e referências.
 - Integração executável com a API atual `avancar_previsao_analise()`, checkpoint e publicador, em `integracao/executar_pipeline.R` e `scripts/run_local.py`.
 - Simulação local interativa: 2.800 seções fictícias, 24 lotes, 400 sorteios por cálculo, avanço automático e página sem controles de operação. Usa o publicador original do coletor, o leitor TSE e o modelo adaptativo reais.
 - Modo `--mode tse` lê o export existente e processa a população real, sem iniciar coletor e sem gravar no módulo do modelo. Modos real e fictício usam pastas separadas.
@@ -154,6 +168,6 @@ Os testes estatísticos e a calibração dos intervalos pertencem ao modelo. As 
 
 ## Correção da execução automática
 
-A falha relatada era a leitura de um checkpoint antigo por uma versão mais nova da API do modelo. Cada execução agora preserva os fontes/configurações e seus hashes em `model-source/`; o leitor R e o coletor sintético usam essa mesma versão. Execuções anteriores sem esse registro são mantidas e uma nova execução compatível é criada.
+A falha relatada era a leitura de um checkpoint antigo por uma versão mais nova da API do modelo. Cada execução agora preserva as fontes/configurações e seus hashes em `model-source/`; o leitor R e o coletor sintético usam essa mesma versão. Execuções anteriores sem esse registro são mantidas e uma nova execução compatível é criada.
 
 O teste HTTP automático partiu de uma cópia da execução que falhou, percorreu as 24 etapas sem enviar ações e chegou a 100% sem erros em 60,998 segundos. Os checkpoints anteriores foram preservados e os votos finais coincidiram com a fixture. Reabrir a execução concluída também passou. Registro em [automatico.json](validacao/automatico.json). A página agora atualiza automaticamente, sem botões de reprodução, avanço, reinício ou seleção de intervalo.

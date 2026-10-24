@@ -1,6 +1,6 @@
 # Modelo estatístico e coletor do Pet Apura
 
-Este diretório publica os fontes do release que alimenta o site. Os 63 arquivos
+Este diretório publica as fontes do release que alimenta o site. Os 63 arquivos
 R, Stan, Python e JSON listados em `source-manifest.json` foram comparados byte a byte
 com o runtime de produção em 24/10/2026. O manifesto registra o hash SHA-256 de cada
 arquivo e a identidade da execução. O inventário privado de caminhos de outros projetos
@@ -49,10 +49,10 @@ A execução depende de entradas que não acompanham este repositório:
 `preparar_voto_t1.R`, `preparar_componentes_locais.R` e as funções de
 `analise_execucao.R` documentam as etapas de preparação. Alguns scripts históricos
 usam caminhos relativos da organização original dos dados, explicitados no código.
-Publicar os fontes não equivale a distribuir os objetos ajustados ou a disponibilizar
+Publicar as fontes não equivale a distribuir os objetos ajustados ou a disponibilizar
 uma reprodução integral do ajuste apenas com `git clone`.
 
-Com as entradas preparadas em uma pasta de modelo, o site pode usar estes fontes:
+Com as entradas preparadas em uma pasta de modelo, o site pode usar estas fontes:
 
 ```sh
 python3 scripts/run_local.py --mode tse \

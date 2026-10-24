@@ -127,4 +127,4 @@ Há exemplos sintéticos em `tests/fixtures/`, incluindo uma faixa de 95%, proba
 
 ## Versão do código por execução
 
-Os fontes e configurações do modelo são copiados de forma consistente para `local/<modo>/runs/<id>/model-source/`, com SHA256 conferido antes de executar R. O coletor sintético também usa essa cópia. Isso mantém a API que criou o checkpoint mesmo se o módulo original for atualizado em outra sessão. Uma execução antiga sem esse registro é preservada e substituída por uma nova compatível. Os ajustes e pacotes históricos continuam sendo lidos do projeto do modelo; nenhum parâmetro estatístico é escolhido pela interface.
+As fontes e configurações do modelo são copiadas de forma consistente para `local/<modo>/runs/<id>/model-source/`, com SHA256 conferido antes de executar R. O coletor sintético também usa essa cópia. Isso mantém a API que criou o checkpoint mesmo se o módulo original for atualizado em outra sessão. Uma execução antiga sem esse registro é preservada e substituída por uma nova compatível. Os ajustes e pacotes históricos continuam sendo lidos do projeto do modelo; nenhum parâmetro estatístico é escolhido pela interface.
