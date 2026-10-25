@@ -2,6 +2,35 @@
 
 Atualizado em 25/10/2026. Os registros anteriores abaixo preservam suas datas.
 
+## Gráfico parte da priori (25/10)
+
+Com 166 BUs do exterior, a linha contínua do gráfico (parcial apurado) começava em 30,8%
+para A e 69,2% para B, e a ligação tracejada partia desse ponto. Por decisão do
+operador, o gráfico passou a mostrar a projeção do resultado final em cada atualização,
+a partir da previsão inicial em 0% das seções. O parcial permanece no quadro “Apurado
+até agora” e aparece no tooltip.
+
+- `scripts/contract.py` e `web/assets/data.js`: entradas de `history` aceitam os trios
+  opcionais `forecast_*` e `forecast_2022_*`; o publicador grava a projeção dos dois
+  cenários em cada nova entrada.
+- `web/assets/chart.js`: `projectionPoints()` monta a série (primeira entrada em 0%,
+  última revisão nas demais posições); a faixa acompanha o intervalo de cada
+  atualização e segue constante depois de “Agora”. O tooltip mostra a projeção e o
+  apurado até a posição; o percentual de seções usa duas casas abaixo de 1%.
+- `web/assets/app.js` e `web/index.html`: legenda “Projeção durante a apuração” e
+  “Projeção atual”, nota do gráfico e texto da leitura da incerteza.
+- Testes: 57 JavaScript e 122 Python (venv do coletor, 1 ignorado).
+
+Ordem da operação: deploy do Worker e do site (versão
+`cbe52a87-abe5-4367-8bf5-c9cdc6b0071d`), que aceitam os dois formatos; cópia de
+`public/latest.json` antes da alteração; preenchimento de 437 das 461 entradas do
+histórico a partir do `historico.csv` do modelo, sob o lock do publicador (24 entradas
+das 10h10 em diante, com parcial oficial 0 e BUs já no modelo, ficaram sem projeção);
+SIGINT no publicador às 10h28. O preenchimento usou `scripts/backfill_history_forecast.py RUNTIME --write`. O launchd o reiniciou em menos de um segundo, na mesma
+execução, e a primeira publicação nova (13:28:28Z) já trouxe a projeção no histórico.
+Páginas abertas antes do deploy com o JavaScript anterior recusam o histórico novo e
+mostram “Não foi possível atualizar” até serem recarregadas.
+
 ## Parcial com BUs recebidos (25/10)
 
 Às 10h, o site mostrava zero votos apurados com 166 BUs do exterior já coletados, todos

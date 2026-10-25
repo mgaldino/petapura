@@ -36,7 +36,7 @@ O [JSON Schema](../schema/snapshot.schema.json) descreve os tipos. Os validadore
 | `candidates` | Identidade e nome de A e B; A em vermelho, B em azul |
 | `counting` | Seções e votos dos BUs incorporados pelo modelo (`Recebido` ou `Totalizado`), total de seções e fonte da totalização oficial escolhida, horário de recebimento; pode ser `null` |
 | `forecast` | Previsão final e metadados; pode ser `null` |
-| `history` | Histórico de contagens, mantido pelo publicador; até 4.000 entradas |
+| `history` | Histórico de contagens e da projeção de cada atualização, mantido pelo publicador; até 4.000 entradas |
 
 Percentuais de votos e limites são números de **0 a 100**. `interval.level` e `win_probability_a` usam **0 a 1**. Contagens são inteiros não negativos; votos de A + B devem ser iguais aos válidos. `reported_sections` não pode superar `total_sections`. Somente BR ou a soma completa de UFs/exterior podem representar a totalização nacional.
 
@@ -114,9 +114,11 @@ Os arquivos do coletor são apenas lidos. A entrada não é um endpoint público
 - A chance de vitória fica ausente enquanto não for calculada.
 - Desde 25/10/2026, o executor integrado preenche `reported_sections`, `votes_a`, `votes_b` e `valid_votes` com os BUs que o modelo incorporou, recebidos ou totalizados ([ENTRADA_BU.md](ENTRADA_BU.md#parcial-publicado-no-site)). O importador de dados observados (`scripts/import_tse.py`) continua usando a totalização oficial.
 - Com todas as seções apuradas e votos válidos positivos, a interface usa o resultado observado e informa o fim da apuração.
-- O envelope visual converge para o intervalo do resultado final. A ligação tracejada não estima a ordem de chegada dos votos. O tooltip no trecho futuro informa a estimativa final, sem inventar valores intermediários.
+- Desde 25/10/2026, o gráfico mostra a projeção do resultado final em cada atualização, com a faixa publicada naquele momento, a partir da previsão inicial em 0% das seções. Depois de “Agora”, a linha tracejada e a faixa repetem a projeção atual até 100%; elas não estimam a ordem de chegada dos votos. O parcial apurado aparece no quadro “Apurado até agora” e no tooltip.
 
-Para o gráfico, o histórico bruto permanece no JSON. A apresentação consolida revisões na mesma posição e usa pontos até o avanço atual, evitando desenhar votos antigos além da posição corrigida de “Agora”.
+Para o gráfico, o histórico bruto permanece no JSON. A apresentação consolida revisões na mesma posição e usa pontos até o avanço atual, evitando desenhar valores antigos além da posição corrigida de “Agora”. Em 0%, usa a primeira entrada, que é a priori; nas demais posições, a última revisão.
+
+Cada entrada de `history` pode trazer `forecast_a`, `forecast_lower` e `forecast_upper` (cenário com aprendizado) e `forecast_2022_a`, `forecast_2022_lower` e `forecast_2022_upper` (relação de 2022), copiados pelo publicador de `forecast` e `forecast_2022`. Cada trio é opcional e, quando presente, precisa estar completo, em 0–100 e com limite inferior menor ou igual ao superior. As entradas publicadas até 25/10/2026 às 10h28 foram preenchidas a partir do `historico.csv` do modelo, pelo identificador do checkpoint, apenas quando o número de seções com BU do modelo coincidia com `reported_sections`.
 
 ## Rede e hospedagem
 

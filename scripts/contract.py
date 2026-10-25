@@ -12,6 +12,10 @@ import tempfile
 class ContractError(ValueError):
     pass
 
+# Projeção publicada em cada atualização; entradas anteriores a 25/10/2026 podem não ter esses campos.
+HISTORY_FORECAST = ("forecast_a", "forecast_lower", "forecast_upper",
+                    "forecast_2022_a", "forecast_2022_lower", "forecast_2022_upper")
+
 def require(condition, path):
     if not condition:
         raise ContractError(f"Dado inválido: {path}")
@@ -122,8 +126,15 @@ def validate(snapshot, config=None):
     ids = set()
     for i, h in enumerate(s["history"]):
         p = f"history[{i}]"
-        keys(h, ("snapshot_id","generated_at","total_sections","reported_sections","votes_a","votes_b","valid_votes"), p)
+        keys(h, ("snapshot_id","generated_at","total_sections","reported_sections","votes_a","votes_b","valid_votes") + HISTORY_FORECAST, p, HISTORY_FORECAST)
         counts(h, p)
+        for prefix in ("forecast", "forecast_2022"):
+            values = [h.get(f"{prefix}_{part}") for part in ("a", "lower", "upper")]
+            if all(v is None for v in values):
+                continue
+            for v in values:
+                numeric(v, f"{p}.{prefix}")
+            require(values[1] <= values[2], f"{p}.{prefix}")
         text(h.get("snapshot_id"), p + ".snapshot_id")
         t = stamp(h.get("generated_at"), p + ".generated_at")
         require((last is None or last <= t) and h["snapshot_id"] not in ids and s["generated_at"] is not None and t <= stamp(s["generated_at"]), p)
@@ -182,6 +193,12 @@ def _publish(snapshot, destination, config=None):
         c = s["counting"]
         entry = {key:c[key] for key in ("total_sections", "reported_sections", "votes_a", "votes_b", "valid_votes")}
         entry.update(snapshot_id=s["snapshot_id"], generated_at=s["generated_at"])
+        # A projeção de cada atualização permite traçar o caminho desde a previsão inicial.
+        for prefix in ("forecast", "forecast_2022"):
+            f = s.get(prefix)
+            if f is not None:
+                entry.update({f"{prefix}_a": f["share_a"], f"{prefix}_lower": f["interval"]["lower"],
+                              f"{prefix}_upper": f["interval"]["upper"]})
         if not history or history[-1]["snapshot_id"] != s["snapshot_id"]:
             history.append(entry)
     s["history"] = history[-4000:]

@@ -12,7 +12,7 @@ function connection(){
   else if(s&&freshness(s,Date.now(),state.config.stale_after_ms,state.config.counting_starts_at)==='stale')text=isAwaitingCount(s)?'Ainda não recebemos resultados recentes da apuração. A consulta será refeita automaticamente.':'Os dados estão sem atualização recente. A previsão abaixo pode estar desatualizada.';
   el.hidden=!text;if(el.textContent!==text)el.textContent=text;
 }
-function draw(){if(state.snapshot){const s=state.snapshot,f=state.chartScenario==='2022'?s.forecast_2022:s.forecast;renderChart(root.querySelector('svg'),root.querySelector('.pres-chart-tooltip'),{...s,forecast:f||s.forecast},state.visible);}}
+function draw(){if(state.snapshot){const s=state.snapshot,f=state.chartScenario==='2022'?s.forecast_2022:s.forecast;renderChart(root.querySelector('svg'),root.querySelector('.pres-chart-tooltip'),{...s,forecast:f||s.forecast},state.visible,f?state.chartScenario:'learning');}}
 function result(s,boxId='result',prefix='',f=s.forecast){
   const box=document.getElementById(boxId),$=id=>document.getElementById(prefix+id),complete=isComplete(s),value=complete?share(s.counting):f?.share_a;
   if(isAwaitingCount(s)){
@@ -64,7 +64,7 @@ function render(s){
   $('legend-a').textContent=s.candidates.a.name;$('legend-b').textContent=s.candidates.b.name;
   $('chart-interval-label').textContent=f&&!complete?`Faixa de ${fmt(f.interval.level*100,0)}%`:'Faixa da projeção';
   $('projection-legend').hidden=!f||complete;$('interval-legend').hidden=!f||complete;
-  $('chart-note').textContent=complete?'Apuração concluída. As linhas mostram os votos apurados.':f?'A faixa é do resultado final. O trecho tracejado é uma ligação ilustrativa, sem prever o ritmo da apuração.':'Ainda não há projeção final disponível. As linhas mostram somente os votos já apurados.';
+  $('chart-note').textContent=complete?'Apuração concluída. As linhas mostram a projeção ao longo da apuração até o resultado apurado.':f?'A linha contínua mostra a projeção do resultado final a cada atualização, a partir da previsão inicial do modelo. Depois de “Agora”, a linha tracejada repete a projeção atual, sem prever o ritmo da apuração.':'Ainda não há projeção final disponível.';
   $('counted').innerHTML='<h2>Apurado até agora</h2><div class="pres-counted-results"><p id="partial-votes"></p><p id="partial-sections"></p></div>';
   if(partial===null)$('partial-votes').textContent='Ainda não há votos válidos apurados.';else{const b=document.createElement('b');b.textContent=`${fmt(partial)}%`;$('partial-votes').append(b,document.createTextNode(` dos votos válidos para ${s.candidates.a.name}`));}
   if(s.counting){const p=progress(s.counting),b=document.createElement('b');b.textContent=`${fmt(p,p>0&&p<1?2:1)}%`;$('partial-sections').append(b,document.createTextNode(` das seções apuradas (${fmt(s.counting.reported_sections,0)} de ${fmt(s.counting.total_sections,0)})`));}else $('partial-sections').textContent='Avanço da apuração ainda indisponível.';

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {validateSnapshot,validateConfig,share,progress,isComplete,freshness,createPoller,readJSON,timestamp,isAwaitingCount} from '../web/assets/data.js';
-import {chartPoints,separateLabelBaselines} from '../web/assets/chart.js';
+import {chartPoints,projectionPoints,separateLabelBaselines} from '../web/assets/chart.js';
 const load=name=>JSON.parse(readFileSync(new URL(`fixtures/${name}.json`,import.meta.url)));
 const config=JSON.parse(readFileSync(new URL('../web/config.json',import.meta.url)));
 const demo=JSON.parse(readFileSync(new URL('../web/demo/snapshots.json',import.meta.url)));
@@ -51,6 +51,23 @@ for(const [name,mutate] of invalid)test(`rejeita ${name}`,()=>{const s=load('liv
 test('identifica desatualização da fonte mesmo com modelo recente',()=>{const s=load('live-95');const now=timestamp(s.generated_at)+1000;s.counting.generated_at='2026-10-25T23:00:00Z';assert.equal(freshness(s,now,180000),'stale');});
 test('demonstração nunca é apresentada como dado real desatualizado',()=>assert.equal(freshness(demo[0],Date.now()+1e12,1),'current'));
 test('gráfico mantém só posições até o avanço corrente e corrige a última posição',()=>{const s=load('live-95');s.counting.reported_sections=5000;s.counting.votes_a=2500000;s.counting.votes_b=2500000;s.counting.valid_votes=5000000;const points=chartPoints(s);assert.ok(points.every(p=>p.x<=50));assert.deepEqual(points.at(-1),{x:50,a:50});});
+test('histórico aceita projeção opcional e recusa faixa invertida ou incompleta',()=>{
+  const s=load('live-95');Object.assign(s.history[0],{forecast_a:47.4,forecast_lower:42.9,forecast_upper:51.5});validateSnapshot(s,config);
+  const inverted=load('live-95');Object.assign(inverted.history[0],{forecast_a:47.4,forecast_lower:51.5,forecast_upper:42.9});assert.throws(()=>validateSnapshot(inverted,config));
+  const partial=load('live-95');Object.assign(partial.history[0],{forecast_a:47.4});assert.throws(()=>validateSnapshot(partial,config));
+});
+test('projeção do gráfico parte da priori e termina na previsão atual',()=>{
+  const s=load('live-95');
+  s.history.unshift({total_sections:10000,reported_sections:0,votes_a:0,votes_b:0,valid_votes:0,snapshot_id:'prior-1',generated_at:'2026-10-25T20:00:00Z',forecast_a:47.35,forecast_lower:43,forecast_upper:51.4},
+    {total_sections:10000,reported_sections:0,votes_a:0,votes_b:0,valid_votes:0,snapshot_id:'prior-2',generated_at:'2026-10-25T20:01:00Z',forecast_a:47.36,forecast_lower:43,forecast_upper:51.4});
+  Object.assign(s.history[2],{forecast_a:48,forecast_lower:44,forecast_upper:52});
+  validateSnapshot(s,config);
+  const points=projectionPoints(s);
+  assert.deepEqual(points[0],{x:0,a:47.35,lower:43,upper:51.4});
+  assert.deepEqual(points[1],{x:1,a:48,lower:44,upper:52});
+  assert.deepEqual(points.at(-1),{x:65.2,a:51.4,lower:47.5,upper:55.3});
+  assert.equal(points.length,3);
+});
 test('rótulos finais não se sobrepõem no empate ou em uma disputa muito próxima',()=>{for(const [a,b] of [[100,100],[100,101],[101,100]]){const [x,y]=separateLabelBaselines(a,b);assert.ok(Math.abs(x-y)>=22);}assert.deepEqual(separateLabelBaselines(80,120),[80,120]);});
 const response=data=>({ok:true,status:200,text:async()=>JSON.stringify(data)});
 function poller(fetcher,settings=config){const received=[],errors=[],timers=new Map();let id=0;const p=createPoller({url:'/data/latest.json',config:settings,onData:s=>received.push(s),onError:e=>errors.push(e),fetcher,schedule:f=>{timers.set(++id,f);return id;},cancel:i=>timers.delete(i)});return {p,received,errors,timers};}

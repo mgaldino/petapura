@@ -45,6 +45,11 @@ class PublicationTests(unittest.TestCase):
         second,_=publish(s,self.output,CONFIG)
         self.assertEqual(second['history'][-1]['reported_sections'],6000)
         self.assertEqual(len(second['history']),len(first['history'])+1)
+    def test_history_keeps_forecast_of_each_update(self):
+        first,_=publish(fixture(),self.output,CONFIG)
+        entry=first['history'][-1]
+        self.assertEqual((entry['forecast_a'],entry['forecast_lower'],entry['forecast_upper']),(51.4,47.5,55.3))
+        self.assertNotIn('forecast_2022_a',entry)
     def test_old_snapshot_rejected(self):
         s=fixture();s['snapshot_id']='novo';s['generated_at']='2026-10-25T23:31:00Z';publish(s,self.output,CONFIG)
         with self.assertRaises(ContractError):publish(fixture(),self.output,CONFIG)

@@ -11,6 +11,16 @@ export function timestamp(v,p='generated_at') {
   const t=Date.parse(v); if (!Number.isFinite(t) || new Date(t).toISOString().slice(0,19)!==v.slice(0,19)) fail(p);
   return t;
 }
+// Projeção publicada em cada atualização; entradas anteriores a 25/10/2026 podem não ter esses campos.
+export const HISTORY_FORECAST=['forecast_a','forecast_lower','forecast_upper','forecast_2022_a','forecast_2022_lower','forecast_2022_upper'];
+function historyForecast(h,p) {
+  for (const prefix of ['forecast','forecast_2022']) {
+    const v=[h[`${prefix}_a`],h[`${prefix}_lower`],h[`${prefix}_upper`]];
+    if (v.every(x=>x===undefined)) continue;
+    v.forEach(x=>number(x,`${p}.${prefix}`));
+    if (v[1]>v[2]) fail(`${p}.${prefix}`);
+  }
+}
 function counts(c,p) {
   object(c,p);
   for (const key of ['total_sections','reported_sections','votes_a','votes_b','valid_votes']) count(c[key],`${p}.${key}`);
@@ -44,7 +54,7 @@ export function validateSnapshot(s,config={}) {
   }
   if(!Array.isArray(s.history)||s.history.length>4000)fail('history');
   let last=-Infinity;const ids=new Set();
-  for(const [i,h] of s.history.entries()){keys(h,['snapshot_id','generated_at','total_sections','reported_sections','votes_a','votes_b','valid_votes'],`history[${i}]`);counts(h,`history[${i}]`);string(h.snapshot_id,`history[${i}].snapshot_id`);const t=timestamp(h.generated_at,`history[${i}].generated_at`);if(t<last||ids.has(h.snapshot_id)||s.generated_at===null||t>timestamp(s.generated_at))fail(`history[${i}]`);last=t;ids.add(h.snapshot_id);}
+  for(const [i,h] of s.history.entries()){keys(h,['snapshot_id','generated_at','total_sections','reported_sections','votes_a','votes_b','valid_votes',...HISTORY_FORECAST],`history[${i}]`,HISTORY_FORECAST);counts(h,`history[${i}]`);historyForecast(h,`history[${i}]`);string(h.snapshot_id,`history[${i}].snapshot_id`);const t=timestamp(h.generated_at,`history[${i}].generated_at`);if(t<last||ids.has(h.snapshot_id)||s.generated_at===null||t>timestamp(s.generated_at))fail(`history[${i}]`);last=t;ids.add(h.snapshot_id);}
   if(s.mode==='waiting' && (s.source_snapshot_id!==null||s.forecast!==null||s.counting!==null||s.history.length))fail('waiting');
   if(s.forecast_2022!=null){
     if(!s.forecast)fail('forecast_2022 sem forecast');
