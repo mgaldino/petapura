@@ -7,7 +7,7 @@ Somente Presidência da República, segundo turno. Direção visual **Observató
 ## Hierarquia
 
 1. Votação final projetada de A e faixa de incerteza, com referência de 50%.
-2. Gráfico: A em vermelho e B em azul; projeção do resultado final ao longo da apuração em linha contínua, a partir da previsão inicial, com a faixa de cada atualização; projeção atual tracejada depois de “Agora”; intervalo final visível. O parcial apurado fica no quadro abaixo do gráfico e no tooltip (alteração de 25/10/2026).
+2. Gráfico: A em vermelho e B em azul; projeção do resultado final ao longo da apuração em linha contínua, a partir da previsão inicial, com a faixa de cada atualização; projeção atual tracejada depois de “Agora”; intervalo final visível na posição 100%, identificada como “Resultado final projetado”. O parcial apurado fica no quadro abaixo do gráfico e no tooltip (alteração de 25/10/2026).
 3. Bloco “Apurado até agora”, depois do gráfico.
 4. Detalhes sobre chance de vitória, hipóteses e incerteza.
 5. Identificação: “Projeto do PET de Ciências Sociais da USP”.

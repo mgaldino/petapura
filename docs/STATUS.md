@@ -20,6 +20,10 @@ até agora” e aparece no tooltip.
 - `web/assets/app.js` e `web/index.html`: legenda “Projeção durante a apuração” e
   “Projeção atual”, nota do gráfico e texto da leitura da incerteza.
 - Testes: 57 JavaScript e 122 Python (venv do coletor, 1 ignorado).
+- Rótulo “Resultado final projetado” no alto da posição 100%, para que os pontos e
+  rótulos finais não sejam lidos como 100% das seções apuradas. Ele é omitido quando
+  colide com “Agora”, perto do fim da apuração. Deploy `f65b7070-d638-4fb7-a554-67dd5add2707`;
+  conferido em desktop, celular (375 px) e em estado fictício com 97% apurado.
 
 Ordem da operação: deploy do Worker e do site (versão
 `cbe52a87-abe5-4367-8bf5-c9cdc6b0071d`), que aceitam os dois formatos; cópia de

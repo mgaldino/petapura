@@ -53,6 +53,8 @@ export function renderChart(svg,tooltip,s,visible=[true,true],scenario='learning
   if(!awaiting&&s.counting&&current<100){
     const now=x(current);add(plot,'line',{'data-now-guide':'',x1:now,x2:now,y1:T,y2:h-B,stroke:'var(--pres-muted)','stroke-width':1,'stroke-dasharray':'3 4'});
     const n=label(svg,now+8,T+15,'Agora','start',{'data-now-label':''});if(end-now<n.getComputedTextLength()+12){n.setAttribute('x',now-8);n.setAttribute('text-anchor','end');}
+    // A posição 100% guarda o resultado final projetado, não seções já apuradas.
+    if(forecast){const f=label(svg,end-8,T+15,'Resultado final projetado','end',{'data-final-label':''}),a=n.getBBox(),b=f.getBBox();if(a.x<b.x+b.width+8&&b.x<a.x+a.width+8)f.remove();}
   }
   const colors=['var(--pres-a)','var(--pres-b)'];
   // Valores da candidatura i em um ponto da projeção; para B, a faixa é o complemento da de A.
