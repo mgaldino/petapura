@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pet Apura · Comparecimento por UF · Local</title>
+<link rel="stylesheet" href="style.css">
+<main>
+  <header><p class="eyebrow">PET APURA · ACOMPANHAMENTO LOCAL</p>
+    <h1>Comparecimento por UF</h1>
+    <p>Variante com intercepto, voto no primeiro turno e comparecimento variando por UF. Os mesmos boletins alimentam os dois cenários.</p>
+    <p id="state" role="status" aria-live="polite">Aguardando o primeiro cálculo local…</p>
+  </header>
+  <section aria-labelledby="national-title"><h2 id="national-title">Projeção nacional de Lula</h2>
+    <div class="cards"><article><h3>Com aprendizado</h3><p class="big" id="learning">—</p><p id="learning-range">Faixa de 95%: —</p></article>
+    <article><h3>Relação de 2022</h3><p class="big" id="historical">—</p><p id="historical-range">Faixa de 95%: —</p></article></div>
+    <p id="comparison"></p><p id="time" class="muted"></p>
+  </section>
+  <section aria-labelledby="countries-title"><h2 id="countries-title">Primeiros países do exterior</h2>
+    <p class="muted">Percentuais dos votos válidos. China inclui Hong Kong. As projeções por país combinam os BUs coletados e as seções pendentes.</p>
+    <table><thead><tr><th scope="col">País</th><th scope="col">BUs</th><th scope="col">Com aprendizado</th><th scope="col">Relação de 2022</th></tr></thead><tbody id="countries"></tbody></table>
+  </section>
+  <section aria-labelledby="ufs-title"><h2 id="ufs-title">UFs e exterior</h2>
+    <table><thead><tr><th scope="col">UF</th><th scope="col">BUs</th><th scope="col">Com aprendizado</th><th scope="col">Relação de 2022</th></tr></thead><tbody id="ufs"></tbody></table>
+  </section>
+  <footer>Variante experimental local · 86 coeficientes · Consulta ao modelo a cada 60 segundos, além do tempo de cálculo. A página confere o relatório a cada 5 segundos. As faixas são condicionadas ao modelo.</footer>
+</main>
+<script type="module" src="app.js"></script>
+</html>

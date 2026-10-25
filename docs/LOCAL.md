@@ -1,5 +1,9 @@
 # Executar o fluxo local
 
+O acompanhamento experimental com **comparecimento variando por UF** está em
+[COMPARECIMENTO_UF_LOCAL.md](COMPARECIMENTO_UF_LOCAL.md). Ele usa uma execução própria
+e o mesmo export do coletor, sem publicar seus resultados no site.
+
 ## Simulação integrada
 
 Na raiz do repositório:
