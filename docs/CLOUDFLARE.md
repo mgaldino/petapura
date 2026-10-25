@@ -24,6 +24,11 @@ A operação e os comandos atuais estão em [SERVICOS.md](SERVICOS.md). Para con
 python3 scripts/manage_services.py status
 ```
 
+A janela operacional atual é de **25/10 às 00h até 26/10 às 8h**, Brasília,
+definida em [`../deployment/collector-2026.json`](../deployment/collector-2026.json).
+Ela foi antecipada para consultar também eventuais boletins do exterior antes das
+17h, preservando a exigência de estado `Totalizado` e os dois modelos.
+
 As observações anteriores de PIDs abaixo registram a história da implantação. O estado
 atual deve ser consultado no `launchd` e em `local/services/`, não nos recibos históricos.
 

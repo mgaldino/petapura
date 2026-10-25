@@ -1,6 +1,6 @@
 {
   "supervisor_python": "/caminho/python3",
-  "collector_config": "/caminho/modelo-com-dados/config.json",
+  "collector_config": "/caminho/petapura/deployment/collector-2026.json",
   "environment": {
     "PATH": "/caminho/node/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
     "LANG": "en_US.UTF-8",
@@ -10,7 +10,7 @@
   },
   "services": {
     "collector": {
-      "command": ["/caminho/python-com-asn1tools", "/caminho/modelo-com-dados/coletor.py", "watch"],
+      "command": ["/caminho/python-com-asn1tools", "/caminho/modelo-com-dados/coletor.py", "watch", "--config", "/caminho/petapura/deployment/collector-2026.json"],
       "cwd": "/caminho/modelo-com-dados",
       "launch_receipt": "/caminho/modelo-com-dados/data/live/launch.json"
     },

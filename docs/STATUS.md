@@ -2,6 +2,25 @@
 
 Atualizado em 24/10/2026. Os registros anteriores abaixo preservam suas datas.
 
+## Início da coleta antecipado para 00h em 24/10
+
+O operador autorizou antecipar o início das consultas para **25/10 às 00h**, Brasília.
+A configuração operacional está em
+[`../deployment/collector-2026.json`](../deployment/collector-2026.json), passada
+explicitamente ao coletor por `--config` e lida também pelos supervisores. O fim
+permanece em 26/10 às 8h. A única mudança nos campos da coleta é o horário inicial.
+Os filtros, incluindo a exigência de estado `Totalizado`, os limites e a lista de
+UFs com `ZZ` foram preservados.
+
+Os dois supervisores foram recarregados no domínio `system`, sem processos antigos
+remanescentes. O coletor confirmou espera pela nova janela, e o novo publicador
+enviou os dois cenários à Cloudflare. O JSON público coincide com a saída local e o
+upload. Foram verificados os hashes das fontes congeladas, o mesmo estado inicial,
+runtime e checkpoint. Os 63 arquivos do release público também mantêm seus hashes.
+A referência do teste de partida sem login foi preservada, e a reinicialização física
+do Mac permanece pendente. Evidência em
+[janela-coleta-20261024.json](validacao/janela-coleta-20261024.json).
+
 ## Preparação do teste de partida sem login em 24/10
 
 O supervisor passou a registrar a identificação da partida do macOS e o estado da
@@ -12,13 +31,14 @@ O verificador exige uma nova partida, os dois jobs em `system`, confirmação de
 
 Passaram 89 testes Python. A referência da partida atual foi salva, e o verificador
 recusou corretamente confirmar uma reinicialização que ainda não ocorreu. O novo
-registro será usado no próximo início dos supervisores. O procedimento está em
+registro foi confirmado na recarga dos supervisores descrita acima. O procedimento está em
 [SERVICOS.md](SERVICOS.md#teste-com-reinicialização-física). A reinicialização física
 permanece pendente de execução pelo operador.
 
-O exterior (`ZZ`) já consta da configuração. A janela ainda começa em 25/10 às 17h,
-Brasília. Foi proposta a antecipação para 00h para consultar eventuais arquivos de
-seção anteriores à divulgação dos totais, mantendo a exigência de hash `Totalizado`.
+O exterior (`ZZ`) já constava da configuração. Na etapa de preparação, a janela ainda
+começava em 25/10 às 17h, Brasília. Foi proposta a antecipação para 00h para consultar
+eventuais arquivos de seção anteriores à divulgação dos totais. A aprovação e a
+aplicação dessa mudança estão registradas acima, mantendo a exigência de hash `Totalizado`.
 O art. 263 trata da disponibilização dos boletins recebidos, enquanto o art. 265,
 § 1º, fixa 17h para divulgação dos resultados presidenciais, inclusive do exterior.
 Referência consultada em 24/10/2026:
@@ -97,7 +117,7 @@ matemática, sem erros TeX ou excesso de largura. Evidência em
 
 ## Conexão da atualização automática conferida em 24/10
 
-O coletor está ativo e aguarda 25/10 às 17h de Brasília. Foi encontrada e corrigida uma
+Naquela conferência, o coletor estava ativo e aguardava 25/10 às 17h de Brasília. Foi encontrada e corrigida uma
 interrupção operacional: o publicador dos cenários havia parado em 23/10 às 01h21.
 O processo foi retomado em segundo plano, com o mesmo checkpoint e fontes congeladas.
 O upload remoto foi concluído, e o JSON público coincide com a saída real do executor R,

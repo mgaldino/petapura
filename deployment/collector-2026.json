@@ -1,0 +1,18 @@
+{
+  "year": 2026,
+  "round": 2,
+  "election": 6258,
+  "pleito": 3221,
+  "candidate_a": 13,
+  "candidate_b": 22,
+  "label_a": "Lula",
+  "label_b": "Flávio Bolsonaro",
+  "start": "2026-10-25T00:00:00-03:00",
+  "end": "2026-10-26T08:00:00-03:00",
+  "interval_seconds": 60,
+  "workers": 24,
+  "requests_per_second": 70,
+  "max_sections_per_cycle": 10000,
+  "unannounced_probe_limit": 0,
+  "ufs": ["AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO", "ZZ"]
+}

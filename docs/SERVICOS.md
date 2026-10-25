@@ -58,9 +58,12 @@ O encerramento abrupto do supervisor também provoca a retomada. O `launchd` lim
 demais processos de seu grupo (`AbandonProcessGroup = false`), evitando deixar uma
 cópia antiga do coletor, de R ou do publicador ocupando o lock.
 
-Os supervisores usam o mesmo `config.json` do coletor para reconhecer o fim da janela.
-Na configuração de 2026, ela começa em **25/10 às 17h** e termina em **26/10 às 8h**,
-Brasília. O coletor aguarda o início como antes. O publicador pode conferir o export
+Os supervisores usam a mesma configuração operacional passada ao coletor por
+`--config` para reconhecer a janela. Ela está em
+[`../deployment/collector-2026.json`](../deployment/collector-2026.json) e começa em
+**25/10 às 00h**, terminando em **26/10 às 8h**, Brasília. O início foi antecipado de
+17h para 00h em 24/10 para consultar eventuais boletins do exterior publicados mais
+cedo. O coletor aguarda o início como antes. O publicador pode conferir o export
 antes do início. No término, ambos são encerrados de forma controlada e retornam
 sucesso, sem um ciclo infinito de reinicialização depois da eleição. Em sinais de
 parada, o supervisor tenta primeiro `SIGINT` para permitir a limpeza prevista no
@@ -78,6 +81,11 @@ Os caminhos reais ficam em `local/services/settings.json`, fora do Git. O exempl
 o formato, com caminhos que precisam ser ajustados à máquina. O ambiente inclui o
 Node necessário ao Wrangler. As credenciais continuam no perfil já autenticado do
 operador, fora do arquivo de configuração e dos plists.
+
+O campo `collector_config` aponta para a configuração operacional, e o comando do
+coletor recebe esse mesmo caminho em `--config`. Os filtros, a lista de UFs com `ZZ`,
+os limites de consultas e o fim da janela foram preservados. O `config.json` do
+release em `modelo/` e as fontes congeladas no runtime mantêm os hashes originais.
 
 Antes da primeira instalação, encerre as instâncias iniciadas manualmente, depois de
 conferir sua identidade e aguardar a liberação dos locks. Os serviços já configurados

@@ -6,6 +6,11 @@ com o runtime de produção em 24/10/2026. O manifesto registra o hash SHA-256 d
 arquivo e a identidade da execução. O inventário privado de caminhos de outros projetos
 foi omitido. A especificação ASN.1 e o arquivo de dependências Python acompanham o coletor.
 
+A janela atual de coleta está na configuração operacional
+[`../deployment/collector-2026.json`](../deployment/collector-2026.json), passada ao
+coletor por `--config`. O início foi antecipado para 25/10 às 00h, Brasília. O
+`config.json` deste release permanece preservado como parte das fontes congeladas.
+
 ## Arquivos principais
 
 | Arquivo | Função |
