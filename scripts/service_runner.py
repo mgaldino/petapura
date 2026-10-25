@@ -11,6 +11,7 @@ import threading
 import time
 
 from contract import atomic_write, require
+from startup_evidence import host_context, save_startup
 
 
 def utc_now():
@@ -62,11 +63,12 @@ def supervise(settings_path, name, stop_event=None, now=utc_now, poll_seconds=1)
     stop_event = stop_event or threading.Event()
     state_path = settings_path.parent / f'{name}-status.json'
     child = None
+    startup = None
 
     def record(phase, **extra):
         value = dict(service=name, phase=phase, observed_at_utc=now().isoformat(),
                      supervisor_pid=os.getpid(), child_pid=child.pid if child else None,
-                     window_start=start.isoformat(), window_end=end.isoformat(), **extra)
+                     window_start=start.isoformat(), window_end=end.isoformat(), startup=startup, **extra)
         atomic_write(state_path, value)
         return value
 
@@ -76,6 +78,7 @@ def supervise(settings_path, name, stop_event=None, now=utc_now, poll_seconds=1)
             record('window_finished')
             return 0
         try:
+            startup = host_context()
             child = subprocess.Popen(service['command'], cwd=service['cwd'], stdin=subprocess.DEVNULL)
             if service.get('launch_receipt'):
                 atomic_write(Path(service['launch_receipt']), dict(
@@ -83,7 +86,12 @@ def supervise(settings_path, name, stop_event=None, now=utc_now, poll_seconds=1)
                     command=service['command'], start=start.isoformat(), end=end.isoformat(),
                     mode='observed_data_only' if name == 'collector' else 'two_real_scenarios',
                     managed_by='launchd', supervisor_pid=os.getpid()))
-            print(json.dumps(record('running'), ensure_ascii=False), flush=True)
+            initial_record = record('running')
+            try:
+                save_startup(settings_path.parent, initial_record)
+            except OSError as error:
+                print(f'Registro histórico da partida indisponível: {error}', flush=True)
+            print(json.dumps(initial_record, ensure_ascii=False), flush=True)
             last_status = time.monotonic()
             while child.poll() is None:
                 if stop_event.is_set() or now() >= end:

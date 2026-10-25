@@ -2,6 +2,28 @@
 
 Atualizado em 24/10/2026. Os registros anteriores abaixo preservam suas datas.
 
+## Preparação do teste de partida sem login em 24/10
+
+O supervisor passou a registrar a identificação da partida do macOS e o estado da
+sessão gráfica no instante em que inicia o filho. Os registros históricos privados
+permitem distinguir um início na tela de login de um início após a entrada na conta.
+O verificador exige uma nova partida, os dois jobs em `system`, confirmação de
+`loginwindow` e os mesmos processos ainda ativos com status recente.
+
+Passaram 89 testes Python. A referência da partida atual foi salva, e o verificador
+recusou corretamente confirmar uma reinicialização que ainda não ocorreu. O novo
+registro será usado no próximo início dos supervisores. O procedimento está em
+[SERVICOS.md](SERVICOS.md#teste-com-reinicialização-física). A reinicialização física
+permanece pendente de execução pelo operador.
+
+O exterior (`ZZ`) já consta da configuração. A janela ainda começa em 25/10 às 17h,
+Brasília. Foi proposta a antecipação para 00h para consultar eventuais arquivos de
+seção anteriores à divulgação dos totais, mantendo a exigência de hash `Totalizado`.
+O art. 263 trata da disponibilização dos boletins recebidos, enquanto o art. 265,
+§ 1º, fixa 17h para divulgação dos resultados presidenciais, inclusive do exterior.
+Referência consultada em 24/10/2026:
+[Resolução TSE nº 23.751/2026](https://www.tse.jus.br/legislacao/compilada/res/2026/resolucao-no-23-751-de-26-de-fevereiro-de-2026?texto=compilado).
+
 ## Instalação de sistema confirmada em 24/10
 
 O operador executou o instalador com autenticação administrativa. Coletor e publicador

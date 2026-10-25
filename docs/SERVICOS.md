@@ -124,6 +124,41 @@ inspecionada, mas não foi testada com uma reinicialização física sem login.
 O registro [`validacao/servicos-20261024.json`](validacao/servicos-20261024.json)
 documenta a instalação inicial por LaunchAgents, substituída pelo modo sistema.
 
+## Teste com reinicialização física
+
+O supervisor grava, a cada início, uma evidência privada em
+`local/services/startups/ID_DA_PARTIDA/`. O registro inclui a identificação da partida
+do macOS, horário de início, PID do supervisor e do filho, usuário da sessão gráfica
+e dono de `/dev/console`. O registro permanece após atualizações do status e depois
+do login. Uma falha na leitura dessas informações é registrada como indisponibilidade,
+sem presumir que não havia login.
+
+Antes de reiniciar, registre a partida atual:
+
+```sh
+python3 scripts/startup_evidence.py prepare
+```
+
+Salve o trabalho aberto e reinicie pelo menu Apple. Mantenha o Mac ligado à energia,
+com a tampa aberta e a rede disponível. Ao aparecer a tela de login, aguarde **três
+minutos sem entrar na conta**. Depois entre normalmente e execute:
+
+```sh
+python3 scripts/startup_evidence.py verify
+```
+
+O verificador exige uma identificação de partida diferente da referência, registros
+dos dois serviços com `loginwindow` e UID zero na sessão gráfica, jobs ativos em
+`system` e os mesmos supervisores e filhos ainda em execução, com status recente.
+O resultado fica em `local/services/boot-test-result.json`. Saída zero confirma os
+dois serviços. Saída 2 indica que o teste não comprovou o início antes do login,
+inclusive quando falta evidência ou ocorreu outro reinício de processo após o login.
+Nesses casos, confira o resultado e os logs antes de repetir o teste.
+
+Esse teste confirma o início dos processos. A publicação na Cloudflare e a leitura
+dos dados do TSE também precisam ser conferidas após a partida, pois dependem de rede
+e da disponibilidade dos serviços externos.
+
 Referências da Apple consultadas em 24/10/2026:
 [daemons e agentes](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingLaunchdJobs.html),
 [gerenciamento de scripts](https://support.apple.com/guide/terminal/apdc6c1077b-5d5d-4d35-9c19-60f2397b2369/mac) e
