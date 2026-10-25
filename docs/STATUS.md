@@ -1,6 +1,37 @@
 # Estado da entrega
 
-Atualizado em 24/10/2026. Os registros anteriores abaixo preservam suas datas.
+Atualizado em 25/10/2026. Os registros anteriores abaixo preservam suas datas.
+
+## Parcial com BUs recebidos (25/10)
+
+Às 10h, o site mostrava zero votos apurados com 166 BUs do exterior já coletados, todos
+com status `Recebido`. A projeção já incorporava esses BUs: 14.654 votos para A e 32.893
+para B, que moveram a estimativa de 47,35341% para 47,35387%, conforme a atualização
+gradual prevista no modelo. O parcial lia a totalização oficial, zerada até as 17h.
+
+Por decisão do operador, o parcial passou a usar os BUs incorporados pelo modelo,
+recebidos ou totalizados ([critério](ENTRADA_BU.md#parcial-publicado-no-site)):
+
+- `integracao/exportar_previsao_site.R`: `montar_snapshot_site()` aceita `apurado`
+  (seções, votos de A e de B) e o usa em `counting`. Sem o argumento, mantém o
+  comportamento anterior.
+- `integracao/executar_pipeline.R`: passa `secoes_apuradas_coletor`,
+  `votos_a_observados` e `votos_b_observados` do resumo do checkpoint.
+- `web/`: "totalizadas" passou a "apuradas" no quadro, no gráfico, no rodapé e nos
+  detalhes da fonte. O avanço mostra a contagem de seções e usa duas casas decimais
+  abaixo de 1% (por exemplo, "0,03% das seções apuradas (166 de 499.248)").
+- `tests/check_r_adapter.R`: caso com totalização oficial zerada e BUs recebidos.
+
+O publicador relê o R a cada ciclo; não houve reinício de serviço. O primeiro snapshot
+com o parcial foi gerado às 13:10:00Z. O envio dele ao KV falhou com o 401 horário do
+token OAuth do wrangler, que se repete desde a manhã e se resolve no ciclo seguinte.
+O snapshot das 13:12:54Z chegou ao endpoint com 166 seções e 47.547 votos válidos.
+
+Verificação: teste do adaptador R; 55 testes JavaScript; 121 testes Python com o venv
+do coletor (1 ignorado; no Python do sistema, 14 falham por falta de `asn1tools`);
+prévia local com o JSON de produção; deploy do Worker (versão
+`3b63fb91-d6ea-47ed-97ff-8e1432596729`, 3 arquivos estáticos); `app.js`, `chart.js` e
+`index.html` públicos idênticos aos locais. As alterações não foram commitadas.
 
 ## Início da coleta antecipado para 00h em 24/10
 

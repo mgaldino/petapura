@@ -28,6 +28,12 @@ python3 scripts/build.py
 
 ## Atualização de dados
 
+Desde 25/10/2026, a [política de entrada de BUs](ENTRADA_BU.md) aceita também
+`Recebido`, preserva a prioridade de `Totalizado` e reconcilia versões por seção.
+A descoberta pelo índice individual complementa os anúncios gerais no exterior.
+O parcial do site mostra esses mesmos BUs, recebidos ou totalizados, assim que
+entram no modelo ([detalhes](ENTRADA_BU.md#parcial-publicado-no-site)).
+
 O produtor do modelo escreve o snapshot completo; um único processo executa o publicador após cada resultado calculado. Não inicie um segundo coletor do TSE para servir o site.
 
 ```sh

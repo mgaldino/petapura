@@ -14,5 +14,10 @@
   "requests_per_second": 70,
   "max_sections_per_cycle": 10000,
   "unannounced_probe_limit": 0,
+  "accepted_hash_statuses": ["Totalizado", "Recebido"],
+  "direct_index_ufs": ["ZZ"],
+  "direct_index_sections_per_cycle": 200,
+  "direct_index_missing_retry_seconds": 900,
+  "direct_index_priority_municipalities": [30805, 29491, 30562, 29742, 30198, 30627, 30538, 29645, 29793, 30317, 30651, 30848, 29548, 30082, 29890, 30570, 29840, 29343, 29750, 99295, 99376, 29629, 29173, 30171, 30210, 30929, 29831, 39241],
   "ufs": ["AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO", "ZZ"]
 }

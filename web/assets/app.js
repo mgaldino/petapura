@@ -21,9 +21,9 @@ function result(s,boxId='result',prefix='',f=s.forecast){
   }
   if(value===undefined||value===null){box.innerHTML='<div class="pres-empty"><h2>Aguardando previsão</h2><p>As estimativas serão apresentadas aqui quando estiverem disponíveis.</p></div>';return;}
   box.innerHTML='<div class="pres-result"><div class="pres-name"><i class="pres-dot" aria-hidden="true"></i><span id="candidate-name"></span></div><div class="pres-number"><span id="projected-share" class="pres-number-value"></span><span>%</span></div><p class="pres-denominator" id="result-denominator"></p><p class="pres-status" id="result-status"></p></div><div class="pres-uncertainty" id="uncertainty"></div>'.replaceAll('id="',`id="${prefix}`);
-  $('candidate-name').textContent=s.candidates.a.name;$('projected-share').textContent=fmt(value);$('result-denominator').textContent=complete?'dos votos válidos totalizados':'dos votos válidos no resultado final';
+  $('candidate-name').textContent=s.candidates.a.name;$('projected-share').textContent=fmt(value);$('result-denominator').textContent=complete?'dos votos válidos apurados':'dos votos válidos no resultado final';
   $('result-status').textContent=complete?'Apuração concluída.':Math.abs(value-50)<.05?'Em torno de 50% na projeção atual.':value>50?'Acima de 50% na projeção atual.':'Abaixo de 50% na projeção atual.';
-  if(complete){$('uncertainty').innerHTML='<h2>Resultado final apurado</h2><p>Todos os votos informados nesta totalização já foram incorporados. A projeção dá lugar ao resultado apurado.</p>';return;}
+  if(complete){$('uncertainty').innerHTML='<h2>Resultado final apurado</h2><p>Os boletins de urna de todas as seções já foram incorporados. A projeção dá lugar ao resultado apurado.</p>';return;}
   const b=f.interval,precision=b.upper-b.lower<.2?2:1;
   const low=Math.max(0,Math.min(40,Math.floor((Math.min(b.lower,value,50)-2)/5)*5)),high=Math.min(100,Math.max(60,Math.ceil((Math.max(b.upper,value,50)+2)/5)*5)),pct=v=>(v-low)/(high-low)*100;
   $('uncertainty').innerHTML='<h2>Faixa da projeção</h2><p class="pres-range-value" id="range-value"></p><p class="pres-range-caption" id="range-caption"></p><div class="pres-interval" role="img" id="range-image"><i class="pres-axis-track"></i><i class="pres-range-band" id="range-band"></i><i class="pres-threshold" id="range-threshold"></i><i class="pres-estimate" id="range-estimate"></i></div><div class="pres-range-ticks"><span id="range-min"></span><span id="range-majority"></span><span id="range-max"></span></div><div class="pres-threshold-label">50% · limiar de vitória</div><p class="pres-risk" id="range-risk"></p>'.replaceAll('id="',`id="${prefix}`);
@@ -39,7 +39,7 @@ function render(s){
   $('update-time').textContent=awaiting?'Aguardando apuração':s.generated_at?`${demo?(state.config.local_simulation?'Simulação atualizada':'Cenário ilustrativo'):'Dados atualizados'} · ${time(s.generated_at)} (Brasília)`:'Aguardando dados';
   $('main-title').textContent=complete?'Resultado final apurado':prior&&!awaiting?'Previsão inicial do modelo':'Projeção do resultado final';
   $('intro-description').hidden=awaiting;
-  $('intro-description').textContent=complete?'Votação após a totalização de todas as seções informadas.':prior?`Previsão a priori, antes de incorporar votos do segundo turno.${dual?' Os dois cenários coincidem neste ponto.':''}`:`Estimativa atualizada da votação de ${s.candidates.a.name} ao fim da apuração.`;
+  $('intro-description').textContent=complete?'Votação com os boletins de urna de todas as seções.':prior?`Previsão a priori, antes de incorporar votos do segundo turno.${dual?' Os dois cenários coincidem neste ponto.':''}`:`Estimativa atualizada da votação de ${s.candidates.a.name} ao fim da apuração.`;
   $('learning-intro').hidden=!dual;$('historical-scenario').hidden=!dual;$('scenarios-note').hidden=!dual||awaiting;$('scenario-switch').hidden=!dual||awaiting;
   $('chart-section').hidden=false;
   for(const id of ['counted','uncertainty-details'])$(id).hidden=awaiting;
@@ -47,7 +47,7 @@ function render(s){
     $('result').setAttribute('aria-label','Projeção não disponível. Aguardando apuração');result(s);
     if(dual)result(s,'result-2022','historical-',s.forecast_2022);else $('result-2022').replaceChildren();
     $('chart-title').textContent='Aguardando urnas serem apuradas';
-    $('legend-a').textContent=`A · ${s.candidates.a.name}`;$('legend-b').textContent=`B · ${s.candidates.b.name}`;
+    $('legend-a').textContent=s.candidates.a.name;$('legend-b').textContent=s.candidates.b.name;
     root.querySelector('.pres-legend').hidden=true;
     $('chart-note').textContent='50% / 50% é apenas uma posição visual de espera. As projeções aparecerão após os primeiros boletins de urna.';
     for(const id of ['win-probability','model-notes','model-notes-2022','source-details'])$(id).textContent='';
@@ -61,19 +61,19 @@ function render(s){
   if(!dual)state.chartScenario='learning';
   root.querySelectorAll('[data-scenario]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.scenario===state.chartScenario)));
   $('chart-title').textContent=dual?`Da apuração ao resultado final · ${state.chartScenario==='2022'?'relação de 2022':'com aprendizado'}`:'Da apuração ao resultado final';
-  $('legend-a').textContent=`A · ${s.candidates.a.name}`;$('legend-b').textContent=`B · ${s.candidates.b.name}`;
+  $('legend-a').textContent=s.candidates.a.name;$('legend-b').textContent=s.candidates.b.name;
   $('chart-interval-label').textContent=f&&!complete?`Faixa de ${fmt(f.interval.level*100,0)}%`:'Faixa da projeção';
   $('projection-legend').hidden=!f||complete;$('interval-legend').hidden=!f||complete;
-  $('chart-note').textContent=complete?'Apuração concluída. As linhas mostram os votos totalizados.':f?'A faixa é do resultado final. O trecho tracejado é uma ligação ilustrativa, sem prever o ritmo da apuração.':'Ainda não há projeção final disponível. As linhas mostram somente os votos já totalizados.';
+  $('chart-note').textContent=complete?'Apuração concluída. As linhas mostram os votos apurados.':f?'A faixa é do resultado final. O trecho tracejado é uma ligação ilustrativa, sem prever o ritmo da apuração.':'Ainda não há projeção final disponível. As linhas mostram somente os votos já apurados.';
   $('counted').innerHTML='<h2>Apurado até agora</h2><div class="pres-counted-results"><p id="partial-votes"></p><p id="partial-sections"></p></div>';
-  if(partial===null)$('partial-votes').textContent='Ainda não há votos válidos totalizados.';else{const b=document.createElement('b');b.textContent=`${fmt(partial)}%`;$('partial-votes').append(b,document.createTextNode(` dos votos válidos para ${s.candidates.a.name}`));}
-  if(s.counting){const b=document.createElement('b');b.textContent=`${fmt(progress(s.counting))}%`;$('partial-sections').append(b,document.createTextNode(' das seções totalizadas'));}else $('partial-sections').textContent='Avanço da apuração ainda indisponível.';
+  if(partial===null)$('partial-votes').textContent='Ainda não há votos válidos apurados.';else{const b=document.createElement('b');b.textContent=`${fmt(partial)}%`;$('partial-votes').append(b,document.createTextNode(` dos votos válidos para ${s.candidates.a.name}`));}
+  if(s.counting){const p=progress(s.counting),b=document.createElement('b');b.textContent=`${fmt(p,p>0&&p<1?2:1)}%`;$('partial-sections').append(b,document.createTextNode(` das seções apuradas (${fmt(s.counting.reported_sections,0)} de ${fmt(s.counting.total_sections,0)})`));}else $('partial-sections').textContent='Avanço da apuração ainda indisponível.';
   $('win-probability').textContent=complete?'A apuração está concluída.':f?.win_probability_a!=null?`Chance de vitória de ${s.candidates.a.name}: ${fmt(f.win_probability_a*100,0)}%.`:'O modelo ainda não informou uma chance de vitória.';
   $('interval-explanation').textContent=complete?'A apuração foi concluída. O resultado observado substitui a projeção.':f?`A faixa de ${fmt(f.interval.level*100,0)}% reúne os resultados centrais das simulações sob as hipóteses de cada cenário; ${fmt((1-f.interval.level)*100,0)}% ficam fora dela. Ela pode mudar durante a apuração.`:'A faixa será apresentada com o nível informado pelo modelo. Ela depende das hipóteses adotadas.';
   $('model-notes-2022').hidden=!dual;$('model-notes-2022').textContent=dual?`Relação de 2022. ${s.forecast_2022.notes.join(' ')}`:'';
   $('model-notes').textContent=f?`Modelo: ${f.model_version}. Previsão calculada às ${time(f.generated_at)} (Brasília). ${f.notes.join(' ')}`:'';
-  $('source-details').textContent=s.counting?`Totalização: ${s.counting.source.area==='SOMA_UFS'?'soma das UFs e exterior':s.counting.source.area}. ${s.counting.collected_sections==null?'':`BUs incorporados pelo coletor: ${fmt(s.counting.collected_sections,0)} de ${fmt(s.counting.total_sections,0)} seções.`} ${s.counting.source.generated_raw?`Horário de geração informado pela fonte: ${s.counting.source.generated_raw}.`:''}`:'';
-  $('source-label').textContent=demo?'Demonstração com dados sintéticos. Sem conexão com a apuração do TSE.':'Dados: totalizações do TSE. As estimativas são produzidas pelo modelo do projeto.';
+  $('source-details').textContent=s.counting?`Apurado: ${demo?'boletins de urna fictícios':'boletins de urna publicados pelo TSE, com status Recebido ou Totalizado'}; ${fmt(s.counting.reported_sections,0)} de ${fmt(s.counting.total_sections,0)} seções.`:'';
+  $('source-label').textContent=demo?'Demonstração com dados sintéticos. Sem conexão com a apuração do TSE.':'Dados: boletins de urna publicados pelo TSE. As estimativas são produzidas pelo modelo do projeto.';
   $('demo-link').textContent=state.config.local_simulation?(state.demo?'Voltar à simulação integrada':'Ver mockup com dados ilustrativos'):demo?'Voltar à apuração':'Ver demonstração com dados fictícios';$('demo-link').href=state.config.local_simulation?(state.demo?'./':'?demo=1'):demo?'./':'?demo=1';
   root.querySelectorAll('[data-series]').forEach(b=>b.setAttribute('aria-pressed',state.visible[Number(b.dataset.series)]?'true':'false'));
   $('live-summary').textContent=complete?`Apuração concluída. ${s.candidates.a.name}: ${fmt(partial)}% dos votos válidos.`:f?`${s.candidates.a.name}: projeção de ${fmt(f.share_a)}% dos votos válidos, faixa de ${fmt(f.interval.level*100,0)}% entre ${fmt(f.interval.lower)}% e ${fmt(f.interval.upper)}%.${dual?` Cenário relação de 2022: ${fmt(s.forecast_2022.share_a)}%, faixa entre ${fmt(s.forecast_2022.interval.lower)}% e ${fmt(s.forecast_2022.interval.upper)}%.`:''}`:'Aguardando previsão.';

@@ -15,4 +15,10 @@ resultado <- jsonlite::fromJSON(args[[1]], simplifyVector = FALSE)
 stopifnot(resultado$forecast$interval$level == .95,
           is.null(resultado$forecast$win_probability_a),
           resultado$counting$reported_sections == 0L)
-cat("Saída R com intervalo de 95%, probabilidade nula e zero BUs verificada.\n")
+# BUs recebidos entram no parcial mesmo com a totalização oficial zerada.
+montar_snapshot_site(args[[1]], manifesto, totais, previsao,
+  apurado = list(secoes = 3, votos_a = 120, votos_b = 80))
+resultado <- jsonlite::fromJSON(args[[1]], simplifyVector = FALSE)
+stopifnot(resultado$counting$reported_sections == 3L, resultado$counting$votes_a == 120L,
+          resultado$counting$votes_b == 80L, resultado$counting$valid_votes == 200L)
+cat("Saída R com intervalo de 95%, probabilidade nula, zero BUs e BUs recebidos verificada.\n")

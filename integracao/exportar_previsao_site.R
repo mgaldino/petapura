@@ -31,8 +31,11 @@ exportar_previsao_site <- function(caminho, snapshot_id, versao_modelo,
 
 # Usa os objetos do snapshot já lido pelo executor, sem reler o ponteiro vivo.
 # O JSON completo deve passar por scripts/publish_snapshot.py antes de servir.
+# `apurado` (secoes, votos_a, votos_b) são os BUs incorporados pelo modelo, com status
+# Recebido ou Totalizado. Quando informado, substitui a totalização oficial no parcial.
 montar_snapshot_site <- function(caminho, manifesto, totalizacao_escolhida,
-                                previsao = NULL, nome_a = "Candidata A", nome_b = "Candidato B") {
+                                previsao = NULL, nome_a = "Candidata A", nome_b = "Candidato B",
+                                apurado = NULL) {
   utc <- function(x) {
     if (!grepl("(Z|\\+00:00)$", x)) stop("Horário precisa estar explicitamente em UTC")
     valor <- as.POSIXct(sub("(Z|\\+00:00)$", "", x), format = "%Y-%m-%dT%H:%M:%OS", tz = "UTC")
@@ -47,6 +50,12 @@ montar_snapshot_site <- function(caminho, manifesto, totalizacao_escolhida,
     gerado_utc <- max(observado_utc, previsao$generated_at)
   }
   c <- totalizacao_escolhida
+  if (!is.null(apurado)) {
+    c$st <- as.integer(apurado$secoes)
+    c$votos_a <- as.integer(apurado$votos_a)
+    c$votos_b <- as.integer(apurado$votos_b)
+    c$validos <- c$votos_a + c$votos_b
+  }
   contagem <- if (c$ts > 0) list(total_sections = c$ts, reported_sections = c$st,
     collected_sections = manifesto$observed_sections, votes_a = c$votos_a,
     votes_b = c$votos_b, valid_votes = c$validos, generated_at = observado_utc,

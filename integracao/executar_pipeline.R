@@ -82,7 +82,9 @@ snapshot_checkpoint_site <- function(cp, p) {
     limite_superior = summary$pct_a_q975, nivel_intervalo = .95,
     probabilidade_vitoria_a = NULL, notas = notes, calculado_utc = cp$created_utc)
   snapshot <- montar_snapshot_site(file.path(p$runtime, "snapshot-site.json"),
-    cp$snapshot_manifest, cp$official_details$chosen, forecast, p$name_a, p$name_b)
+    cp$snapshot_manifest, cp$official_details$chosen, forecast, p$name_a, p$name_b,
+    apurado = list(secoes = summary$secoes_apuradas_coletor,
+                   votos_a = summary$votos_a_observados, votos_b = summary$votos_b_observados))
   fields_2022 <- c("pct_a_2022", "pct_a_2022_q025", "pct_a_2022_q975")
   if (all(fields_2022 %in% names(summary))) {
     snapshot$forecast_2022 <- exportar_previsao_site(file.path(p$runtime, "forecast-2022.json"),

@@ -34,7 +34,7 @@ O [JSON Schema](../schema/snapshot.schema.json) descreve os tipos. Os validadore
 | `mode` | `waiting`, `live` ou `demo`; o endpoint real rejeita `demo` |
 | `election` | 2026, segundo turno, Presidência; IDs esperados conferidos com a configuração |
 | `candidates` | Identidade e nome de A e B; A em vermelho, B em azul |
-| `counting` | Contagens oficiais, horário de recebimento e fonte escolhida; pode ser `null` |
+| `counting` | Seções e votos dos BUs incorporados pelo modelo (`Recebido` ou `Totalizado`), total de seções e fonte da totalização oficial escolhida, horário de recebimento; pode ser `null` |
 | `forecast` | Previsão final e metadados; pode ser `null` |
 | `history` | Histórico de contagens, mantido pelo publicador; até 4.000 entradas |
 
@@ -112,7 +112,8 @@ Os arquivos do coletor são apenas lidos. A entrada não é um endpoint público
 - Zero BUs não impede uma previsão inicial, se o modelo fornecê-la. Não há limiar artificial de 2%.
 - Se só houver contagem, a votação projetada permanece indisponível; não se apresenta o parcial como previsão.
 - A chance de vitória fica ausente enquanto não for calculada.
-- Com todas as seções totalizadas e votos válidos positivos, a interface usa o resultado observado e informa o fim da apuração.
+- Desde 25/10/2026, o executor integrado preenche `reported_sections`, `votes_a`, `votes_b` e `valid_votes` com os BUs que o modelo incorporou, recebidos ou totalizados ([ENTRADA_BU.md](ENTRADA_BU.md#parcial-publicado-no-site)). O importador de dados observados (`scripts/import_tse.py`) continua usando a totalização oficial.
+- Com todas as seções apuradas e votos válidos positivos, a interface usa o resultado observado e informa o fim da apuração.
 - O envelope visual converge para o intervalo do resultado final. A ligação tracejada não estima a ordem de chegada dos votos. O tooltip no trecho futuro informa a estimativa final, sem inventar valores intermediários.
 
 Para o gráfico, o histórico bruto permanece no JSON. A apresentação consolida revisões na mesma posição e usa pontos até o avanço atual, evitando desenhar votos antigos além da posição corrigida de “Agora”.
