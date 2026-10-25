@@ -58,6 +58,29 @@ preparar_fixture_site <- function(p) {
   invisible(scenario)
 }
 
+# Média da previsão sem aprendizado nas seções já apuradas, ponderada pelos votos válidos
+# observados. A tabela por seção é congelada por scripts/freeze_prior_sections.py; sem ela,
+# ou com qualquer inconsistência, o campo fica ausente e o snapshot segue sem ele.
+previsao_sem_aprendizado_apuradas <- function(cp, p) {
+  tryCatch({
+    tabela <- file.path(p$runtime, "previsao-sem-aprendizado.csv")
+    secoes <- file.path(p$runtime, "model", "pacotes",
+                        sprintf("%08d_%s", as.integer(cp$sequence), cp$id), "secoes.csv")
+    if (!file.exists(tabela) || !file.exists(secoes)) return(NULL)
+    chaves <- c("uf", "cd_mun", "zona", "secao")
+    apuradas <- data.table::fread(secoes, select = c(chaves, "apurada", "validos_observados"))
+    apuradas <- apuradas[apurada == TRUE & validos_observados > 0]
+    if (!nrow(apuradas)) return(NULL)
+    prior <- data.table::fread(tabela, select = c(chaves, "pct_a_sem_aprendizado"))
+    juntas <- merge(apuradas, prior, by = chaves)
+    if (nrow(juntas) != nrow(apuradas) || anyNA(juntas$pct_a_sem_aprendizado)) return(NULL)
+    sum(juntas$validos_observados * juntas$pct_a_sem_aprendizado) / sum(juntas$validos_observados)
+  }, error = function(e) {
+    message("Previsão sem aprendizado indisponível: ", conditionMessage(e))
+    NULL
+  })
+}
+
 snapshot_checkpoint_site <- function(cp, p) {
   synthetic <- any(grepl("PET SYNTHETIC REPLAY", unlist(cp$snapshot_manifest$notes), fixed = TRUE))
   exigir_analise(identical(p$mode == "demo", synthetic),
@@ -84,7 +107,8 @@ snapshot_checkpoint_site <- function(cp, p) {
   snapshot <- montar_snapshot_site(file.path(p$runtime, "snapshot-site.json"),
     cp$snapshot_manifest, cp$official_details$chosen, forecast, p$name_a, p$name_b,
     apurado = list(secoes = summary$secoes_apuradas_coletor,
-                   votos_a = summary$votos_a_observados, votos_b = summary$votos_b_observados))
+                   votos_a = summary$votos_a_observados, votos_b = summary$votos_b_observados,
+                   pct_a_sem_aprendizado = previsao_sem_aprendizado_apuradas(cp, p)))
   fields_2022 <- c("pct_a_2022", "pct_a_2022_q025", "pct_a_2022_q975")
   if (all(fields_2022 %in% names(summary))) {
     snapshot$forecast_2022 <- exportar_previsao_site(file.path(p$runtime, "forecast-2022.json"),

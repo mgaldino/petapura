@@ -39,11 +39,14 @@
 #presidencia-2026-preview .pres-threshold-label{text-align:center;font-size:12px;color:var(--pres-muted);margin-top:3px}
 #presidencia-2026-preview .pres-risk{font-size:14px;line-height:1.5;margin:15px 0 0}
 #presidencia-2026-preview .pres-risk strong{font-weight:500}
-#presidencia-2026-preview .pres-counted{display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding:23px 0;border-top:1px solid var(--pres-rule)}
+#presidencia-2026-preview .pres-counted{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:20px;padding:23px 0;border-top:1px solid var(--pres-rule)}
 #presidencia-2026-preview .pres-counted h2{font-size:15px}
 #presidencia-2026-preview .pres-counted-results{display:flex;gap:27px;flex-wrap:wrap;align-items:baseline}
 #presidencia-2026-preview .pres-counted-results p{font-size:13px;color:var(--pres-muted);margin:0}
 #presidencia-2026-preview .pres-counted-results b{font-size:20px;font-weight:500;color:var(--pres-ink);font-variant-numeric:tabular-nums;margin-right:4px;letter-spacing:-.4px}
+#presidencia-2026-preview .pres-counted-prior{flex-basis:100%;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 20px;margin:0;padding-top:14px;border-top:1px solid var(--pres-rule);font-size:13px;color:var(--pres-muted)}
+#presidencia-2026-preview .pres-counted-prior[hidden]{display:none}
+#presidencia-2026-preview .pres-counted-prior b{font-size:17px;font-weight:500;color:var(--pres-ink);font-variant-numeric:tabular-nums;margin-right:4px}
 #presidencia-2026-preview .pres-history{padding:25px 0 8px}
 #presidencia-2026-preview .pres-history-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 #presidencia-2026-preview .pres-chart-legend{display:flex;gap:22px;flex-wrap:wrap}
@@ -99,6 +102,10 @@
   #presidencia-2026-preview .pres-counted-results{display:block;margin-top:9px}
   #presidencia-2026-preview .pres-counted-results p+p{margin-top:5px}
   #presidencia-2026-preview .pres-counted-results b{font-size:19px}
+  #presidencia-2026-preview .pres-counted-prior{display:block;margin-top:14px}
+  #presidencia-2026-preview .pres-counted-prior[hidden]{display:none}
+  #presidencia-2026-preview .pres-counted-prior span{display:block}
+  #presidencia-2026-preview .pres-counted-prior span+span{margin-top:4px}
   #presidencia-2026-preview .pres-history-header{gap:9px}
   #presidencia-2026-preview .pres-chart-legend{gap:21px}
   #presidencia-2026-preview .pres-history-plot{height:310px}

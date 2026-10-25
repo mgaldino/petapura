@@ -33,6 +33,7 @@ exportar_previsao_site <- function(caminho, snapshot_id, versao_modelo,
 # O JSON completo deve passar por scripts/publish_snapshot.py antes de servir.
 # `apurado` (secoes, votos_a, votos_b) são os BUs incorporados pelo modelo, com status
 # Recebido ou Totalizado. Quando informado, substitui a totalização oficial no parcial.
+# `apurado$pct_a_sem_aprendizado`, opcional, é a previsão da priori para essas seções.
 montar_snapshot_site <- function(caminho, manifesto, totalizacao_escolhida,
                                 previsao = NULL, nome_a = "Candidata A", nome_b = "Candidato B",
                                 apurado = NULL) {
@@ -60,6 +61,8 @@ montar_snapshot_site <- function(caminho, manifesto, totalizacao_escolhida,
     collected_sections = manifesto$observed_sections, votes_a = c$votos_a,
     votes_b = c$votos_b, valid_votes = c$validos, generated_at = observado_utc,
     source = list(name = "TSE", area = c$area, generated_raw = c$generated)) else NULL
+  if (!is.null(contagem) && !is.null(apurado$pct_a_sem_aprendizado))
+    contagem$prior_share_a <- apurado$pct_a_sem_aprendizado
   temporario <- tempfile(pattern = "site-assinatura-")
   on.exit(unlink(temporario), add = TRUE)
   jsonlite::write_json(previsao, temporario, auto_unbox = TRUE, null = "null", digits = 12)

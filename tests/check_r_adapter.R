@@ -21,4 +21,8 @@ montar_snapshot_site(args[[1]], manifesto, totais, previsao,
 resultado <- jsonlite::fromJSON(args[[1]], simplifyVector = FALSE)
 stopifnot(resultado$counting$reported_sections == 3L, resultado$counting$votes_a == 120L,
           resultado$counting$votes_b == 80L, resultado$counting$valid_votes == 200L)
-cat("Saída R com intervalo de 95%, probabilidade nula, zero BUs e BUs recebidos verificada.\n")
+montar_snapshot_site(args[[1]], manifesto, totais, previsao,
+  apurado = list(secoes = 3, votos_a = 120, votos_b = 80, pct_a_sem_aprendizado = 57.5))
+resultado <- jsonlite::fromJSON(args[[1]], simplifyVector = FALSE)
+stopifnot(resultado$counting$prior_share_a == 57.5)
+cat("Saída R com intervalo de 95%, probabilidade nula, zero BUs e BUs recebidos e previsão sem aprendizado verificada.\n")

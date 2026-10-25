@@ -68,6 +68,10 @@ test('projeção do gráfico parte da priori e termina na previsão atual',()=>{
   assert.deepEqual(points.at(-1),{x:65.2,a:51.4,lower:47.5,upper:55.3});
   assert.equal(points.length,3);
 });
+test('previsão sem aprendizado das seções apuradas é opcional e fica entre 0 e 100',()=>{
+  const s=load('live-95');s.counting.prior_share_a=49.8;validateSnapshot(s,config);
+  const bad=load('live-95');bad.counting.prior_share_a=120;assert.throws(()=>validateSnapshot(bad,config));
+});
 test('rótulos finais não se sobrepõem no empate ou em uma disputa muito próxima',()=>{for(const [a,b] of [[100,100],[100,101],[101,100]]){const [x,y]=separateLabelBaselines(a,b);assert.ok(Math.abs(x-y)>=22);}assert.deepEqual(separateLabelBaselines(80,120),[80,120]);});
 const response=data=>({ok:true,status:200,text:async()=>JSON.stringify(data)});
 function poller(fetcher,settings=config){const received=[],errors=[],timers=new Map();let id=0;const p=createPoller({url:'/data/latest.json',config:settings,onData:s=>received.push(s),onError:e=>errors.push(e),fetcher,schedule:f=>{timers.set(++id,f);return id;},cancel:i=>timers.delete(i)});return {p,received,errors,timers};}

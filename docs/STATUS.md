@@ -2,6 +2,28 @@
 
 Atualizado em 25/10/2026. Os registros anteriores abaixo preservam suas datas.
 
+## Previsão sem aprendizado no quadro do apurado (25/10)
+
+Por decisão do operador (opção A entre duas propostas), o quadro “Apurado até agora”
+compara o percentual apurado com a previsão sem aprendizado para as mesmas seções. A
+alternativa descartada mostrava a previsão inicial nacional (47,4%), que se refere a outra
+população; com 171 seções do exterior, a distância para o apurado refletiria sobretudo
+a composição dessas seções. Na primeira publicação, o apurado era 31,2% e a previsão
+sem aprendizado, 29,8% (apurado 1,4 p.p. acima).
+
+- `counting.prior_share_a`, opcional, aceito por `web/assets/data.js` (site e Worker) e
+  `scripts/contract.py`; preenchido por `integracao/executar_pipeline.R` a partir da
+  tabela congelada ([critério](ENTRADA_BU.md#previsão-sem-aprendizado-para-as-seções-apuradas)).
+- `scripts/freeze_prior_sections.py` congela a tabela e recusa sobrescrever uma existente.
+- `web/assets/app.js` e `styles.css`: linha abaixo do parcial, omitida sem o campo
+  (demonstração) e ao fim da apuração.
+- Testes: 58 JavaScript, Python com o venv do coletor e adaptador R. A prévia local
+  encontrou uma colisão de nome (`prior`) em `render()` antes do deploy; corrigida.
+
+Ordem: deploy do site e do Worker (versão `21736462-ac30-4a90-aa83-7ae26b6cedd8`);
+SIGINT no publicador às 11h08, retomado pelo launchd; congelamento da tabela às 11h09;
+primeiro snapshot com o campo às 14:10:28Z, conferido no endpoint e na página.
+
 ## Gráfico parte da priori (25/10)
 
 Com 166 BUs do exterior, a linha contínua do gráfico (parcial apurado) começava em 30,8%

@@ -50,6 +50,12 @@ class PublicationTests(unittest.TestCase):
         entry=first['history'][-1]
         self.assertEqual((entry['forecast_a'],entry['forecast_lower'],entry['forecast_upper']),(51.4,47.5,55.3))
         self.assertNotIn('forecast_2022_a',entry)
+    def test_counting_accepts_prior_share_of_counted_sections(self):
+        s=fixture();s['counting']['prior_share_a']=49.8
+        published,_=publish(s,self.output,CONFIG)
+        self.assertEqual(published['counting']['prior_share_a'],49.8)
+        bad=fixture();bad['snapshot_id']='ruim';bad['counting']['prior_share_a']=120
+        with self.assertRaises(ContractError):publish(bad,self.output,CONFIG)
     def test_old_snapshot_rejected(self):
         s=fixture();s['snapshot_id']='novo';s['generated_at']='2026-10-25T23:31:00Z';publish(s,self.output,CONFIG)
         with self.assertRaises(ContractError):publish(fixture(),self.output,CONFIG)

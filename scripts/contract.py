@@ -90,8 +90,11 @@ def validate(snapshot, config=None):
     require("counting" in s and "forecast" in s, "counting/forecast")
     if s["counting"] is not None:
         c = s["counting"]
-        keys(c, ("total_sections","reported_sections","collected_sections","votes_a","votes_b","valid_votes","generated_at","source"), "counting", ("collected_sections",))
+        keys(c, ("total_sections","reported_sections","collected_sections","prior_share_a","votes_a","votes_b","valid_votes","generated_at","source"), "counting", ("collected_sections","prior_share_a"))
         counts(c, "counting")
+        if "prior_share_a" in c:
+            # Previsão sem aprendizado para as seções já apuradas (ver docs/ENTRADA_BU.md).
+            numeric(c["prior_share_a"], "counting.prior_share_a")
         stamp(c.get("generated_at"), "counting.generated_at")
         require(stamp(c["generated_at"]) <= stamp(s["generated_at"]), "counting.generated_at")
         obj(c.get("source"), "counting.source")

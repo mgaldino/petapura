@@ -34,7 +34,7 @@ O [JSON Schema](../schema/snapshot.schema.json) descreve os tipos. Os validadore
 | `mode` | `waiting`, `live` ou `demo`; o endpoint real rejeita `demo` |
 | `election` | 2026, segundo turno, Presidência; IDs esperados conferidos com a configuração |
 | `candidates` | Identidade e nome de A e B; A em vermelho, B em azul |
-| `counting` | Seções e votos dos BUs incorporados pelo modelo (`Recebido` ou `Totalizado`), total de seções e fonte da totalização oficial escolhida, horário de recebimento; pode ser `null` |
+| `counting` | Seções e votos dos BUs incorporados pelo modelo (`Recebido` ou `Totalizado`), total de seções e fonte da totalização oficial escolhida, horário de recebimento e, opcionalmente, `prior_share_a`, a previsão sem aprendizado para as mesmas seções (0–100); pode ser `null` |
 | `forecast` | Previsão final e metadados; pode ser `null` |
 | `history` | Histórico de contagens e da projeção de cada atualização, mantido pelo publicador; até 4.000 entradas |
 

@@ -35,6 +35,24 @@ escolhida. Depois das 17h, o percentual de seções do site pode diferir do pain
 TSE, porque o site conta BUs recebidos ainda não totalizados e depende do ritmo do
 coletor. A projeção usa exatamente o mesmo conjunto mostrado no parcial.
 
+### Previsão sem aprendizado para as seções apuradas
+
+Desde 25/10/2026, às 11h10, o quadro mostra também a previsão do modelo sem aprendizado
+para as mesmas seções já apuradas (`counting.prior_share_a`). É a média da previsão por
+seção, ponderada pelos votos válidos observados em cada seção apurada, e se compara
+diretamente com o percentual apurado das mesmas seções. A diferença indica o quanto o
+resultado dessas seções se afastou da priori.
+
+A previsão por seção foi congelada às 11h09 por `scripts/freeze_prior_sections.py` em
+`previsao-sem-aprendizado.csv`, na pasta da execução (fora do Git), com manifesto em
+`previsao-sem-aprendizado.json` (checkpoint 490, SHA-256 `59ae5076…`). Nas seções então
+pendentes, usa `pct_a_2022`, que mantém coeficientes, choques municipais e razão de válidos
+na prior. Nas 171 seções já apuradas, usa `pct_a_modelo`, calculado com peso de
+aprendizado de 6,6 × 10⁻⁶; a diferença em relação à prior é desprezível nessa escala.
+A cada ciclo, `previsao_sem_aprendizado_apuradas()`, em `integracao/executar_pipeline.R`,
+cruza a tabela com as seções apuradas do `secoes.csv` do checkpoint. Sem a tabela, ou com
+alguma seção apurada fora dela, o campo fica ausente e o site omite a linha.
+
 A montagem está em `montar_snapshot_site(..., apurado = )`, em
 `integracao/exportar_previsao_site.R`. `integracao/executar_pipeline.R` informa o
 argumento a partir do checkpoint. Sem `apurado`, a função mantém o comportamento
